@@ -4,6 +4,7 @@ function App() {
   return (
     <>
       <p>Test page</p>
+      <p>new test page</p>
     </>
   );
 }
