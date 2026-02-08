@@ -5,7 +5,7 @@ export default function PublicRootLayout() {
   return (
     <>
       <PublicMainNavigation />
-      <main>
+      <main className="max-w-350 flex justify-center mx-auto">
         <Outlet />
       </main>
     </>
