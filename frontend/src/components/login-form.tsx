@@ -14,11 +14,33 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  function handleChange(
+    identifier: string,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) {
+    setFormData((prevVal) => ({
+      ...prevVal,
+      [identifier]: e.target.value,
+    }));
+  }
+
+  function handleSubmit(e: React.SubmitEvent) {
+    e.preventDefault();
+
+    console.log(formData);
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -29,7 +51,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -37,8 +59,11 @@ export function LoginForm({
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  required
+                  onChange={(e) => {
+                    handleChange("email", e);
+                  }}
                 />
+                <p className="text-red-500">Error: Invalid email or password</p>
               </Field>
               <Field>
                 {/* Features => resetare parola user */}
@@ -51,12 +76,12 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" type="password" />
+                <p className="text-red-500">Error: Invalid email or password</p>
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
-                <Button variant="outline" type="button">
-                  Login with Google
+                <Button type="submit" className="cursor-pointer">
+                  Login
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?{" "}
