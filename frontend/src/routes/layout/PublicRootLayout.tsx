@@ -1,0 +1,13 @@
+import { Outlet } from "react-router";
+import PublicMainNavigation from "../navigation/PublicMainNavigation";
+
+export default function PublicRootLayout() {
+  return (
+    <>
+      <PublicMainNavigation />
+      <main className="max-w-350 flex justify-center mx-auto">
+        <Outlet />
+      </main>
+    </>
+  );
+}

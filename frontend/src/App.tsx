@@ -1,11 +1,51 @@
-import { Button } from "@/components/ui/button";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import PublicRootLayout from "./routes/layout/PublicRootLayout";
+import DashboardRootLayout from "./routes/layout/DashboardRootLayout";
+import PublicHomePage from "./pages/public/PublicHomePage";
+import PublicPricesPage from "./pages/public/PublicPricesPage";
+import PublicAboutPage from "./pages/public/PublicAboutPage";
+import ErrorPage from "./routes/Error";
+import Login from "./pages/auth/Login";
+import SignIn from "./pages/auth/Signin";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <PublicRootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <PublicHomePage />,
+      },
+      {
+        path: "/about",
+        element: <PublicAboutPage />,
+      },
+      {
+        path: "/prices",
+        element: <PublicPricesPage />,
+      },
+      {
+        path: "/signin",
+        element: <SignIn />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+    ],
+  },
+
+  // ACESTE RUTE VOR FII PROTEJATE
+  {
+    path: "/dashboard",
+    element: <DashboardRootLayout />,
+  },
+]);
 
 function App() {
-  return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
