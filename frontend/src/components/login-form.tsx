@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import LoginSchema from "@/schemas/login.schema";
 
 export function LoginForm({
   className,
@@ -25,6 +26,11 @@ export function LoginForm({
     password: "",
   });
 
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+  }>({});
+
   function handleChange(
     identifier: string,
     e: React.ChangeEvent<HTMLInputElement>,
@@ -33,12 +39,29 @@ export function LoginForm({
       ...prevVal,
       [identifier]: e.target.value,
     }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [identifier]: undefined,
+    }));
   }
 
-  function handleSubmit(e: React.SubmitEvent) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    console.log(formData);
+    const result = LoginSchema.safeParse(formData);
+
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+      setErrors({
+        email: fieldErrors.email?.[0],
+        password: fieldErrors.password?.[0],
+      });
+      return;
+    }
+
+    console.log("Valid form data:", result.data);
+    setErrors({});
   }
 
   return (
@@ -53,22 +76,27 @@ export function LoginForm({
         <CardContent>
           <form onSubmit={handleSubmit}>
             <FieldGroup>
-              <Field>
+              {/* Email Field */}
+              <Field className="max-h-16">
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  onChange={(e) => {
-                    handleChange("email", e);
-                  }}
+                  value={formData.email}
+                  onChange={(e) => handleChange("email", e)}
+                  className={errors.email ? "border-red-500" : ""}
                 />
-                <p className="text-red-500">Error: Invalid email or password</p>
+                {errors.email && (
+                  <p className="text-sm text-red-500 min-h-5">{errors.email}</p>
+                )}
               </Field>
-              <Field>
-                {/* Features => resetare parola user */}
+
+              {/* Password Field */}
+              <Field className="mt-2 max-h-16">
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
+
                   <a
                     href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
@@ -76,16 +104,29 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" />
-                <p className="text-red-500">Error: Invalid email or password</p>
+                <Input
+                  id="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) => handleChange("password", e)}
+                  className={errors.password ? "border-red-500" : ""}
+                />
+                {errors.password && (
+                  <p className="text-sm text-red-500 min-h-5">
+                    {errors.password}
+                  </p>
+                )}
               </Field>
-              <Field>
-                <Button type="submit" className="cursor-pointer">
+
+              <Field className="mt-3">
+                <Button type="submit" className="cursor-pointer w-full">
                   Login
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?{" "}
-                  <a href="/signin">Start for Free</a>
+                  <a href="/signin" className="underline">
+                    Start for Free
+                  </a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
