@@ -16,6 +16,8 @@ import ProfilePage from "./pages/dashboard/ProfilePage";
 import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
 import UpgradePlansPage from "./pages/dashboard/UpgradePlansPage";
 import SettingsPage from "./pages/dashboard/SettingsPage";
+import PrivacyPolicy from "./pages/public/terms-and-policy/PrivacyPolicy";
+import TermsAndConditions from "./pages/public/terms-and-policy/TermsAndConditions";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,14 @@ const router = createBrowserRouter([
             element: <WriteStory />,
           },
         ],
+      },
+      {
+        path: "/terms-and-services",
+        element: <TermsAndConditions />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "/signin",
