@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/navigation-menu";
 import { useState } from "react";
 
+type SubmenuKey = "blog" | "prices";
+
 export default function PublicMainNavigation() {
   const [openMenu, setOpenMenu] = useState(false);
-  const [openSubMenu, setOpenSubMenu] = useState({
+  const [openSubMenu, setOpenSubMenu] = useState<Record<SubmenuKey, boolean>>({
     blog: false,
     prices: false,
   });
@@ -23,7 +25,7 @@ export default function PublicMainNavigation() {
     setOpenMenu((prev) => !prev);
   }
 
-  function handleSubMenuToggle(identifier: string) {
+  function handleSubMenuToggle(identifier: SubmenuKey) {
     setOpenSubMenu((prev) => ({
       ...prev,
       [identifier]: !prev[identifier],
