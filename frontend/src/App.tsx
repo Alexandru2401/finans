@@ -9,6 +9,8 @@ import Login from "./pages/auth/Login";
 import SignIn from "./pages/auth/Signin";
 import SuccessStories from "./pages/public/blog/SuccessStories";
 import WriteStory from "./pages/public/blog/WriteStory";
+import DashboardHomePage from "./pages/dashboard/DashboardHomePage";
+import Chart from "./pages/dashboard/BudgetPage";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +59,16 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardRootLayout />,
+    children: [
+      {
+        index: true,
+        element: <DashboardHomePage />,
+      },
+      {
+        path: "/dashboard/budget",
+        element: <Chart />,
+      },
+    ],
   },
 ]);
 

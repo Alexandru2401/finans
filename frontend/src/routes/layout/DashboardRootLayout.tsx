@@ -3,11 +3,11 @@ import { Outlet } from "react-router";
 
 export default function DashboardRootLayout() {
   return (
-    <>
+    <div className="flex min-h-screen">
       <DashboardMainNavigation />
-      <main>
+      <main className="flex-1">
         <Outlet />
       </main>
-    </>
+    </div>
   );
 }
