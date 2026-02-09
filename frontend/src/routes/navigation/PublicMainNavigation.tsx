@@ -57,6 +57,7 @@ export default function PublicMainNavigation() {
             </NavigationMenuLink>
           </NavigationMenuItem>
 
+          {/* Doar de test */}
           <NavigationMenuItem>
             <NavigationMenuLink
               asChild
@@ -67,6 +68,15 @@ export default function PublicMainNavigation() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <Link to="/dashboard">Challenges</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem className="relative">
             <NavigationMenuTrigger>Prices</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-96 p-4">
@@ -80,7 +90,7 @@ export default function PublicMainNavigation() {
             </NavigationMenuContent>
           </NavigationMenuItem>
 
-          <NavigationMenuItem>
+          <NavigationMenuItem className="relative">
             <NavigationMenuTrigger>Blog</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-96 p-4">
@@ -98,22 +108,24 @@ export default function PublicMainNavigation() {
             </NavigationMenuContent>
           </NavigationMenuItem>
 
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
-              <Link to="/terms-and-services">Terms and services</Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
-              <Link to="/privacy-policy">Privacy Policy</Link>
-            </NavigationMenuLink>
+          <NavigationMenuItem className="relative">
+            <NavigationMenuTrigger>Info </NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="w-96 p-4">
+                <ListItem
+                  href="/info/terms-and-services"
+                  title="Read our terms and services"
+                >
+                  Terms and services
+                </ListItem>
+                <ListItem
+                  href="/info/privacy-policy"
+                  title="Read our privacy policy"
+                >
+                  Privacy Policy
+                </ListItem>
+              </ul>
+            </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
