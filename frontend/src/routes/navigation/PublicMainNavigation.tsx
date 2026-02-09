@@ -53,7 +53,16 @@ export default function PublicMainNavigation() {
               asChild
               className={navigationMenuTriggerStyle()}
             >
-              <Link to="/about">About</Link>
+              <Link to="/#about">About</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <Link to="/dashboard">Dashboard</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
 
