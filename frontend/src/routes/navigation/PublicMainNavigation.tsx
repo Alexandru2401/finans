@@ -53,11 +53,30 @@ export default function PublicMainNavigation() {
               asChild
               className={navigationMenuTriggerStyle()}
             >
-              <Link to="/about">About</Link>
+              <Link to="/#about">About</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+
+          {/* Doar de test */}
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <Link to="/dashboard">Dashboard</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
 
           <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <Link to="/dashboard">Challenges</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem className="relative">
             <NavigationMenuTrigger>Prices</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-96 p-4">
@@ -71,7 +90,7 @@ export default function PublicMainNavigation() {
             </NavigationMenuContent>
           </NavigationMenuItem>
 
-          <NavigationMenuItem>
+          <NavigationMenuItem className="relative">
             <NavigationMenuTrigger>Blog</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-96 p-4">
@@ -84,6 +103,26 @@ export default function PublicMainNavigation() {
                 </ListItem>
                 <ListItem href="/blog/success-stories" title="Success stories">
                   People changing their financial lives with our product.
+                </ListItem>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem className="relative">
+            <NavigationMenuTrigger>Info </NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="w-96 p-4">
+                <ListItem
+                  href="/info/terms-and-services"
+                  title="Read our terms and services"
+                >
+                  Terms and services
+                </ListItem>
+                <ListItem
+                  href="/info/privacy-policy"
+                  title="Read our privacy policy"
+                >
+                  Privacy Policy
                 </ListItem>
               </ul>
             </NavigationMenuContent>

@@ -1,3 +1,3 @@
-export default function BuggetPage() {
+export default function BudgetPage() {
   return <div>Budget Page</div>;
 }

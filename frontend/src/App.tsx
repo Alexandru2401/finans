@@ -10,7 +10,14 @@ import SignIn from "./pages/auth/Signin";
 import SuccessStories from "./pages/public/blog/SuccessStories";
 import WriteStory from "./pages/public/blog/WriteStory";
 import DashboardHomePage from "./pages/dashboard/DashboardHomePage";
-import Chart from "./pages/dashboard/BudgetPage";
+import BudgetPage from "./pages/dashboard/BudgetPage";
+import CompleteProfilePage from "./pages/dashboard/CompleteProfilePage";
+import ProfilePage from "./pages/dashboard/ProfilePage";
+import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
+import UpgradePlansPage from "./pages/dashboard/UpgradePlansPage";
+import SettingsPage from "./pages/dashboard/SettingsPage";
+import PrivacyPolicy from "./pages/public/terms-and-policy/PrivacyPolicy";
+import TermsAndConditions from "./pages/public/terms-and-policy/TermsAndConditions";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +52,14 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "/terms-and-services",
+        element: <TermsAndConditions />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
         path: "/signin",
         element: <SignIn />,
       },
@@ -66,7 +81,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/budget",
-        element: <Chart />,
+        element: <BudgetPage />,
+      },
+      {
+        path: "/dashboard/complete-profile",
+        element: <CompleteProfilePage />,
+      },
+      {
+        path: "/dashboard/profile",
+        element: <ProfilePage />,
+      },
+      {
+        path: "/dashboard/analytics",
+        element: <AnalyticsPage />,
+      },
+      {
+        path: "/dashboard/upgrade-plans",
+        element: <UpgradePlansPage />,
+      },
+      {
+        path: "/dashboard/settings",
+        element: <SettingsPage />,
       },
     ],
   },
