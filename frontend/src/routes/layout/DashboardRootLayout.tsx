@@ -5,7 +5,7 @@ export default function DashboardRootLayout() {
   return (
     <div className="flex min-h-screen">
       <DashboardMainNavigation />
-      <main className="flex-1">
+      <main className="flex-1 mx-10">
         <Outlet />
       </main>
     </div>
