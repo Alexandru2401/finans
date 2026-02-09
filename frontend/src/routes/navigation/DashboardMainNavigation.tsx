@@ -1,31 +1,56 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { PanelLeftOpen } from "lucide-react";
 import { useState } from "react";
 import { dashboardNavigation } from "@/components/dashboard/data/DashboardNavigation";
+import clsx from "clsx";
 
 export default function DashboardMainNavigation() {
   const [open, setOpen] = useState(true);
+  const location = useLocation();
 
   return (
     <aside
-      className={`bg-gray-400 p-5 relative ${open ? "w-64" : "w-16"} transition-width duration-300`}
+      className={clsx(
+        "relative h-screen border-r bg-background transition-all duration-300",
+        open ? "w-64" : "w-16",
+      )}
     >
-      <PanelLeftOpen
+      {/* Toggle button */}
+      <button
         onClick={() => setOpen((prev) => !prev)}
-        className="cursor-pointer w-10 h-10 mb-4 absolute top-2 right-0 translate-x-5 bg-slate-100 p-2 rounded-2xl"
-      />
+        className="absolute cursor-pointer top-4 -right-5 z-10 flex h-8 w-8 items-center justify-center rounded-full border bg-background shadow hover:bg-accent transition-colors"
+        aria-label="Toggle sidebar"
+      >
+        <PanelLeftOpen className="h-4 w-4" />
+      </button>
 
-      <nav className="flex flex-col justify-between h-full text-lg">
+      <nav className="flex h-full flex-col justify-between px-3 py-6 text-sm">
         {dashboardNavigation.map((section, index) => (
-          <ul key={index} className="flex gap-4 flex-col mt-10">
-            {section.items.map(({ label, to, icon: Icon }) => (
-              <li key={to}>
-                <Link to={to} className="flex gap-2 items-center">
-                  {Icon && <Icon className="h-5 w-5 shrink-0" />}
-                  {open && <span>{label}</span>}
-                </Link>
-              </li>
-            ))}
+          <ul key={index} className="flex flex-col gap-1">
+            {section.items.map(({ label, to, icon: Icon }) => {
+              const isActive = location.pathname === to;
+
+              return (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className={clsx(
+                      "flex items-center gap-3 rounded-md px-3 py-2 transition-colors",
+                      "hover:bg-accent hover:text-accent-foreground",
+                      isActive && "bg-accent text-accent-foreground",
+                    )}
+                  >
+                    {Icon && (
+                      <Icon className="h-5 w-5 shrink-0 text-muted-foreground" />
+                    )}
+
+                    {open && (
+                      <span className="truncate font-medium">{label}</span>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         ))}
       </nav>

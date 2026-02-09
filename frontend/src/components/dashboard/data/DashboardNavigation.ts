@@ -5,6 +5,7 @@ import {
   UserRound,
   ChartNoAxesCombined,
   Settings,
+  CircleFadingArrowUp,
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
@@ -48,7 +49,7 @@ export const dashboardNavigation: DashboardNavSection[] = [
       },
       {
         label: "Analytics",
-        to: "/dashboard/analitics",
+        to: "/dashboard/analytics",
         icon: ChartNoAxesCombined,
       },
     ],
@@ -57,7 +58,8 @@ export const dashboardNavigation: DashboardNavSection[] = [
     items: [
       {
         label: "Upgrade to pro",
-        to: "/dashboard/plans",
+        to: "/dashboard/upgrade-plans",
+        icon: CircleFadingArrowUp,
       },
       {
         label: "Settings",
