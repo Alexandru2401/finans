@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import PublicRootLayout from "./routes/layout/PublicRootLayout";
 import DashboardRootLayout from "./routes/layout/DashboardRootLayout";
 import PublicHomePage from "./pages/public/PublicHomePage";
-import PublicPricesPage from "./pages/public/PublicPricesPersonalPage";
 import PublicAboutPage from "./pages/public/PublicAboutPage";
 import ErrorPage from "./routes/Error";
 import Login from "./pages/auth/Login";
