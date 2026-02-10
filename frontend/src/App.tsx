@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import PublicRootLayout from "./routes/layout/PublicRootLayout";
 import DashboardRootLayout from "./routes/layout/DashboardRootLayout";
 import PublicHomePage from "./pages/public/PublicHomePage";
-import PublicPricesPage from "./pages/public/PublicPricesPage";
 import PublicAboutPage from "./pages/public/PublicAboutPage";
 import ErrorPage from "./routes/Error";
 import Login from "./pages/auth/Login";
@@ -18,6 +17,8 @@ import UpgradePlansPage from "./pages/dashboard/UpgradePlansPage";
 import SettingsPage from "./pages/dashboard/SettingsPage";
 import PrivacyPolicy from "./pages/public/terms-and-policy/PrivacyPolicy";
 import TermsAndConditions from "./pages/public/terms-and-policy/TermsAndConditions";
+import PublicPricesPersonalPage from "./pages/public/PublicPricesPersonalPage";
+import PersonalPayPage from "./pages/public/paypage/PersonalPayPage";
 
 const router = createBrowserRouter([
   {
@@ -34,8 +35,8 @@ const router = createBrowserRouter([
         element: <PublicAboutPage />,
       },
       {
-        path: "/prices",
-        element: <PublicPricesPage />,
+        path: "/prices/personal",
+        element: <PublicPricesPersonalPage />,
       },
       {
         path: "/blog",
@@ -50,6 +51,11 @@ const router = createBrowserRouter([
             element: <WriteStory />,
           },
         ],
+      },
+
+      {
+        path: "/paypage/personal",
+        element: <PersonalPayPage />,
       },
       {
         path: "/terms-and-services",
