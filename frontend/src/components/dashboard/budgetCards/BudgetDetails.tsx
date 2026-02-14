@@ -9,6 +9,7 @@ import {
   Check,
   X,
   Plus,
+  Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
+import BudgetCategory from "./BudgetCategory";
 
 export default function BudgetDetails({ identifier, value }) {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -116,7 +118,7 @@ export default function BudgetDetails({ identifier, value }) {
                     <Button
                       size="sm"
                       onClick={handleAddNewCategory}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 cursor-pointer"
                     >
                       <Check size={16} />
                       Add
@@ -125,7 +127,7 @@ export default function BudgetDetails({ identifier, value }) {
                       size="sm"
                       variant="outline"
                       onClick={handleCancelAdd}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 cursor-pointer"
                     >
                       <X size={16} />
                       Cancel
@@ -149,13 +151,7 @@ export default function BudgetDetails({ identifier, value }) {
                 ))}
 
                 {/* Categorii existente */}
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Salary</span>
-                  <span className="font-medium">
-                    ${(value * 0.7).toLocaleString()}
-                  </span>
-                </div>
-                <Progress value={70} className="h-2" />
+                <BudgetCategory value={5000} />
 
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Freelancing</span>
