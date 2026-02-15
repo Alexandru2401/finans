@@ -43,6 +43,9 @@ export default function BudgetCards({
   onChange,
   onExpand,
 }: BudgetCardsProps) {
+  function calculateTotal(items: { amount: number }[]) {
+    return items.reduce((total, acc) => total + acc.amount, 0);
+  }
   return (
     <Card className="relative pb-8">
       <CardHeader>
@@ -67,7 +70,7 @@ export default function BudgetCards({
               variant="default"
               className={`${badgeColor} text-white px-5 py-2`}
             >
-              ${value.toLocaleString()}
+              ${calculateTotal([])}
             </Badge>
           )}
           {isEditing ? (

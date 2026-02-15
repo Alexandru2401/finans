@@ -27,8 +27,20 @@ export default function BudgetDetails({
     amount: "",
   });
 
+  const [newItems, setNewItems] = useState<
+    Array<{ category: string; amount: number }>
+  >([]);
+
   function handleAddNewCategory() {
     if (formData.category && formData.amount) {
+      setNewItems((prevItems) => [
+        ...prevItems,
+        {
+          category: formData.category,
+          amount: parseFloat(formData.amount) || 0,
+        },
+      ]);
+
       setFormData({ category: "", amount: "" });
       setShowAddForm(false);
     }
@@ -62,7 +74,9 @@ export default function BudgetDetails({
                   onClick={() => setShowAddForm(true)}
                 >
                   <Plus size={16} />
-                  <span className="text-sm">Add source</span>
+                  <span className="text-sm" onClick={handleAddNewCategory}>
+                    Add source
+                  </span>
                 </div>
               </div>
 
@@ -125,8 +139,15 @@ export default function BudgetDetails({
               )}
 
               <div className="space-y-3 mt-4">
-                {/* Categorii existente */}
-                <BudgetCategory value={5000} />
+                <BudgetCategory category="Salary" amount={5000} />
+
+                {newItems.map((item, index) => (
+                  <BudgetCategory
+                    key={index}
+                    category={item.category}
+                    amount={item.amount}
+                  />
+                ))}
 
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Freelancing</span>
