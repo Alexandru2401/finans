@@ -1,12 +1,16 @@
 import { useState } from "react";
 import BudgetCards from "@/components/dashboard/budgetCards/BudgetCards";
+import { useBudgetStore } from "@/store/dashboardStore/BudgetStoreContext";
 
 export default function BudgetPage() {
-  const [budgetData, setBudgetData] = useState({
-    income: 5200,
-    expenses: 3200,
-    savings: 2000,
-  });
+  const {
+    incomeItems,
+    expenseItems,
+    savingsItems,
+    totalIncome,
+    totalExpenses,
+    totalSavings,
+  } = useBudgetStore();
 
   const [isEditing, setIsEditing] = useState({
     income: false,
@@ -24,13 +28,6 @@ export default function BudgetPage() {
     setIsExpanded((prev) => ({
       ...prev,
       [identifier]: !prev[identifier as keyof typeof prev],
-    }));
-  }
-
-  function handleInputChange(identifier: string, value: string) {
-    setBudgetData((prev) => ({
-      ...prev,
-      [identifier]: parseFloat(value) || 0,
     }));
   }
 
@@ -58,42 +55,39 @@ export default function BudgetPage() {
         <BudgetCards
           title="Income"
           identifier="income"
-          value={budgetData.income}
+          value={totalIncome}
           isEditing={isEditing.income}
           isExpanded={isExpanded.income}
           iconColor="text-green-500"
           badgeColor="bg-green-500"
           onEdit={handleEdit}
           onSave={handleSave}
-          onChange={handleInputChange}
           onExpand={handleExpanded}
         />
 
         <BudgetCards
           title="Expenses"
           identifier="expenses"
-          value={budgetData.expenses}
+          value={totalExpenses}
           isEditing={isEditing.expenses}
           isExpanded={isExpanded.expenses}
           iconColor="text-red-500"
           badgeColor="bg-red-500"
           onEdit={handleEdit}
           onSave={handleSave}
-          onChange={handleInputChange}
           onExpand={handleExpanded}
         />
 
         <BudgetCards
           title="Savings"
           identifier="savings"
-          value={budgetData.savings}
+          value={totalSavings}
           isEditing={isEditing.savings}
           isExpanded={isExpanded.savings}
           iconColor="text-blue-500"
           badgeColor="bg-blue-500"
           onEdit={handleEdit}
           onSave={handleSave}
-          onChange={handleInputChange}
           onExpand={handleExpanded}
         />
       </div>
