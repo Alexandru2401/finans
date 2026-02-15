@@ -23,7 +23,7 @@ export default function BudgetPage() {
   function handleExpanded(identifier: string) {
     setIsExpanded((prev) => ({
       ...prev,
-      [identifier]: !prev[identifier],
+      [identifier]: !prev[identifier as keyof typeof prev],
     }));
   }
 
