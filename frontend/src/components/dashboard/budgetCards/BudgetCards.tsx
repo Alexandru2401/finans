@@ -1,10 +1,4 @@
-import {
-  DollarSign,
-  TrendingUp,
-  TrendingDown,
-  Target,
-  Divide,
-} from "lucide-react";
+import { DollarSign } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -20,7 +14,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Progress } from "@/components/ui/progress";
 import BudgetDetails from "./BudgetDetails";
 
 interface BudgetCardsProps {

@@ -1,32 +1,27 @@
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import {
-  DollarSign,
-  TrendingUp,
-  TrendingDown,
-  Target,
-  Divide,
-  Check,
-  X,
-  Plus,
-  Trash2,
-} from "lucide-react";
+import { TrendingUp, TrendingDown, Target, Check, X, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import BudgetCategory from "./BudgetCategory";
 
-export default function BudgetDetails({ identifier, value }) {
+interface BudgetDetailsProps {
+  identifier: string;
+  value: number;
+}
+
+export default function BudgetDetails({
+  identifier,
+  value,
+}: BudgetDetailsProps) {
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newCategories, setNewCategories] = useState([]);
   const [formData, setFormData] = useState({
     category: "",
     amount: "",
@@ -34,13 +29,6 @@ export default function BudgetDetails({ identifier, value }) {
 
   function handleAddNewCategory() {
     if (formData.category && formData.amount) {
-      const newCat = {
-        name: formData.category,
-        amount: parseFloat(formData.amount),
-        percentage: (parseFloat(formData.amount) / value) * 100,
-      };
-
-      setNewCategories([...newCategories, newCat]);
       setFormData({ category: "", amount: "" });
       setShowAddForm(false);
     }
@@ -137,19 +125,6 @@ export default function BudgetDetails({ identifier, value }) {
               )}
 
               <div className="space-y-3 mt-4">
-                {/* Categorii noi adăugate */}
-                {newCategories.map((cat, idx) => (
-                  <div key={`new-${idx}`}>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">{cat.name}</span>
-                      <span className="font-medium">
-                        ${cat.amount.toLocaleString()}
-                      </span>
-                    </div>
-                    <Progress value={cat.percentage} className="h-2" />
-                  </div>
-                ))}
-
                 {/* Categorii existente */}
                 <BudgetCategory value={5000} />
 
