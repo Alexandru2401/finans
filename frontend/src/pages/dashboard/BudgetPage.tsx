@@ -3,20 +3,7 @@ import BudgetCards from "@/components/dashboard/budgetCards/BudgetCards";
 import { useBudgetStore } from "@/store/dashboardStore/BudgetStoreContext";
 
 export default function BudgetPage() {
-  const {
-    incomeItems,
-    expenseItems,
-    savingsItems,
-    totalIncome,
-    totalExpenses,
-    totalSavings,
-  } = useBudgetStore();
-
-  const [isEditing, setIsEditing] = useState({
-    income: false,
-    expenses: false,
-    savings: false,
-  });
+  const { totalIncome, totalExpenses, totalSavings } = useBudgetStore();
 
   const [isExpanded, setIsExpanded] = useState({
     income: false,
@@ -31,20 +18,6 @@ export default function BudgetPage() {
     }));
   }
 
-  function handleEdit(identifier: string) {
-    setIsEditing((prev) => ({
-      ...prev,
-      [identifier]: true,
-    }));
-  }
-
-  function handleSave(identifier: string) {
-    setIsEditing((prev) => ({
-      ...prev,
-      [identifier]: false,
-    }));
-  }
-
   console.log("Is expanded:", isExpanded);
 
   return (
@@ -56,12 +29,9 @@ export default function BudgetPage() {
           title="Income"
           identifier="income"
           value={totalIncome}
-          isEditing={isEditing.income}
           isExpanded={isExpanded.income}
           iconColor="text-green-500"
           badgeColor="bg-green-500"
-          onEdit={handleEdit}
-          onSave={handleSave}
           onExpand={handleExpanded}
         />
 
@@ -69,12 +39,9 @@ export default function BudgetPage() {
           title="Expenses"
           identifier="expenses"
           value={totalExpenses}
-          isEditing={isEditing.expenses}
           isExpanded={isExpanded.expenses}
           iconColor="text-red-500"
           badgeColor="bg-red-500"
-          onEdit={handleEdit}
-          onSave={handleSave}
           onExpand={handleExpanded}
         />
 
@@ -82,12 +49,9 @@ export default function BudgetPage() {
           title="Savings"
           identifier="savings"
           value={totalSavings}
-          isEditing={isEditing.savings}
           isExpanded={isExpanded.savings}
           iconColor="text-blue-500"
           badgeColor="bg-blue-500"
-          onEdit={handleEdit}
-          onSave={handleSave}
           onExpand={handleExpanded}
         />
       </div>
