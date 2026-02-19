@@ -1,18 +1,9 @@
 import { useState } from "react";
 import BudgetCards from "@/components/dashboard/budgetCards/BudgetCards";
+import { useBudgetStore } from "@/store/dashboardStore/BudgetStoreContext";
 
 export default function BudgetPage() {
-  const [budgetData, setBudgetData] = useState({
-    income: 5200,
-    expenses: 3200,
-    savings: 2000,
-  });
-
-  const [isEditing, setIsEditing] = useState({
-    income: false,
-    expenses: false,
-    savings: false,
-  });
+  const { totalIncome, totalExpenses, totalSavings } = useBudgetStore();
 
   const [isExpanded, setIsExpanded] = useState({
     income: false,
@@ -27,27 +18,6 @@ export default function BudgetPage() {
     }));
   }
 
-  function handleInputChange(identifier: string, value: string) {
-    setBudgetData((prev) => ({
-      ...prev,
-      [identifier]: parseFloat(value) || 0,
-    }));
-  }
-
-  function handleEdit(identifier: string) {
-    setIsEditing((prev) => ({
-      ...prev,
-      [identifier]: true,
-    }));
-  }
-
-  function handleSave(identifier: string) {
-    setIsEditing((prev) => ({
-      ...prev,
-      [identifier]: false,
-    }));
-  }
-
   console.log("Is expanded:", isExpanded);
 
   return (
@@ -58,42 +28,30 @@ export default function BudgetPage() {
         <BudgetCards
           title="Income"
           identifier="income"
-          value={budgetData.income}
-          isEditing={isEditing.income}
+          value={totalIncome}
           isExpanded={isExpanded.income}
           iconColor="text-green-500"
           badgeColor="bg-green-500"
-          onEdit={handleEdit}
-          onSave={handleSave}
-          onChange={handleInputChange}
           onExpand={handleExpanded}
         />
 
         <BudgetCards
           title="Expenses"
           identifier="expenses"
-          value={budgetData.expenses}
-          isEditing={isEditing.expenses}
+          value={totalExpenses}
           isExpanded={isExpanded.expenses}
           iconColor="text-red-500"
           badgeColor="bg-red-500"
-          onEdit={handleEdit}
-          onSave={handleSave}
-          onChange={handleInputChange}
           onExpand={handleExpanded}
         />
 
         <BudgetCards
           title="Savings"
           identifier="savings"
-          value={budgetData.savings}
-          isEditing={isEditing.savings}
+          value={totalSavings}
           isExpanded={isExpanded.savings}
           iconColor="text-blue-500"
           badgeColor="bg-blue-500"
-          onEdit={handleEdit}
-          onSave={handleSave}
-          onChange={handleInputChange}
           onExpand={handleExpanded}
         />
       </div>

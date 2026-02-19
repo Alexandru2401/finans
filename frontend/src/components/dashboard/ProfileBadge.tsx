@@ -126,7 +126,7 @@ export default function ProfileBadge() {
             <Separator />
 
             <div className="p-4">
-              <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-linear-to-r from-primary/10 to-primary/5 border border-primary/20">
                 <div className="flex items-center gap-3">
                   <Crown className="h-4 w-4 text-primary" />
                   <div>
