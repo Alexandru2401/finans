@@ -321,7 +321,7 @@ export default function BudgetDetails({ identifier }: BudgetDetailsProps) {
                     <Button
                       size="sm"
                       onClick={handleAddNewCategory}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 cursor-pointer"
                     >
                       <Check size={16} />
                       Add
@@ -330,7 +330,7 @@ export default function BudgetDetails({ identifier }: BudgetDetailsProps) {
                       size="sm"
                       variant="outline"
                       onClick={handleCancelAdd}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 cursor-pointer"
                     >
                       <X size={16} />
                       Cancel
