@@ -19,6 +19,7 @@ import PrivacyPolicy from "./pages/public/terms-and-policy/PrivacyPolicy";
 import TermsAndConditions from "./pages/public/terms-and-policy/TermsAndConditions";
 import PublicPricesPersonalPage from "./pages/public/PublicPricesPersonalPage";
 import PersonalPayPage from "./pages/public/paypage/PersonalPayPage";
+import { useEffect, useState } from "react";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +115,32 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function auth() {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/v1/auth/get-user",
+        );
+
+        console.log("Raspuns:", response);
+
+        const data = await response.json();
+
+        console.log("Data", data);
+
+        setUser(data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    auth();
+  }, []);
+
+  console.log("User la mount:", user?.email);
+
   return <RouterProvider router={router} />;
 }
 
