@@ -37,7 +37,7 @@ export default function PublicMainNavigation() {
       <div>logo</div>
 
       {/* Desktop Navigation */}
-      <NavigationMenu className="hidden md:flex">
+      <NavigationMenu className="hidden md:flex sticky">
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuLink

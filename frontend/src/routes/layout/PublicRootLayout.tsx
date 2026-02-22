@@ -25,7 +25,7 @@ export default function PublicRootLayout() {
     <>
       <PublicMainNavigation />
 
-      <main className="relative max-w-250 flex justify-center mx-auto flex-col border-4 border-y border-gray-100 ">
+      <main className="relative max-w-250 flex justify-center mx-auto flex-col">
         {/* <div
           className="absolute top-0 -left-1 w-1 bg-yellow-300 transition-all duration-150 z-50"
           style={{ height: `${scrollProgress}%` }}
