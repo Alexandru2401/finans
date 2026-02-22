@@ -120,7 +120,7 @@ function ProfileBtn({ label }: profileBtnProps) {
   return (
     <Button
       size="sm"
-      className="bg-lime-500 hover:bg-lime-600 text-white font-semibold cursor-pointer"
+      className="bg-green-500 hover:bg-green-600 text-white font-semibold cursor-pointer"
     >
       {label}
     </Button>
