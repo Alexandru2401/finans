@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import LoginSchema from "@/schemas/login.schema";
+import { useNavigate } from "react-router";
 
 export function LoginForm({
   className,
@@ -26,10 +27,14 @@ export function LoginForm({
     password: "",
   });
 
+  const redirect = useNavigate();
+
   const [errors, setErrors] = useState<{
     email?: string;
     password?: string;
   }>({});
+
+  const [isSubmiting, setIsSubmiting] = useState(false);
 
   function handleChange(
     identifier: string,
@@ -46,7 +51,7 @@ export function LoginForm({
     }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const result = LoginSchema.safeParse(formData);
@@ -62,6 +67,40 @@ export function LoginForm({
 
     console.log("Valid form data:", result.data);
     setErrors({});
+
+    setIsSubmiting(true);
+
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      console.log("Raspuns request din form:", response);
+
+      const data = await response.json();
+
+      console.log("Data din form:", data);
+
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 2000);
+      });
+
+      console.log("Test");
+      setIsSubmiting(false);
+
+      redirect("/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -120,7 +159,7 @@ export function LoginForm({
 
               <Field className="mt-3">
                 <Button type="submit" className="cursor-pointer w-full">
-                  Login
+                  {isSubmiting ? "Loading..." : "Login"}
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?{" "}

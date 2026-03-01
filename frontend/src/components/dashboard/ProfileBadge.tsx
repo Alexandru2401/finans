@@ -46,7 +46,7 @@ export default function ProfileBadge() {
   return (
     <div className="flex justify-end px-5 relative" ref={dropdownRef}>
       <Avatar
-        className="cursor-pointer ring-2 ring-offset-2 ring-transparent hover:ring-primary transition-all"
+        className="cursor-pointer ring-2 ring-offset-2 ring-transparent hover:ring-primary transition-all w-12 h-12"
         onClick={() => setOpenProfile(!openProfile)}
       >
         <AvatarImage src="https://github.com/shadcn.png" alt="User avatar" />
