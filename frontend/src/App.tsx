@@ -21,6 +21,8 @@ import PublicPricesPersonalPage from "./pages/public/PublicPricesPersonalPage";
 import PersonalPayPage from "./pages/public/paypage/PersonalPayPage";
 import { useEffect, useState } from "react";
 
+import { Toaster } from "@/components/ui/sonner";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -139,9 +141,14 @@ function App() {
     auth();
   }, []);
 
-  console.log("User la mount:", user?.email);
+  console.log("User la mount:", user);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster position="top-right" />
+    </>
+  );
 }
 
 export default App;
