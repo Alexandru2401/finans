@@ -1,5 +1,4 @@
 import { Outlet } from "react-router";
-import { useEffect, useState } from "react";
 import PublicMainNavigation from "../navigation/PublicMainNavigation";
 import PublicFooter from "@/components/public/Footer";
 
