@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,6 +16,26 @@ import {
 import { Input } from "@/components/ui/input";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  function handleChange(
+    field: keyof typeof formData,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) {
+    setFormData({
+      ...formData,
+      [field]: e.target.value,
+    });
+  }
+
+  function handleSubmitForm(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+  }
+
   return (
     <Card {...props}>
       <CardHeader>
@@ -24,7 +45,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form onSubmit={handleSubmitForm}>
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="name">Full Name</FieldLabel>
@@ -37,6 +58,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 type="email"
                 placeholder="m@example.com"
                 required
+                value={formData.email}
+                onChange={(e) => handleChange("email", e)}
+                className={errors.email ? "border-red-500" : ""}
               />
               <FieldDescription>
                 We&apos;ll use this to contact you. We will not share your email

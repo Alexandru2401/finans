@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { toast } from "sonner";
 
 interface BudgetItem {
   id: string;
@@ -73,6 +74,7 @@ export function BudgetStoreProvider({
 
   function deleteIncomeItem(id: string) {
     setIncomeItems((prevItem) => prevItem.filter((item) => item.id !== id));
+    toast.error("Venit șters");
   }
 
   function addExpenseItem(category: string, amount: number) {

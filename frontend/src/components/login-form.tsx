@@ -55,6 +55,8 @@ export function LoginForm({
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    if (isSubmiting) return;
+
     const result = LoginSchema.safeParse(formData);
 
     if (!result.success) {
@@ -104,6 +106,8 @@ export function LoginForm({
       redirect("/dashboard");
     } catch (err) {
       console.log(err);
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      toast.error(`An error has occured: ${errorMessage}`);
     } finally {
       setIsSubmiting(false);
     }
