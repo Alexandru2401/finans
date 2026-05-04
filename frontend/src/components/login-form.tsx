@@ -19,6 +19,8 @@ import LoginSchema from "@/schemas/login.schema";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
+import { loginUser } from "@/api/user";
+
 export function LoginForm({
   className,
   ...props
@@ -79,30 +81,16 @@ export function LoginForm({
           resolve();
         }, 2000);
       });
-      const response = await fetch("http://localhost:3000/api/v1/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+      const response = await loginUser(formData.email, formData.password);
 
       console.log("Raspuns request din form:", response);
 
-      const data = await response.json();
-
-      console.log("Data din form:", data);
-
       if (!response.ok) {
-        toast.error(data.message || "test");
+        toast.error(response.data.message || "test");
         return;
       }
 
-      toast.success(data.message || "Login successful!");
+      toast.success(response.data.message || "Login successful!");
       redirect("/dashboard");
     } catch (err) {
       console.log(err);

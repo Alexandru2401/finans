@@ -43,6 +43,16 @@ export default function ProfileBadge() {
     };
   }, [openProfile]);
 
+  async function handleLogout() {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      window.location.href = "/login";
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="flex justify-end px-5 relative" ref={dropdownRef}>
       <Avatar
@@ -173,6 +183,7 @@ export default function ProfileBadge() {
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-3 text-red-600 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950"
+                onClick={handleLogout}
               >
                 <LogOut className="h-4 w-4" />
                 Log out
