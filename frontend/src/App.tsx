@@ -119,27 +119,27 @@ const router = createBrowserRouter([
 function App() {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    async function auth() {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/api/v1/auth/get-user",
-        );
+  // useEffect(() => {
+  //   async function auth() {
+  //     try {
+  //       const response = await fetch(
+  //         "http://localhost:3000/api/v1/auth/get-user",
+  //       );
 
-        console.log("Raspuns:", response);
+  //       console.log("Raspuns:", response);
 
-        const data = await response.json();
+  //       const data = await response.json();
 
-        console.log("Data", data);
+  //       console.log("Data", data);
 
-        setUser(data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+  //       setUser(data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
 
-    auth();
-  }, []);
+  //   auth();
+  // }, []);
 
   console.log("User la mount:", user);
 

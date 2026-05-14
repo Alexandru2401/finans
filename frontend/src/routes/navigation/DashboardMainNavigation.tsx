@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router";
 import { PanelLeftOpen } from "lucide-react";
 import { useState } from "react";
-import { dashboardNavigation } from "@/components/dashboard/data/DashboardNavigation";
+import { dashboardNavigation } from "@/components/dashboard/routes/DashboardNavigation";
 import clsx from "clsx";
 
 export default function DashboardMainNavigation() {
