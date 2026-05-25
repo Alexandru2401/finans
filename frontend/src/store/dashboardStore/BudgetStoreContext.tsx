@@ -5,6 +5,7 @@ interface BudgetItem {
   id: string;
   category: string;
   amount: number;
+  date?: string;
 }
 
 interface BudgetStoreContextType {
@@ -38,9 +39,42 @@ export function BudgetStoreProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [incomeItems, setIncomeItems] = useState<BudgetItem[]>([]);
-  const [expenseItems, setExpenseItems] = useState<BudgetItem[]>([]);
-  const [savingsItems, setSavingsItems] = useState<BudgetItem[]>([]);
+  const [incomeItems, setIncomeItems] = useState<BudgetItem[]>([
+    {
+      id: crypto.randomUUID(),
+      category: "Salariu",
+      amount: 5000,
+      date: new Date().toISOString(),
+    },
+    {
+      id: crypto.randomUUID(),
+      category: "Investitii",
+      amount: 2500,
+      date: new Date().toISOString(),
+    },
+  ]);
+  const [expenseItems, setExpenseItems] = useState<BudgetItem[]>([
+    {
+      id: crypto.randomUUID(),
+      category: "Facturi",
+      amount: 530,
+      date: new Date().toISOString(),
+    },
+    {
+      id: crypto.randomUUID(),
+      category: "Chirie",
+      amount: 2500,
+      date: new Date().toISOString(),
+    },
+  ]);
+  const [savingsItems, setSavingsItems] = useState<BudgetItem[]>([
+    {
+      id: crypto.randomUUID(),
+      category: "Economii",
+      amount: 1000,
+      date: new Date().toISOString(),
+    },
+  ]);
 
   const totalIncome: number = incomeItems.reduce(
     (total, acc) => total + acc.amount,
