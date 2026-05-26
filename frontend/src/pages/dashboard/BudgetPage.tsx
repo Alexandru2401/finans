@@ -2,13 +2,9 @@ import { useMemo, useState } from "react";
 import {
   ArrowDownRight,
   ArrowUpRight,
-  ChevronDown,
   DollarSign,
   Plus,
   PiggyBank,
-  Trash2,
-  Pencil,
-  Minus,
 } from "lucide-react";
 import { useBudgetStore } from "@/store/dashboardStore/BudgetStoreContext";
 import { Button } from "@/components/ui/button";
@@ -18,13 +14,55 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ItemCard from "@/components/dashboard/ItemCard";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type BudgetType = "income" | "expenses" | "savings";
+
+const CATEGORIES_BY_TYPE: Record<
+  BudgetType,
+  { value: string; label: string }[]
+> = {
+  income: [
+    { value: "salary", label: "Salary" },
+    { value: "freelance", label: "Freelance" },
+    { value: "investments", label: "Investments" },
+    { value: "bonus", label: "Bonus" },
+    { value: "rental", label: "Rental Income" },
+    { value: "dividends", label: "Dividends" },
+    { value: "other", label: "Other" },
+  ],
+  expenses: [
+    { value: "groceries", label: "Groceries" },
+    { value: "rent", label: "Rent / Mortgage" },
+    { value: "utilities", label: "Utilities" },
+    { value: "transport", label: "Transport" },
+    { value: "healthcare", label: "Healthcare" },
+    { value: "entertainment", label: "Entertainment" },
+    { value: "invoice", label: "Invoice" },
+    { value: "subscriptions", label: "Subscriptions" },
+    { value: "dining", label: "Dining Out" },
+    { value: "other", label: "Other" },
+  ],
+  savings: [
+    { value: "emergency", label: "Emergency Fund" },
+    { value: "retirement", label: "Retirement" },
+    { value: "vacation", label: "Vacation" },
+    { value: "education", label: "Education" },
+    { value: "investment", label: "Investment Fund" },
+    { value: "house", label: "House / Property" },
+    { value: "other", label: "Other" },
+  ],
+};
 
 export default function BudgetPage() {
   const {
@@ -40,6 +78,9 @@ export default function BudgetPage() {
     deleteIncomeItem,
     deleteExpenseItem,
     deleteSavingsItem,
+    editIncomeItem,
+    editExpenseItem,
+    editSavingsItem,
   } = useBudgetStore();
 
   const [showForm, setShowForm] = useState(false);
@@ -50,8 +91,10 @@ export default function BudgetPage() {
   });
   const [formData, setFormData] = useState({
     type: "expenses" as BudgetType,
-    category: "",
+    description: "",
+    category: "groceries",
     amount: "",
+    notes: "",
   });
 
   const netBalance = useMemo(
@@ -60,47 +103,54 @@ export default function BudgetPage() {
   );
 
   function handleToggle(section: keyof typeof expanded) {
-    setExpanded((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
+    setExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
   }
 
   function handleChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const category = formData.category.trim();
-    const amount = Number(formData.amount);
-    if (!category || !amount || Number.isNaN(amount)) {
-      return;
-    }
-
-    if (formData.type === "income") {
-      addIncomeItem(category, amount);
-    } else if (formData.type === "expenses") {
-      addExpenseItem(category, amount);
-    } else {
-      addSavingsItem(category, amount);
-    }
-
-    setFormData({ type: formData.type, category: "", amount: "" });
+  function handleTypeChange(value: BudgetType) {
+    const firstCategory = CATEGORIES_BY_TYPE[value][0].value;
+    setFormData((prev) => ({ ...prev, type: value, category: firstCategory }));
   }
 
-  const dummyData = [
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const description = formData.description.trim();
+    const amount = Number(formData.amount);
+    if (!description || !amount || Number.isNaN(amount)) return;
+
+    const payload = {
+      description,
+      amount,
+      category: formData.category,
+      notes: formData.notes.trim(),
+    };
+
+    if (formData.type === "income") addIncomeItem(payload);
+    else if (formData.type === "expenses") addExpenseItem(payload);
+    else addSavingsItem(payload);
+
+    setFormData((prev) => ({
+      ...prev,
+      description: "",
+      amount: "",
+      notes: "",
+    }));
+  }
+
+  const sections = [
     {
       title: "Income",
       items: incomeItems,
       total: totalIncome,
       section: "income" as const,
       onDelete: deleteIncomeItem,
-      onEdit: "",
+      onEdit: editIncomeItem,
     },
     {
       title: "Expenses",
@@ -108,7 +158,7 @@ export default function BudgetPage() {
       total: totalExpenses,
       section: "expenses" as const,
       onDelete: deleteExpenseItem,
-      onEdit: "",
+      onEdit: editExpenseItem,
     },
     {
       title: "Savings",
@@ -116,12 +166,13 @@ export default function BudgetPage() {
       total: totalSavings,
       section: "savings" as const,
       onDelete: deleteSavingsItem,
-      onEdit: "",
+      onEdit: editSavingsItem,
     },
   ];
 
   return (
-    <section className="relative py-8 px-4  max-w-7xl mx-auto">
+    <section className="relative py-8 px-4 max-w-7xl mx-auto">
+      {/* Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold">Budget Overview</h1>
@@ -138,6 +189,7 @@ export default function BudgetPage() {
         </Button>
       </div>
 
+      {/* Summary cards */}
       <div className="space-y-6 mb-8">
         <div className="grid gap-6 md:grid-cols-4">
           <Card className="border border-green-200 bg-green-50/60">
@@ -191,7 +243,9 @@ export default function BudgetPage() {
             </CardHeader>
             <CardContent>
               <p
-                className={`text-3xl font-semibold ${netBalance >= 0 ? "text-emerald-700" : "text-rose-700"}`}
+                className={`text-3xl font-semibold ${
+                  netBalance >= 0 ? "text-emerald-700" : "text-rose-700"
+                }`}
               >
                 ${netBalance.toFixed(2)}
               </p>
@@ -199,9 +253,11 @@ export default function BudgetPage() {
           </Card>
         </div>
 
+        {/* Item sections */}
         <div className="grid gap-6 md:grid-cols-3">
-          {dummyData.map((section) => (
+          {sections.map((section) => (
             <ItemCard
+              onShowForm={() => setShowForm(true)}
               key={section.section}
               section={section}
               expanded={expanded}
@@ -211,18 +267,14 @@ export default function BudgetPage() {
         </div>
       </div>
 
-      {showForm ? (
+      {/* Slide-in form */}
+      {showForm && (
         <>
           <div
             className="fixed inset-0 z-40 bg-black/30"
             onClick={() => setShowForm(false)}
           />
-          <aside
-            className="fixed inset-y-0 right-0 z-50 w-full max-w-md overflow-y-auto bg-background shadow-2xl border-l border-muted/30 transition-transform duration-300 md:max-w-xl lg:max-w-2xl"
-            style={{
-              transform: showForm ? "translateX(0)" : "translateX(100%)",
-            }}
-          >
+          <aside className="fixed inset-y-0 right-0 z-50 w-full max-w-md overflow-y-auto bg-background shadow-2xl border-l border-muted/30 md:max-w-xl lg:max-w-2xl">
             <div className="flex items-center justify-between border-b border-muted/20 px-6 py-4">
               <div>
                 <h2 className="text-xl font-semibold">Add a budget item</h2>
@@ -234,34 +286,62 @@ export default function BudgetPage() {
                 Close
               </Button>
             </div>
+
             <div className="p-6">
               <form onSubmit={handleSubmit} className="grid gap-4">
+                {/* Type */}
                 <div className="space-y-2">
-                  <Label htmlFor="type">Type</Label>
-                  <select
-                    id="type"
-                    name="type"
-                    className="h-9 w-full rounded-md border border-input bg-transparent px-3 text-base outline-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  <Label>Type</Label>
+                  <Select
                     value={formData.type}
-                    onChange={handleChange}
+                    onValueChange={(v) => handleTypeChange(v as BudgetType)}
                   >
-                    <option value="income">Income</option>
-                    <option value="expenses">Expense</option>
-                    <option value="savings">Savings</option>
-                  </select>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="income">Income</SelectItem>
+                      <SelectItem value="expenses">Expense</SelectItem>
+                      <SelectItem value="savings">Savings</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
+                {/* Category — dynamic per type */}
                 <div className="space-y-2">
-                  <Label htmlFor="category">Category</Label>
-                  <Input
-                    id="category"
-                    name="category"
+                  <Label>Category</Label>
+                  <Select
                     value={formData.category}
+                    onValueChange={(v) =>
+                      setFormData((prev) => ({ ...prev, category: v }))
+                    }
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {CATEGORIES_BY_TYPE[formData.type].map((cat) => (
+                        <SelectItem key={cat.value} value={cat.value}>
+                          {cat.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Description */}
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Input
+                    id="description"
+                    name="description"
+                    value={formData.description}
                     onChange={handleChange}
                     placeholder="e.g. Salary, Rent, Emergency Fund"
                   />
                 </div>
 
+                {/* Amount */}
                 <div className="space-y-2">
                   <Label htmlFor="amount">Amount</Label>
                   <Input
@@ -276,6 +356,19 @@ export default function BudgetPage() {
                   />
                 </div>
 
+                {/* Notes */}
+                <div className="space-y-2">
+                  <Label htmlFor="notes">Notes</Label>
+                  <textarea
+                    id="notes"
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleChange}
+                    placeholder="Optional notes about this entry..."
+                    className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-[80px] resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  />
+                </div>
+
                 <div className="flex justify-end">
                   <Button type="submit">Save item</Button>
                 </div>
@@ -283,7 +376,7 @@ export default function BudgetPage() {
             </div>
           </aside>
         </>
-      ) : null}
+      )}
     </section>
   );
 }
