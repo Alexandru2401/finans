@@ -26,7 +26,15 @@ import {
   FileText,
   PiggyBank,
   Calendar1,
+  ChevronDownIcon,
 } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns/format";
 
 type BudgetType = "income" | "expenses" | "savings";
 
@@ -75,6 +83,8 @@ export default function ItemCard({
   const [editingItem, setEditingItem] = useState(null);
   const [deletingItem, setDeletingItem] = useState(null);
   const [viewingItem, setViewingItem] = useState(null);
+
+  const [date, setDate] = useState<Date | undefined>(new Date());
   const [editValues, setEditValues] = useState({
     amount: "",
     category: "",
@@ -316,6 +326,7 @@ export default function ItemCard({
                 type="button"
                 variant="ghost"
                 onClick={() => setViewingItem(null)}
+                className="cursor-pointer"
               >
                 Close
               </Button>
@@ -325,8 +336,9 @@ export default function ItemCard({
                   setViewingItem(null);
                   startEdit(viewingItem);
                 }}
+                className="cursor-pointer w-22"
               >
-                <Pencil size={14} className="mr-1" /> Edit
+                Edit
               </Button>
             </div>
           </div>
@@ -337,10 +349,13 @@ export default function ItemCard({
       {editingItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/40" onClick={cancelEdit} />
-          <div className="relative z-10 bg-background rounded-xl shadow-2xl border border-muted/30 w-full max-w-sm mx-4 p-6 flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
+          <div className="relative z-10 bg-background rounded-xl shadow-2xl border border-muted/30 w-full max-w-md mx-4 p-6 flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
             <div>
-              <h2 className="text-lg font-semibold">Edit item</h2>
-              <p className="text-sm text-muted-foreground">
+              <h2 className="text-lg font-semibold flex items-center gap-1">
+                <Pencil size={16} className="mr-1 shrink-0" />
+                Edit item
+              </h2>
+              <p className="text-sm text-slate-700 mt-1">
                 Update the details for this {section.title.toLowerCase()} entry.
               </p>
             </div>
@@ -382,29 +397,29 @@ export default function ItemCard({
               </Select>
             </div>
 
-            {/* Description */}
-            <div className="space-y-2">
-              <Label>Description</Label>
-              <Input
-                type="text"
-                value={editValues.description}
-                onChange={(e) =>
-                  setEditValues((v) => ({ ...v, description: e.target.value }))
-                }
-                placeholder="e.g. Salary, Rent..."
-              />
-            </div>
-
             {/* Date */}
             <div className="space-y-2">
               <Label>Date</Label>
-              <Input
-                type="date"
-                value={editValues.date}
-                onChange={(e) =>
-                  setEditValues((v) => ({ ...v, date: e.target.value }))
-                }
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    data-empty={!date}
+                    className="w-62 justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
+                  >
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    <ChevronDownIcon />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    defaultMonth={date}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
 
             {/* Notes */}
@@ -421,10 +436,19 @@ export default function ItemCard({
             </div>
 
             <div className="flex justify-end gap-2 pt-2">
-              <Button type="button" variant="ghost" onClick={cancelEdit}>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={cancelEdit}
+                className="cursor-pointer"
+              >
                 Cancel
               </Button>
-              <Button type="button" onClick={confirmEdit}>
+              <Button
+                type="button"
+                onClick={confirmEdit}
+                className="cursor-pointer"
+              >
                 Save changes
               </Button>
             </div>

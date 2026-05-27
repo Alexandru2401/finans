@@ -419,18 +419,6 @@ export default function BudgetPage() {
                   </Select>
                 </div>
 
-                {/* Description */}
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Input
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="e.g. Salary, Rent, Emergency Fund"
-                  />
-                </div>
-
                 {/* Amount */}
                 <div className="space-y-2">
                   <Label htmlFor="amount">Amount</Label>
