@@ -1,6 +1,6 @@
 import DashboardMainNavigation from "../navigation/DashboardMainNavigation";
 import { Outlet } from "react-router";
-import ProfileBadge from "@/components/dashboard/ProfileBadge";
+import ProfileBadge from "@/components/dashboard/budget/ProfileBadge";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BudgetStoreProvider } from "@/store/dashboardStore/BudgetStoreContext";
 

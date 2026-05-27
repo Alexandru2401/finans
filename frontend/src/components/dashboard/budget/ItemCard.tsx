@@ -1,33 +1,3 @@
-import { useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "../ui/card";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import {
-  ChevronDown,
-  Plus,
-  Minus,
-  Pencil,
-  Trash2,
-  FileText,
-  PiggyBank,
-  Calendar1,
-  ChevronDownIcon,
-} from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -35,6 +5,35 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format } from "date-fns/format";
+import {
+  Calendar1,
+  ChevronDown,
+  ChevronDownIcon,
+  FileText,
+  Minus,
+  Pencil,
+  PiggyBank,
+  Plus,
+  Trash2,
+} from "lucide-react";
+import { useState } from "react";
+import { Button } from "../../ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../ui/card";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../ui/select";
 
 type BudgetType = "income" | "expenses" | "savings";
 
@@ -142,6 +141,8 @@ export default function ItemCard({
 
   const categories = CATEGORIES_BY_TYPE[section.section as BudgetType];
 
+  console.log(section);
+
   return (
     <>
       <Card>
@@ -186,74 +187,79 @@ export default function ItemCard({
               </div>
             ) : (
               <div className="space-y-3">
-                {section.items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center justify-between gap-2 rounded-lg border border-slate-700/30 px-2 py-2"
-                  >
-                    <div className="flex items-end gap-3 min-w-0">
-                      <div className="flex flex-col min-w-0">
-                        <p
-                          className={`text-md font-bold flex items-center gap-1 ${sectionColor}`}
-                        >
-                          {SectionIcon} ${item.amount.toFixed(2)}
-                        </p>
-                        <div className="flex items-center gap-3 text-slate-600">
-                          <p className="text-sm  font-bold">{item.category}</p>
-
-                          {item.date && (
-                            <div className="flex items-center gap-1 mt-0.5">
-                              <Calendar1 size={12} />
-                              <p className="text-xs text-slate-600">
-                                {new Date(item.date).toLocaleDateString(
-                                  "ro-RO",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  },
-                                )}
+                {section.items.map(
+                  (item) =>
+                    console.log("item complet:", item) || (
+                      <div
+                        key={item.id}
+                        className="flex items-center justify-between gap-2 rounded-lg border border-slate-700/30 px-2 py-2"
+                      >
+                        <div className="flex items-end gap-3 min-w-0">
+                          <div className="flex flex-col min-w-0">
+                            <p
+                              className={`text-md font-bold flex items-center gap-1 ${sectionColor}`}
+                            >
+                              {SectionIcon} ${item.amount.toFixed(2)}
+                            </p>
+                            <div className="flex items-center gap-3 text-slate-600">
+                              <p className="text-sm  font-bold">
+                                {item.category}
                               </p>
+
+                              {item.date && (
+                                <div className="flex items-center gap-1 mt-0.5">
+                                  <Calendar1 size={12} />
+                                  <p className="text-xs text-slate-600">
+                                    {new Date(item.date).toLocaleDateString(
+                                      "ro-RO",
+                                      {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric",
+                                      },
+                                    )}
+                                  </p>
+                                </div>
+                              )}
                             </div>
-                          )}
+                          </div>
+                        </div>
+
+                        <div className="flex shrink-0">
+                          {/* View details */}
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setViewingItem(item)}
+                            className="cursor-pointer  hover:bg-slate-400/20"
+                          >
+                            <FileText size={18} className="text-slate-800" />
+                          </Button>
+                          {/* Edit */}
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => startEdit(item)}
+                            className="cursor-pointer  hover:bg-slate-400/20"
+                          >
+                            <Pencil size={16} className="text-blue-700" />
+                          </Button>
+                          {/* Delete */}
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => startDelete(item)}
+                            className="cursor-pointer  hover:bg-slate-400/20"
+                          >
+                            <Trash2 size={18} className="text-destructive" />
+                          </Button>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="flex shrink-0">
-                      {/* View details */}
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setViewingItem(item)}
-                        className="cursor-pointer  hover:bg-slate-400/20"
-                      >
-                        <FileText size={18} className="text-slate-800" />
-                      </Button>
-                      {/* Edit */}
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => startEdit(item)}
-                        className="cursor-pointer  hover:bg-slate-400/20"
-                      >
-                        <Pencil size={16} className="text-blue-700" />
-                      </Button>
-                      {/* Delete */}
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => startDelete(item)}
-                        className="cursor-pointer  hover:bg-slate-400/20"
-                      >
-                        <Trash2 size={18} className="text-destructive" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                    ),
+                )}
               </div>
             )}
           </CardContent>

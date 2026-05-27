@@ -1,32 +1,24 @@
-import { useMemo, useState } from "react";
-import {
-  ArrowDownRight,
-  ArrowUpRight,
-  DollarSign,
-  Plus,
-  PiggyBank,
-  SlidersHorizontal,
-  Target,
-} from "lucide-react";
-import { useBudgetStore } from "@/store/dashboardStore/BudgetStoreContext";
+import BudgetForm from "@/components/dashboard/budget/BudgetForm";
+import ItemCard from "@/components/dashboard/budget/ItemCard";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import ItemCard from "@/components/dashboard/ItemCard";
+import { useBudgetStore } from "@/store/dashboardStore/BudgetStoreContext";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  ArrowDownRight,
+  ArrowUpRight,
+  DollarSign,
+  PiggyBank,
+  Plus,
+  SlidersHorizontal,
+  Target,
+} from "lucide-react";
+import { useMemo, useState } from "react";
 
 type BudgetType = "income" | "expenses" | "savings";
 
@@ -86,6 +78,7 @@ export default function BudgetPage() {
   } = useBudgetStore();
 
   const [showForm, setShowForm] = useState(false);
+  const [formDate, setFormDate] = useState<Date | undefined>(new Date());
   const [expanded, setExpanded] = useState({
     income: true,
     expenses: true,
@@ -93,10 +86,10 @@ export default function BudgetPage() {
   });
   const [formData, setFormData] = useState({
     type: "expenses" as BudgetType,
-    description: "",
     category: "groceries",
     amount: "",
     notes: "",
+    date: new Date().toISOString().split("T")[0],
   });
 
   const netBalance = useMemo(
@@ -120,28 +113,32 @@ export default function BudgetPage() {
     setFormData((prev) => ({ ...prev, type: value, category: firstCategory }));
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const description = formData.description.trim();
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
     const amount = Number(formData.amount);
-    if (!description || !amount || Number.isNaN(amount)) return;
+    if (!amount || Number.isNaN(amount)) return;
 
     const payload = {
-      description,
-      amount,
+      type: formData.type,
       category: formData.category,
+      amount: Number(formData.amount),
       notes: formData.notes.trim(),
+      date: formData.date,
     };
 
     if (formData.type === "income") addIncomeItem(payload);
     else if (formData.type === "expenses") addExpenseItem(payload);
     else addSavingsItem(payload);
 
+    console.log("Payload:", payload);
+
     setFormData((prev) => ({
       ...prev,
-      description: "",
+      category: CATEGORIES_BY_TYPE[prev.type][0].value,
       amount: "",
       notes: "",
+      date: new Date().toISOString().split("T")[0],
     }));
   }
 
@@ -372,85 +369,21 @@ export default function BudgetPage() {
                   Choose whether it's income, expense or savings.
                 </p>
               </div>
-              <Button variant="ghost" onClick={() => setShowForm(false)}>
+              <Button
+                variant="ghost"
+                onClick={() => setShowForm(false)}
+                className="cursor-pointer"
+              >
                 Close
               </Button>
             </div>
 
             <div className="p-6">
-              <form onSubmit={handleSubmit} className="grid gap-4">
-                {/* Type */}
-                <div className="space-y-2">
-                  <Label>Type</Label>
-                  <Select
-                    value={formData.type}
-                    onValueChange={(v) => handleTypeChange(v as BudgetType)}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="income">Income</SelectItem>
-                      <SelectItem value="expenses">Expense</SelectItem>
-                      <SelectItem value="savings">Savings</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Category — dynamic per type */}
-                <div className="space-y-2">
-                  <Label>Category</Label>
-                  <Select
-                    value={formData.category}
-                    onValueChange={(v) =>
-                      setFormData((prev) => ({ ...prev, category: v }))
-                    }
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {CATEGORIES_BY_TYPE[formData.type].map((cat) => (
-                        <SelectItem key={cat.value} value={cat.value}>
-                          {cat.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Amount */}
-                <div className="space-y-2">
-                  <Label htmlFor="amount">Amount</Label>
-                  <Input
-                    id="amount"
-                    name="amount"
-                    type="number"
-                    value={formData.amount}
-                    onChange={handleChange}
-                    placeholder="0.00"
-                    step="0.01"
-                    min="0"
-                  />
-                </div>
-
-                {/* Notes */}
-                <div className="space-y-2">
-                  <Label htmlFor="notes">Notes</Label>
-                  <textarea
-                    id="notes"
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleChange}
-                    placeholder="Optional notes about this entry..."
-                    className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-[80px] resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
-                  />
-                </div>
-
-                <div className="flex justify-end">
-                  <Button type="submit">Save item</Button>
-                </div>
-              </form>
+              <BudgetForm
+                formData={formData}
+                setFormData={setFormData}
+                handleSubmit={handleSubmit}
+              />
             </div>
           </aside>
         </>
