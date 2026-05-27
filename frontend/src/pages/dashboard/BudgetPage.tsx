@@ -5,6 +5,8 @@ import {
   DollarSign,
   Plus,
   PiggyBank,
+  SlidersHorizontal,
+  Target,
 } from "lucide-react";
 import { useBudgetStore } from "@/store/dashboardStore/BudgetStoreContext";
 import { Button } from "@/components/ui/button";
@@ -170,19 +172,60 @@ export default function BudgetPage() {
     },
   ];
 
+  const budgetTargets = {
+    income: 8000,
+    expenses: 4000,
+    savings: 1500,
+  };
+
+  const getBarColor = (pct: number, isExpenses = false) => {
+    if (isExpenses) {
+      if (pct >= 100) return "bg-red-500";
+      if (pct >= 80) return "bg-amber-400";
+      return "bg-green-500";
+    }
+    if (pct >= 100) return "bg-emerald-500";
+    if (pct >= 50) return "bg-sky-500";
+    return "bg-slate-300";
+  };
+
+  const incomePct = Math.min((totalIncome / budgetTargets.income) * 100, 100);
+  const expensesPct = Math.min(
+    (totalExpenses / budgetTargets.expenses) * 100,
+    100,
+  );
+  const savingsPct = Math.min(
+    (totalSavings / budgetTargets.savings) * 100,
+    100,
+  );
+  const savingsRate =
+    totalIncome > 0 ? Math.min((netBalance / totalIncome) * 100, 100) : 0;
+
   return (
     <section className="relative py-8 px-4 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold">Budget Overview</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-slate-600 mt-1">
             Track income, expenses, savings and add new budget items quickly.
           </p>
+          {/* FILTERS */}
+          <div className="flex items-center gap-6 mt-4">
+            <div className="flex items-center gap-2 mt-2">
+              <SlidersHorizontal size={16} />
+              <p className="text-md text-slate-600">Filters</p>
+            </div>
+            <div className="flex items-center gap-2 mt-2">
+              <Target size={16} />
+              <p className="text-md text-slate-600">Your Target</p>
+            </div>
+          </div>
         </div>
         <Button
-          variant="secondary"
+          variant="default"
           onClick={() => setShowForm((prev) => !prev)}
+          className="cursor-pointer"
         >
           <Plus size={16} />
           {showForm ? "Close" : "Add entry"}
@@ -191,18 +234,31 @@ export default function BudgetPage() {
 
       {/* Summary cards */}
       <div className="space-y-6 mb-8">
-        <div className="grid gap-6 md:grid-cols-4">
+        <div className="grid gap-3 md:grid-cols-4">
           <Card className="border border-green-200 bg-green-50/60">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
+              <CardTitle className="flex items-center gap-1 text-lg">
                 <ArrowUpRight className="text-green-600" /> Income
               </CardTitle>
               <CardDescription>Total incoming money</CardDescription>
             </CardHeader>
+
             <CardContent>
               <p className="text-3xl font-semibold text-green-700">
                 ${totalIncome.toFixed(2)}
               </p>
+              <div className="mt-3 space-y-1">
+                <div className="flex justify-between text-xs text-slate-500">
+                  <span>{Math.round(incomePct)}% of target</span>
+                  <span>${budgetTargets.income.toLocaleString()}</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-slate-200">
+                  <div
+                    className={`h-1.5 rounded-full transition-all ${getBarColor(incomePct)}`}
+                    style={{ width: `${incomePct}%` }}
+                  />
+                </div>
+              </div>
             </CardContent>
           </Card>
 
@@ -217,6 +273,18 @@ export default function BudgetPage() {
               <p className="text-3xl font-semibold text-red-700">
                 ${totalExpenses.toFixed(2)}
               </p>
+              <div className="mt-3 space-y-1">
+                <div className="flex justify-between text-xs text-slate-500">
+                  <span>{Math.round(expensesPct)}% of limit</span>
+                  <span>${budgetTargets.expenses.toLocaleString()}</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-slate-200">
+                  <div
+                    className={`h-1.5 rounded-full transition-all ${getBarColor(expensesPct, true)}`}
+                    style={{ width: `${expensesPct}%` }}
+                  />
+                </div>
+              </div>
             </CardContent>
           </Card>
 
@@ -231,6 +299,18 @@ export default function BudgetPage() {
               <p className="text-3xl font-semibold text-sky-700">
                 ${totalSavings.toFixed(2)}
               </p>
+              <div className="mt-3 space-y-1">
+                <div className="flex justify-between text-xs text-slate-500">
+                  <span>{Math.round(savingsPct)}% of goal</span>
+                  <span>${budgetTargets.savings.toLocaleString()}</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-slate-200">
+                  <div
+                    className={`h-1.5 rounded-full transition-all ${getBarColor(savingsPct)}`}
+                    style={{ width: `${savingsPct}%` }}
+                  />
+                </div>
+              </div>
             </CardContent>
           </Card>
 
@@ -243,12 +323,22 @@ export default function BudgetPage() {
             </CardHeader>
             <CardContent>
               <p
-                className={`text-3xl font-semibold ${
-                  netBalance >= 0 ? "text-emerald-700" : "text-rose-700"
-                }`}
+                className={`text-3xl font-semibold ${netBalance >= 0 ? "text-emerald-700" : "text-rose-700"}`}
               >
                 ${netBalance.toFixed(2)}
               </p>
+              <div className="mt-3 space-y-1">
+                <div className="flex justify-between text-xs text-slate-500">
+                  <span>Savings rate</span>
+                  <span>{Math.round(savingsRate)}%</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-slate-200">
+                  <div
+                    className={`h-1.5 rounded-full transition-all ${netBalance >= 0 ? "bg-emerald-500" : "bg-rose-500"}`}
+                    style={{ width: `${Math.abs(savingsRate)}%` }}
+                  />
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>

@@ -441,24 +441,32 @@ export default function ItemCard({
           />
           <div className="relative z-10 bg-background rounded-xl shadow-2xl border border-muted/30 w-full max-w-sm mx-4 p-6 flex flex-col gap-4">
             <div>
-              <h2 className="text-lg font-semibold">Delete item</h2>
-              <p className="text-sm text-muted-foreground">
-                Ești sigur că vrei să ștergi{" "}
-                <span className="font-medium text-foreground">
+              <h2 className="text-lg font-semibold flex items-center gap-1">
+                <Trash2 size={16} className="shrink-0" /> Delete item
+              </h2>
+              <p className="text-sm text-slate-800 mt-2">
+                Are you sure you want to delete{" "}
+                <span className="font-medium text-slate-800">
                   {deletingItem.category}
                 </span>{" "}
-                (${deletingItem.amount.toFixed(2)})? Acțiunea nu poate fi
-                anulată.
+                (${deletingItem.amount.toFixed(2)})? The action cannot be
+                undone.
               </p>
             </div>
             <div className="flex justify-end gap-2 pt-2">
-              <Button type="button" variant="ghost" onClick={cancelDelete}>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={cancelDelete}
+                className="cursor-pointer"
+              >
                 Cancel
               </Button>
               <Button
                 type="button"
                 variant="destructive"
                 onClick={confirmDelete}
+                className="cursor-pointer"
               >
                 Delete
               </Button>
