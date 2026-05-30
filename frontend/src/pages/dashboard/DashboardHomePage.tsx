@@ -32,6 +32,25 @@ const chartConfig = {
   savings: { label: "Savings", color: "#7c3aed" },
 } satisfies ChartConfig;
 
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
+const spendingTrend = [
+  { month: "Jan", income: 5200, expenses: 2800, savings: 1200 },
+  { month: "Feb", income: 4800, expenses: 3100, savings: 900 },
+  { month: "Mar", income: 5500, expenses: 2600, savings: 1500 },
+  { month: "Apr", income: 6000, expenses: 3400, savings: 1800 },
+  { month: "May", income: 5100, expenses: 2900, savings: 1100 },
+  { month: "Jun", income: 5800, expenses: 3200, savings: 1400 },
+];
+
 export default function DashboardHomePage() {
   const topSpendings = [
     { name: "Car insurance", amount: 5200.0, category: "Insurance" },
@@ -60,9 +79,9 @@ export default function DashboardHomePage() {
       </div>
 
       {/* Top Cards Grid - 2 columns */}
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
+      <div className="grid md:grid-cols-4 gap-6 mb-6">
         {/* Financial Overview Card */}
-        <div className="flex flex-col justify-between gap-4 bg-blue-100 p-2 rounded-2xl">
+        <div className="flex flex-col justify-between gap-4 bg-blue-100 p-2 rounded-2xl md:col-span-2">
           <div>
             <Card className="border-0 shadow-none bg-transparent">
               <CardHeader>
@@ -143,7 +162,35 @@ export default function DashboardHomePage() {
         </div>
 
         {/* Spendings Overview Card */}
-        <Card>
+        <Card className="flex flex-col md:col-span-1">
+          <CardHeader className="items-center pb-0">
+            <CardTitle>Pie Chart</CardTitle>
+            <CardDescription>January - June 2024</CardDescription>
+          </CardHeader>
+          <CardContent className="flex-1 pb-0">
+            <ChartContainer
+              config={chartConfig}
+              className="mx-auto aspect-square max-h-62.5"
+            >
+              <PieChart>
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel />}
+                />
+                <Pie data={chartData} dataKey="money" nameKey="budgetType" />
+              </PieChart>
+            </ChartContainer>
+          </CardContent>
+          <CardFooter className="flex-col gap-2 text-sm">
+            <div className="flex items-center gap-2 leading-none font-medium">
+              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+            </div>
+            <div className="leading-none text-muted-foreground">
+              Total net balance: $2500
+            </div>
+          </CardFooter>
+        </Card>
+        <Card className="md:col-span-1">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2">
@@ -154,21 +201,9 @@ export default function DashboardHomePage() {
             <CardDescription>Your expenses this month</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">
-                  Total Spent
-                </p>
-                <p className="text-2xl font-bold text-red-600 dark:text-red-400">
-                  $2,800.00
-                </p>
-              </div>
-              <CreditCard className="h-8 w-8 text-red-500" />
-            </div>
-
             <div className="flex items-center gap-2 p-3 bg-orange-50 dark:bg-orange-950 rounded-lg border border-orange-200 dark:border-orange-800">
               <TrendingUp className="h-5 w-5 text-orange-500" />
-              <p className="text-sm font-medium text-orange-700 dark:text-orange-400">
+              <p className="text-xs font-medium text-orange-700 dark:text-orange-400">
                 12% increase from last month
               </p>
             </div>
@@ -194,35 +229,94 @@ export default function DashboardHomePage() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        <div>
-          <Card className="flex flex-col">
-            <CardHeader className="items-center pb-0">
-              <CardTitle>Pie Chart</CardTitle>
-              <CardDescription>January - June 2024</CardDescription>
+        <div className="flex flex-col gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Spending Trend</CardTitle>
+              <CardDescription>
+                Income vs Expenses — last 6 months
+              </CardDescription>
             </CardHeader>
-            <CardContent className="flex-1 pb-0">
-              <ChartContainer
-                config={chartConfig}
-                className="mx-auto aspect-square max-h-62.5"
-              >
-                <PieChart>
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
+            <CardContent>
+              <ResponsiveContainer width="100%" height={220}>
+                <AreaChart
+                  data={spendingTrend}
+                  margin={{ top: 4, right: 4, left: -20, bottom: 0 }}
+                >
+                  <defs>
+                    <linearGradient id="income" x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        offset="5%"
+                        stopColor="#059669"
+                        stopOpacity={0.15}
+                      />
+                      <stop offset="95%" stopColor="#059669" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="expenses" x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        offset="5%"
+                        stopColor="#dc2626"
+                        stopOpacity={0.15}
+                      />
+                      <stop offset="95%" stopColor="#dc2626" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="savings" x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        offset="5%"
+                        stopColor="#7c3aed"
+                        stopOpacity={0.15}
+                      />
+                      <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <XAxis
+                    dataKey="month"
+                    tick={{ fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={false}
                   />
-                  <Pie data={chartData} dataKey="money" nameKey="budgetType" />
-                </PieChart>
-              </ChartContainer>
+                  <YAxis
+                    tick={{ fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(v) => `$${v}`}
+                  />
+                  <Tooltip
+                    formatter={(value: number, name: string) => [
+                      `$${value.toLocaleString()}`,
+                      name,
+                    ]}
+                    contentStyle={{
+                      borderRadius: "8px",
+                      border: "1px solid #e2e8f0",
+                      fontSize: "13px",
+                    }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="income"
+                    stroke="#059669"
+                    strokeWidth={2}
+                    fill="url(#income)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="expenses"
+                    stroke="#dc2626"
+                    strokeWidth={2}
+                    fill="url(#expenses)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="savings"
+                    stroke="#7c3aed"
+                    strokeWidth={2}
+                    fill="url(#savings)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm">
-              <div className="flex items-center gap-2 leading-none font-medium">
-                Trending up by 5.2% this month{" "}
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="leading-none text-muted-foreground">
-                Total net balance: $2500
-              </div>
-            </CardFooter>
           </Card>
         </div>
         <div className="bg-white shadow-sm p-4 rounded-2xl">
