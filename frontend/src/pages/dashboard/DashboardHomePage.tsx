@@ -1,20 +1,36 @@
-import {
-  TrendingDown,
-  TrendingUp,
-  Wallet,
-  CreditCard,
-  DollarSign,
-  AlertCircle,
-} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { CreditCard, TrendingUp } from "lucide-react";
+import { Pie, PieChart } from "recharts";
+
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
+export const description = "A simple pie chart";
+
+const chartData = [
+  { budgetType: "income", money: 275, fill: "#059669" },
+  { budgetType: "spendings", money: 200, fill: "#dc2626" },
+  { budgetType: "savings", money: 187, fill: "#7c3aed" },
+];
+
+const chartConfig = {
+  money: { label: "Money" },
+  income: { label: "Income", color: "#059669" },
+  spendings: { label: "Spendings", color: "#dc2626" },
+  savings: { label: "Savings", color: "#7c3aed" },
+} satisfies ChartConfig;
 
 export default function DashboardHomePage() {
   const topSpendings = [
@@ -46,55 +62,85 @@ export default function DashboardHomePage() {
       {/* Top Cards Grid - 2 columns */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         {/* Financial Overview Card */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center gap-2">
-                <Wallet className="h-5 w-5 text-primary" />
-                Financial Overview
-              </CardTitle>
-            </div>
-            <CardDescription>
-              Your income and savings this month
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">
-                  Total Income
-                </p>
-                <p className="text-2xl font-bold">$5,200.00</p>
-              </div>
-              <DollarSign className="h-8 w-8 text-green-500" />
-            </div>
+        <div className="flex flex-col justify-between gap-4 bg-blue-100 p-2 rounded-2xl">
+          <div>
+            <Card className="border-0 shadow-none bg-transparent">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-1 text-lg">
+                  Total net balance
+                </CardTitle>
+              </CardHeader>
 
-            <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">
-                  Total Savings
-                </p>
-                <p className="text-2xl font-bold">$1,200.00</p>
-              </div>
-              <Wallet className="h-8 w-8 text-blue-500" />
-            </div>
+              <CardContent>
+                <p className="text-xl font-semibold text-green-700">$ 5,200</p>
 
-            <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-950 rounded-lg border border-red-200 dark:border-red-800">
-              <TrendingDown className="h-5 w-5 text-red-500" />
-              <p className="text-sm font-medium text-red-700 dark:text-red-400">
-                5% decrease from last month
-              </p>
-            </div>
+                <div className="flex justify-between text-xs text-slate-500">
+                  <span>
+                    <TrendingUp className="h-4 w-4 inline mr-1" /> 3.5 % vs last
+                    month
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="flex flex-col  gap-4 md:flex-row bg-white p-4 rounded-3xl">
+            {" "}
+            <Card className="border border-green-200 bg-green-50/60 w-full">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-1 text-sm">
+                  Total incoming money
+                </CardTitle>
+              </CardHeader>
 
-            <div className="pt-2">
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-muted-foreground">Savings Rate</span>
-                <span className="font-semibold">23%</span>
-              </div>
-              <Progress value={23} className="h-2" />
-            </div>
-          </CardContent>
-        </Card>
+              <CardContent>
+                <p className="text-xl font-semibold text-green-700">$ 5,200</p>
+
+                <div className="flex justify-between text-xs text-slate-500 mt-3 space-y-1">
+                  <span>
+                    <TrendingUp className="h-4 w-4 inline mr-1" /> 3.5 % vs last
+                    month
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border border-green-200 bg-red-50/60 w-full">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-1 text-sm">
+                  Total incoming money
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent>
+                <p className="text-xl font-semibold text-red-700">$ 5,200</p>
+
+                <div className="flex justify-between text-xs text-slate-500 mt-3 space-y-1">
+                  <span>
+                    <TrendingUp className="h-4 w-4 inline mr-1" /> 3.5 % vs last
+                    month
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border border-green-200 bg-blue-50/60 w-full">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-1 text-sm">
+                  Total incoming money
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent>
+                <p className="text-xl font-semibold text-blue-700">$ 5,200</p>
+
+                <div className="flex justify-between text-xs text-slate-500 mt-3 space-y-1">
+                  <span>
+                    <TrendingUp className="h-4 w-4 inline mr-1" /> 3.5 % vs last
+                    month
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
 
         {/* Spendings Overview Card */}
         <Card>
@@ -147,84 +193,134 @@ export default function DashboardHomePage() {
         </Card>
       </div>
 
-      {/* Bottom Card - Full Width */}
-      <Card>
-        <CardHeader>
+      <div className="grid md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <Card className="flex flex-col">
+            <CardHeader className="items-center pb-0">
+              <CardTitle>Pie Chart</CardTitle>
+              <CardDescription>January - June 2024</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-1 pb-0">
+              <ChartContainer
+                config={chartConfig}
+                className="mx-auto aspect-square max-h-62.5"
+              >
+                <PieChart>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  />
+                  <Pie data={chartData} dataKey="money" nameKey="budgetType" />
+                </PieChart>
+              </ChartContainer>
+            </CardContent>
+            <CardFooter className="flex-col gap-2 text-sm">
+              <div className="flex items-center gap-2 leading-none font-medium">
+                Trending up by 5.2% this month{" "}
+                <TrendingUp className="h-4 w-4" />
+              </div>
+              <div className="leading-none text-muted-foreground">
+                Total net balance: $2500
+              </div>
+            </CardFooter>
+          </Card>
+        </div>
+        <div className="bg-white shadow-sm p-4 rounded-2xl">
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-primary" />
-              Spending Habits Analysis
-            </CardTitle>
-            <Badge variant="outline">Last 30 days</Badge>
+            <div>
+              <h2 className="px-2 text-lg">Recent Transactions</h2>
+              <p className="text-sm p-2 text-muted-foreground">
+                Here are your latest financial transactions.
+              </p>
+            </div>
+            <Button variant="outline" size="sm" className="ml-2 mb-4">
+              See all
+            </Button>
           </div>
-          <CardDescription>
-            Insights into your spending patterns
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Highlight */}
-          <div className="p-4 bg-yellow-50 dark:bg-yellow-950 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-            <p className="text-sm font-semibold text-yellow-900 dark:text-yellow-100 mb-1">
-              💡 Spending Alert
-            </p>
-            <p className="text-sm text-yellow-800 dark:text-yellow-200">
-              Car insurance was your most expensive spending this month at{" "}
-              <span className="font-bold">$5,200.00</span>. This is
-              significantly higher than usual.
-            </p>
-          </div>
+          <table className="w-full border-collapse text-sm mt-2">
+            <thead className="bg-slate-200">
+              <tr className="border-b border-slate-200">
+                <th className="text-left font-medium text-slate-500 text-xs p-3">
+                  Description
+                </th>
+                <th className="text-left font-medium text-slate-500 text-xs p-3">
+                  Category
+                </th>
+                <th className="text-left font-medium text-slate-500 text-xs p-3">
+                  Date
+                </th>
+                <th className="text-right font-medium text-slate-500 text-xs p-3">
+                  Amount
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-slate-100">
+                <td className="py-3 px-3">Stripe Payment</td>
+                <td className="py-3 px-3">
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
+                    Sales
+                  </span>
+                </td>
+                <td className="py-3 px-3 text-slate-500">Jan 24</td>
+                <td className="py-3 px-3 text-right font-medium text-emerald-700">
+                  +$1,250
+                </td>
+              </tr>
+              <tr className="border-b border-slate-100">
+                <td className="py-3 px-3">Office Rent</td>
+                <td className="py-3 px-3">
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">
+                    Rent
+                  </span>
+                </td>
+                <td className="py-3 px-3 text-slate-500">Jan 23</td>
+                <td className="py-3 px-3 text-right font-medium text-red-700">
+                  -$2,000
+                </td>
+              </tr>
+              <tr className="border-b border-slate-100">
+                <td className="py-3 px-3">Software Tools</td>
+                <td className="py-3 px-3">
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-purple-50 text-purple-700">
+                    SaaS
+                  </span>
+                </td>
+                <td className="py-3 px-3 text-slate-500">Jan 22</td>
+                <td className="py-3 px-3 text-right font-medium text-red-700">
+                  -$320
+                </td>
+              </tr>
+              <tr className="border-b border-slate-100">
+                <td className="py-3 px-3">Client Invoice</td>
+                <td className="py-3 px-3">
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
+                    Sales
+                  </span>
+                </td>
+                <td className="py-3 px-3 text-slate-500">Jan 21</td>
+                <td className="py-3 px-3 text-right font-medium text-emerald-700">
+                  +$4,500
+                </td>
+              </tr>
+              <tr className="last:border-0">
+                <td className="py-3 px-3">Stripe Payment</td>
+                <td className="py-3 px-3">
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
+                    Sales
+                  </span>
+                </td>
+                <td className="py-3 px-3 text-slate-500">Jan 24</td>
+                <td className="py-3 px-3 text-right font-medium text-emerald-700">
+                  +$1,250
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-          {/* Top 5 Spendings */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">
-              Top 5 Most Expensive Spendings
-            </h3>
-            <div className="space-y-3">
-              {topSpendings.map((spending, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold">
-                      {index + 1}
-                    </div>
-                    <div>
-                      <p className="font-medium">{spending.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {spending.category}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-lg font-bold">
-                    ${spending.amount.toLocaleString()}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Summary Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-primary">$8,000</p>
-              <p className="text-sm text-muted-foreground">Budget Limit</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-green-600">$5,200</p>
-              <p className="text-sm text-muted-foreground">Remaining</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold">35%</p>
-              <p className="text-sm text-muted-foreground">Budget Used</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold">18</p>
-              <p className="text-sm text-muted-foreground">Transactions</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Bottom Card - Full Width */}
     </section>
   );
 }
