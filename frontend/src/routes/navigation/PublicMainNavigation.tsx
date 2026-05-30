@@ -163,6 +163,13 @@ export default function PublicMainNavigation() {
               Home
             </Link>
             <Link
+              to="/dashboard"
+              className="text-sm font-medium hover:text-primary transition-colors py-2 border-b"
+              onClick={() => setOpenMenu(false)}
+            >
+              Dashboard
+            </Link>
+            <Link
               to="/about"
               className="text-sm font-medium hover:text-primary transition-colors py-2 border-b"
               onClick={() => setOpenMenu(false)}
