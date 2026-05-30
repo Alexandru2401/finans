@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { toast } from "sonner";
 
-interface BudgetItem {
+export interface BudgetItem {
   id: string;
   category: string;
   amount: number;
@@ -10,7 +10,7 @@ interface BudgetItem {
   notes?: string;
 }
 
-type NewBudgetItem = Omit<BudgetItem, "id">;
+export type NewBudgetItem = Omit<BudgetItem, "id">;
 
 interface BudgetStoreContextType {
   incomeItems: BudgetItem[];

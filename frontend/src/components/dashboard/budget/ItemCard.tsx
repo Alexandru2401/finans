@@ -36,6 +36,11 @@ import {
 } from "../../ui/select";
 
 type BudgetType = "income" | "expenses" | "savings";
+import type { Section } from "../../../pages/dashboard/BudgetPage";
+import type {
+  BudgetItem,
+  NewBudgetItem,
+} from "@/store/dashboardStore/BudgetStoreContext";
 
 const CATEGORIES_BY_TYPE: Record<
   BudgetType,
@@ -73,15 +78,22 @@ const CATEGORIES_BY_TYPE: Record<
   ],
 };
 
+interface ItemCardProps {
+  section: Section;
+  expanded: { income: boolean; expenses: boolean; savings: boolean };
+  handleToggle: (section: "income" | "expenses" | "savings") => void;
+  onShowForm: () => void;
+}
+
 export default function ItemCard({
   section,
   expanded,
   handleToggle,
   onShowForm,
-}) {
-  const [editingItem, setEditingItem] = useState(null);
-  const [deletingItem, setDeletingItem] = useState(null);
-  const [viewingItem, setViewingItem] = useState(null);
+}: ItemCardProps) {
+  const [editingItem, setEditingItem] = useState<BudgetItem | null>(null);
+  const [deletingItem, setDeletingItem] = useState<BudgetItem | null>(null);
+  const [viewingItem, setViewingItem] = useState<BudgetItem | null>(null);
 
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [editValues, setEditValues] = useState({
@@ -92,7 +104,7 @@ export default function ItemCard({
     notes: "",
   });
 
-  const startEdit = (item) => {
+  const startEdit = (item: BudgetItem) => {
     setEditingItem(item);
     setEditValues({
       amount: item.amount.toFixed(2),
@@ -106,20 +118,20 @@ export default function ItemCard({
   const cancelEdit = () => setEditingItem(null);
 
   const confirmEdit = () => {
-    section.onEdit(editingItem.id, {
+    section.onEdit(editingItem!.id, {
       amount: parseFloat(editValues.amount),
       category: editValues.category,
       date: editValues.date,
       description: editValues.description,
       notes: editValues.notes,
-    });
+    } satisfies Partial<NewBudgetItem>);
     setEditingItem(null);
   };
 
-  const startDelete = (item) => setDeletingItem(item);
+  const startDelete = (item: BudgetItem) => setDeletingItem(item);
   const cancelDelete = () => setDeletingItem(null);
   const confirmDelete = () => {
-    section.onDelete(deletingItem.id);
+    section.onDelete(deletingItem!.id);
     setDeletingItem(null);
   };
 
@@ -178,7 +190,7 @@ export default function ItemCard({
                 <p className="text-sm text-slate-600">No entries yet.</p>
                 <Button
                   variant="default"
-                  onClick={() => onShowForm(true)}
+                  onClick={() => onShowForm()}
                   className="cursor-pointer"
                 >
                   <Plus size={16} />
@@ -187,79 +199,74 @@ export default function ItemCard({
               </div>
             ) : (
               <div className="space-y-3">
-                {section.items.map(
-                  (item) =>
-                    console.log("item complet:", item) || (
-                      <div
-                        key={item.id}
-                        className="flex items-center justify-between gap-2 rounded-lg border border-slate-700/30 px-2 py-2"
-                      >
-                        <div className="flex items-end gap-3 min-w-0">
-                          <div className="flex flex-col min-w-0">
-                            <p
-                              className={`text-md font-bold flex items-center gap-1 ${sectionColor}`}
-                            >
-                              {SectionIcon} ${item.amount.toFixed(2)}
-                            </p>
-                            <div className="flex items-center gap-3 text-slate-600">
-                              <p className="text-sm  font-bold">
-                                {item.category}
+                {section.items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between gap-2 rounded-lg border border-slate-700/30 px-2 py-2"
+                  >
+                    <div className="flex items-end gap-3 min-w-0">
+                      <div className="flex flex-col min-w-0">
+                        <p
+                          className={`text-md font-bold flex items-center gap-1 ${sectionColor}`}
+                        >
+                          {SectionIcon} ${item.amount.toFixed(2)}
+                        </p>
+                        <div className="flex items-center gap-3 text-slate-600">
+                          <p className="text-sm  font-bold">{item.category}</p>
+
+                          {item.date && (
+                            <div className="flex items-center gap-1 mt-0.5">
+                              <Calendar1 size={12} />
+                              <p className="text-xs text-slate-600">
+                                {new Date(item.date).toLocaleDateString(
+                                  "ro-RO",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  },
+                                )}
                               </p>
-
-                              {item.date && (
-                                <div className="flex items-center gap-1 mt-0.5">
-                                  <Calendar1 size={12} />
-                                  <p className="text-xs text-slate-600">
-                                    {new Date(item.date).toLocaleDateString(
-                                      "ro-RO",
-                                      {
-                                        day: "2-digit",
-                                        month: "short",
-                                        year: "numeric",
-                                      },
-                                    )}
-                                  </p>
-                                </div>
-                              )}
                             </div>
-                          </div>
-                        </div>
-
-                        <div className="flex shrink-0">
-                          {/* View details */}
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setViewingItem(item)}
-                            className="cursor-pointer  hover:bg-slate-400/20"
-                          >
-                            <FileText size={18} className="text-slate-800" />
-                          </Button>
-                          {/* Edit */}
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => startEdit(item)}
-                            className="cursor-pointer  hover:bg-slate-400/20"
-                          >
-                            <Pencil size={16} className="text-blue-700" />
-                          </Button>
-                          {/* Delete */}
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => startDelete(item)}
-                            className="cursor-pointer  hover:bg-slate-400/20"
-                          >
-                            <Trash2 size={18} className="text-destructive" />
-                          </Button>
+                          )}
                         </div>
                       </div>
-                    ),
-                )}
+                    </div>
+
+                    <div className="flex shrink-0">
+                      {/* View details */}
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setViewingItem(item)}
+                        className="cursor-pointer  hover:bg-slate-400/20"
+                      >
+                        <FileText size={18} className="text-slate-800" />
+                      </Button>
+                      {/* Edit */}
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => startEdit(item)}
+                        className="cursor-pointer  hover:bg-slate-400/20"
+                      >
+                        <Pencil size={16} className="text-blue-700" />
+                      </Button>
+                      {/* Delete */}
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => startDelete(item)}
+                        className="cursor-pointer  hover:bg-slate-400/20"
+                      >
+                        <Trash2 size={18} className="text-destructive" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </CardContent>

@@ -26,7 +26,6 @@ async function api<T = unknown>(
   });
 
   if (response.status === 401) {
-    window.location.href = "/login";
     return { ok: false, status: 401, data: null as T };
   }
 

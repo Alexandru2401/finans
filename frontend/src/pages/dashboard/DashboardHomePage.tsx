@@ -33,13 +33,13 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 import {
-  AreaChart,
   Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
 } from "recharts";
 
 const spendingTrend = [
@@ -52,14 +52,6 @@ const spendingTrend = [
 ];
 
 export default function DashboardHomePage() {
-  const topSpendings = [
-    { name: "Car insurance", amount: 5200.0, category: "Insurance" },
-    { name: "Electricity bill", amount: 150.0, category: "Utilities" },
-    { name: "Groceries", amount: 300.0, category: "Food" },
-    { name: "Restaurant meals", amount: 250.0, category: "Dining" },
-    { name: "Shopping", amount: 450.0, category: "Retail" },
-  ];
-
   const spendingByCategory = [
     { category: "Insurance", amount: 5200, percentage: 65 },
     { category: "Food & Dining", amount: 550, percentage: 7 },
@@ -287,8 +279,8 @@ export default function DashboardHomePage() {
                     tickFormatter={(v) => `$${v}`}
                   />
                   <Tooltip
-                    formatter={(value: number, name: string) => [
-                      `$${value.toLocaleString()}`,
+                    formatter={(value, name) => [
+                      `$${Number(value).toLocaleString()}`,
                       name,
                     ]}
                     contentStyle={{

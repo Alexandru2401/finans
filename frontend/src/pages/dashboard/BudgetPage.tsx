@@ -21,6 +21,19 @@ import {
 import { useMemo, useState } from "react";
 
 type BudgetType = "income" | "expenses" | "savings";
+import type {
+  BudgetItem,
+  NewBudgetItem,
+} from "@/store/dashboardStore/BudgetStoreContext";
+
+export interface Section {
+  title: string;
+  items: BudgetItem[];
+  total: number;
+  section: "income" | "expenses" | "savings";
+  onDelete: (id: string) => void;
+  onEdit: (id: string, payload: Partial<NewBudgetItem>) => void;
+}
 
 const CATEGORIES_BY_TYPE: Record<
   BudgetType,
