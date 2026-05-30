@@ -78,7 +78,7 @@ export default function BudgetPage() {
   } = useBudgetStore();
 
   const [showForm, setShowForm] = useState(false);
-  const [formDate, setFormDate] = useState<Date | undefined>(new Date());
+  // const [formDate, setFormDate] = useState<Date | undefined>(new Date());
   const [expanded, setExpanded] = useState({
     income: true,
     expenses: true,
@@ -101,17 +101,17 @@ export default function BudgetPage() {
     setExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
   }
 
-  function handleChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) {
-    const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }
+  // function handleChange(
+  //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  // ) {
+  //   const { name, value } = event.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // }
 
-  function handleTypeChange(value: BudgetType) {
-    const firstCategory = CATEGORIES_BY_TYPE[value][0].value;
-    setFormData((prev) => ({ ...prev, type: value, category: firstCategory }));
-  }
+  // function handleTypeChange(value: BudgetType) {
+  //   const firstCategory = CATEGORIES_BY_TYPE[value][0].value;
+  //   setFormData((prev) => ({ ...prev, type: value, category: firstCategory }));
+  // }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -222,16 +222,16 @@ export default function BudgetPage() {
         <Button
           variant="default"
           onClick={() => setShowForm((prev) => !prev)}
-          className="cursor-pointer"
+          className="cursor-pointer w-34 md:w-auto"
         >
           <Plus size={16} />
-          {showForm ? "Close" : "Add entry"}
+          {showForm ? "Close" : "Add new entry"}
         </Button>
       </div>
 
       {/* Summary cards */}
       <div className="space-y-6 mb-8">
-        <div className="grid gap-3 md:grid-cols-4">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           <Card className="border border-green-200 bg-green-50/60">
             <CardHeader>
               <CardTitle className="flex items-center gap-1 text-lg">
@@ -241,7 +241,7 @@ export default function BudgetPage() {
             </CardHeader>
 
             <CardContent>
-              <p className="text-3xl font-semibold text-green-700">
+              <p className="text-xl font-semibold text-green-700">
                 ${totalIncome.toFixed(2)}
               </p>
               <div className="mt-3 space-y-1">
@@ -267,7 +267,7 @@ export default function BudgetPage() {
               <CardDescription>Total spending this period</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-semibold text-red-700">
+              <p className="text-xl font-semibold text-red-700">
                 ${totalExpenses.toFixed(2)}
               </p>
               <div className="mt-3 space-y-1">
@@ -293,7 +293,7 @@ export default function BudgetPage() {
               <CardDescription>Money you are setting aside</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-semibold text-sky-700">
+              <p className="text-xl font-semibold text-sky-700">
                 ${totalSavings.toFixed(2)}
               </p>
               <div className="mt-3 space-y-1">
@@ -320,7 +320,7 @@ export default function BudgetPage() {
             </CardHeader>
             <CardContent>
               <p
-                className={`text-3xl font-semibold ${netBalance >= 0 ? "text-emerald-700" : "text-rose-700"}`}
+                className={`text-xl font-semibold ${netBalance >= 0 ? "text-emerald-700" : "text-rose-700"}`}
               >
                 ${netBalance.toFixed(2)}
               </p>
@@ -341,7 +341,7 @@ export default function BudgetPage() {
         </div>
 
         {/* Item sections */}
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {sections.map((section) => (
             <ItemCard
               onShowForm={() => setShowForm(true)}
