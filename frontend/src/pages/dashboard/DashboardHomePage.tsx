@@ -72,16 +72,16 @@ export default function DashboardHomePage() {
     <section className="py-8 px-4 md:px-8 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Welcome back, User! 👋</h1>
+        <h1 className="text-4xl font-bold mb-2">Welcome back, User!</h1>
         <p className="text-muted-foreground text-lg">
-          Take a look over your financial dashboard
+          Take a look over your financial dashboard from last month.
         </p>
       </div>
 
       {/* Top Cards Grid - 2 columns */}
-      <div className="grid md:grid-cols-4 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
         {/* Financial Overview Card */}
-        <div className="flex flex-col justify-between gap-4 bg-blue-100 p-2 rounded-2xl md:col-span-2">
+        <div className="flex flex-col justify-between gap-4 bg-blue-100 p-2 rounded-2xl col-span-1 md:col-span-2">
           <div>
             <Card className="border-0 shadow-none bg-transparent">
               <CardHeader>
@@ -162,75 +162,79 @@ export default function DashboardHomePage() {
         </div>
 
         {/* Spendings Overview Card */}
-        <Card className="flex flex-col md:col-span-1">
-          <CardHeader className="items-center pb-0">
-            <CardTitle>Pie Chart</CardTitle>
-            <CardDescription>January - June 2024</CardDescription>
-          </CardHeader>
-          <CardContent className="flex-1 pb-0">
-            <ChartContainer
-              config={chartConfig}
-              className="mx-auto aspect-square max-h-62.5"
-            >
-              <PieChart>
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent hideLabel />}
-                />
-                <Pie data={chartData} dataKey="money" nameKey="budgetType" />
-              </PieChart>
-            </ChartContainer>
-          </CardContent>
-          <CardFooter className="flex-col gap-2 text-sm">
-            <div className="flex items-center gap-2 leading-none font-medium">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="leading-none text-muted-foreground">
-              Total net balance: $2500
-            </div>
-          </CardFooter>
-        </Card>
-        <Card className="md:col-span-1">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-primary" />
-                Spendings Overview
-              </CardTitle>
-            </div>
-            <CardDescription>Your expenses this month</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-2 p-3 bg-orange-50 dark:bg-orange-950 rounded-lg border border-orange-200 dark:border-orange-800">
-              <TrendingUp className="h-5 w-5 text-orange-500" />
-              <p className="text-xs font-medium text-orange-700 dark:text-orange-400">
-                12% increase from last month
-              </p>
-            </div>
+        <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {" "}
+          <Card className="flex flex-col">
+            <CardHeader className="items-center pb-0">
+              <CardTitle>Pie Chart</CardTitle>
+              <CardDescription>January - June 2024</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-1 pb-0">
+              <ChartContainer
+                config={chartConfig}
+                className="mx-auto aspect-square max-h-62.5"
+              >
+                <PieChart>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  />
+                  <Pie data={chartData} dataKey="money" nameKey="budgetType" />
+                </PieChart>
+              </ChartContainer>
+            </CardContent>
+            <CardFooter className="flex-col gap-2 text-sm">
+              <div className="flex items-center gap-2 leading-none font-medium">
+                Trending up by 5.2% this month{" "}
+                <TrendingUp className="h-4 w-4" />
+              </div>
+              <div className="leading-none text-muted-foreground">
+                Total net balance: $2500
+              </div>
+            </CardFooter>
+          </Card>
+          <Card className="flex flex-col">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <CreditCard className="h-5 w-5 text-primary" />
+                  Spendings Overview
+                </CardTitle>
+              </div>
+              <CardDescription>Your expenses this month</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center gap-2 p-3 bg-orange-50 dark:bg-orange-950 rounded-lg border border-orange-200 dark:border-orange-800">
+                <TrendingUp className="h-5 w-5 text-orange-500" />
+                <p className="text-xs font-medium text-orange-700 dark:text-orange-400">
+                  12% increase from last month
+                </p>
+              </div>
 
-            <div className="space-y-3 pt-2">
-              <p className="text-sm font-semibold">Spending by Category</p>
-              {spendingByCategory.slice(0, 3).map((item) => (
-                <div key={item.category} className="space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      {item.category}
-                    </span>
-                    <span className="font-medium">
-                      ${item.amount.toLocaleString()}
-                    </span>
+              <div className="space-y-3 pt-2">
+                <p className="text-sm font-semibold">Spending by Category</p>
+                {spendingByCategory.slice(0, 3).map((item) => (
+                  <div key={item.category} className="space-y-1">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        {item.category}
+                      </span>
+                      <span className="font-medium">
+                        ${item.amount.toLocaleString()}
+                      </span>
+                    </div>
+                    <Progress value={item.percentage} className="h-1.5" />
                   </div>
-                  <Progress value={item.percentage} className="h-1.5" />
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        <div className="flex flex-col gap-6">
-          <Card>
+        <div className="flex flex-col gap-6 h-96">
+          <Card className="flex-1">
             <CardHeader>
               <CardTitle className="text-base">Spending Trend</CardTitle>
               <CardDescription>
@@ -319,7 +323,7 @@ export default function DashboardHomePage() {
             </CardContent>
           </Card>
         </div>
-        <div className="bg-white shadow-sm p-4 rounded-2xl">
+        <div className="bg-white shadow-sm p-4 rounded-2xl min-h-96 ">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="px-2 text-lg">Recent Transactions</h2>
@@ -350,8 +354,8 @@ export default function DashboardHomePage() {
             </thead>
             <tbody>
               <tr className="border-b border-slate-100">
-                <td className="py-3 px-3">Stripe Payment</td>
-                <td className="py-3 px-3">
+                <td className="p-1 sm:p-3">Stripe Payment</td>
+                <td className="p-1 sm:p-3">
                   <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
                     Sales
                   </span>
@@ -362,8 +366,8 @@ export default function DashboardHomePage() {
                 </td>
               </tr>
               <tr className="border-b border-slate-100">
-                <td className="py-3 px-3">Office Rent</td>
-                <td className="py-3 px-3">
+                <td className="p-1 sm:p-3">Office Rent</td>
+                <td className="p-1 sm:p-3">
                   <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">
                     Rent
                   </span>
@@ -374,8 +378,8 @@ export default function DashboardHomePage() {
                 </td>
               </tr>
               <tr className="border-b border-slate-100">
-                <td className="py-3 px-3">Software Tools</td>
-                <td className="py-3 px-3">
+                <td className="p-1 sm:p-3">Software Tools</td>
+                <td className="p-1 sm:p-3">
                   <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-purple-50 text-purple-700">
                     SaaS
                   </span>
@@ -386,26 +390,26 @@ export default function DashboardHomePage() {
                 </td>
               </tr>
               <tr className="border-b border-slate-100">
-                <td className="py-3 px-3">Client Invoice</td>
-                <td className="py-3 px-3">
+                <td className="p-1 sm:p-3">Client Invoice</td>
+                <td className="p-1 sm:p-3">
                   <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
                     Sales
                   </span>
                 </td>
-                <td className="py-3 px-3 text-slate-500">Jan 21</td>
-                <td className="py-3 px-3 text-right font-medium text-emerald-700">
+                <td className="p-1 sm:p-3 text-slate-500">Jan 21</td>
+                <td className="p-1 sm:p-3 text-right font-medium text-emerald-700">
                   +$4,500
                 </td>
               </tr>
               <tr className="last:border-0">
-                <td className="py-3 px-3">Stripe Payment</td>
-                <td className="py-3 px-3">
+                <td className="p-1 sm:p-3">Stripe Payment</td>
+                <td className="p-1 sm:p-3">
                   <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
                     Sales
                   </span>
                 </td>
-                <td className="py-3 px-3 text-slate-500">Jan 24</td>
-                <td className="py-3 px-3 text-right font-medium text-emerald-700">
+                <td className="p-1 sm:p-3 text-slate-500">Jan 24</td>
+                <td className="p-1 sm:p-3 text-right font-medium text-emerald-700">
                   +$1,250
                 </td>
               </tr>
