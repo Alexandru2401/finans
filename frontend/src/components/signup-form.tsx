@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,8 +13,9 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 import { createUser } from "@/api/user";
 
@@ -27,7 +27,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -49,12 +48,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
     try {
       setLoading(true);
-
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          reject({ message: "Eroare de test la creare" });
-        }, 2000);
-      });
 
       const response = await createUser(
         formData.username,

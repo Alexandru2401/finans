@@ -1,4 +1,4 @@
-import { post } from "./client";
+import { post, get } from "./client";
 
 interface AuthResponse {
   message: string;
@@ -29,4 +29,9 @@ async function createUser(username: string, email: string, password: string) {
   return response;
 }
 
-export { loginUser, createUser };
+async function checkUserAuthentication() {
+  const response = await get<AuthResponse>("/auth/check-me");
+  return response;
+}
+
+export { loginUser, createUser, checkUserAuthentication };

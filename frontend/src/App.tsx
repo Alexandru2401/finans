@@ -1,25 +1,24 @@
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
-import PublicRootLayout from "./routes/layout/PublicRootLayout";
-import DashboardRootLayout from "./routes/layout/DashboardRootLayout";
-import PublicHomePage from "./pages/public/PublicHomePage";
-import PublicAboutPage from "./pages/public/PublicAboutPage";
-import ErrorPage from "./routes/Error";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
 import Login from "./pages/auth/Login";
 import SignIn from "./pages/auth/Signin";
-import SuccessStories from "./pages/public/blog/SuccessStories";
-import WriteStory from "./pages/public/blog/WriteStory";
-import DashboardHomePage from "./pages/dashboard/DashboardHomePage";
+import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
 import BudgetPage from "./pages/dashboard/BudgetPage";
 import CompleteProfilePage from "./pages/dashboard/CompleteProfilePage";
+import DashboardHomePage from "./pages/dashboard/DashboardHomePage";
 import ProfilePage from "./pages/dashboard/ProfilePage";
-import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
-import UpgradePlansPage from "./pages/dashboard/UpgradePlansPage";
 import SettingsPage from "./pages/dashboard/SettingsPage";
+import UpgradePlansPage from "./pages/dashboard/UpgradePlansPage";
+import PublicAboutPage from "./pages/public/PublicAboutPage";
+import PublicHomePage from "./pages/public/PublicHomePage";
+import PublicPricesPersonalPage from "./pages/public/PublicPricesPersonalPage";
+import SuccessStories from "./pages/public/blog/SuccessStories";
+import WriteStory from "./pages/public/blog/WriteStory";
+import PersonalPayPage from "./pages/public/paypage/PersonalPayPage";
 import PrivacyPolicy from "./pages/public/terms-and-policy/PrivacyPolicy";
 import TermsAndConditions from "./pages/public/terms-and-policy/TermsAndConditions";
-import PublicPricesPersonalPage from "./pages/public/PublicPricesPersonalPage";
-import PersonalPayPage from "./pages/public/paypage/PersonalPayPage";
-import { useEffect, useState } from "react";
+import ErrorPage from "./routes/Error";
+import DashboardRootLayout from "./routes/layout/DashboardRootLayout";
+import PublicRootLayout from "./routes/layout/PublicRootLayout";
 
 import { Toaster } from "@/components/ui/sonner";
 
@@ -117,32 +116,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   async function auth() {
-  //     try {
-  //       const response = await fetch(
-  //         "http://localhost:3000/api/v1/auth/get-user",
-  //       );
-
-  //       console.log("Raspuns:", response);
-
-  //       const data = await response.json();
-
-  //       console.log("Data", data);
-
-  //       setUser(data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-
-  //   auth();
-  // }, []);
-
-  console.log("User la mount:", user);
-
   return (
     <>
       <RouterProvider router={router} />

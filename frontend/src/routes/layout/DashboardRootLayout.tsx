@@ -1,8 +1,8 @@
-import DashboardMainNavigation from "../navigation/DashboardMainNavigation";
-import { Outlet } from "react-router";
-import ProfileBadge from "@/components/dashboard/ProfileBadge";
+import ProfileBadge from "@/components/dashboard/budget/ProfileBadge";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BudgetStoreProvider } from "@/store/dashboardStore/BudgetStoreContext";
+import { Outlet } from "react-router";
+import DashboardMainNavigation from "../navigation/DashboardMainNavigation";
 
 export default function DashboardRootLayout() {
   return (
@@ -11,7 +11,7 @@ export default function DashboardRootLayout() {
         <div className="flex h-screen overflow-hidden">
           <DashboardMainNavigation />
 
-          <main className="flex-1 overflow-y-auto px-10 py-6">
+          <main className="flex-1 overflow-y-auto px-4 py-6 bg-gray-100">
             <div className="text-right">
               <ProfileBadge />
             </div>
