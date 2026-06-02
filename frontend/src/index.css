@@ -43,6 +43,14 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-finance-primary: var(--finance-primary);
+  --color-finance-success: var(--finance-success);
+  --color-finance-danger: var(--finance-danger);
+  --color-finance-warning: var(--finance-warning);
+  --color-finance-success-bg: var(--finance-success-bg);
+  --color-finance-danger-bg: var(--finance-danger-bg);
+  --color-finance-warning-bg: var(--finance-warning-bg);
 }
 
 :root {
@@ -78,6 +86,14 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --finance-primary: #3b5bdb;
+  --finance-success: #0a6640;
+  --finance-danger: #b91c1c;
+  --finance-warning: #c47a00;
+  --finance-success-bg: #e8f5ef;
+  --finance-danger-bg: #fee2e2;
+  --finance-warning-bg: #fef3c7;
 }
 
 .dark {
@@ -112,6 +128,14 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --finance-primary: #4c6ef5;
+  --finance-success: #4ade9a;
+  --finance-danger: #f87171;
+  --finance-warning: #fcc419;
+  --finance-success-bg: #0c2b1f;
+  --finance-danger-bg: #2d1515;
+  --finance-warning-bg: #2a1f0a;
 }
 
 @layer base {

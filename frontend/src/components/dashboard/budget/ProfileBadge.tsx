@@ -17,12 +17,14 @@ import {
   Settings,
   Crown,
 } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function ProfileBadge() {
   const [openProfile, setOpenProfile] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const { dark, toggleTheme } = useTheme();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -94,9 +96,9 @@ export default function ProfileBadge() {
                 </h4>
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
+              <div className="flex items-center justify-between p-3 rounded-lg transition-colors">
                 <div className="flex items-center gap-3">
-                  {darkMode ? (
+                  {dark ? (
                     <Moon className="h-4 w-4 text-primary" />
                   ) : (
                     <Sun className="h-4 w-4 text-primary" />
@@ -110,8 +112,8 @@ export default function ProfileBadge() {
                 </div>
                 <Switch
                   id="dark-mode"
-                  checked={darkMode}
-                  onCheckedChange={setDarkMode}
+                  checked={dark}
+                  onCheckedChange={toggleTheme}
                 />
               </div>
 
