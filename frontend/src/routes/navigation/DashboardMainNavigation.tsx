@@ -11,7 +11,7 @@ export default function DashboardMainNavigation() {
   return (
     <aside
       className={clsx(
-        "relative h-screen border-r bg-background transition-all duration-300",
+        "relative h-screen border-r bg-background ",
         open ? "w-64" : "w-16",
       )}
     >

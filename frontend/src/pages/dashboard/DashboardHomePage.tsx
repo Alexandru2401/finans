@@ -73,7 +73,7 @@ export default function DashboardHomePage() {
       {/* Top Cards Grid - 2 columns */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
         {/* Financial Overview Card */}
-        <div className="flex flex-col justify-between gap-4 bg-blue-100 p-2 rounded-2xl col-span-1 md:col-span-2">
+        <div className="shadow-md flex flex-col border justify-between gap-4 p-2 rounded-2xl col-span-1 md:col-span-2">
           <div>
             <Card className="border-0 shadow-none bg-transparent">
               <CardHeader>
@@ -94,7 +94,7 @@ export default function DashboardHomePage() {
               </CardContent>
             </Card>
           </div>
-          <div className="flex flex-col  gap-4 md:flex-row bg-white p-4 rounded-3xl">
+          <div className="flex flex-col  gap-4 md:flex-row p-4 rounded-3xl">
             {" "}
             <Card className="border border-green-200 bg-green-50/60 w-full">
               <CardHeader>
@@ -315,7 +315,7 @@ export default function DashboardHomePage() {
             </CardContent>
           </Card>
         </div>
-        <div className="bg-white shadow-sm p-4 rounded-2xl min-h-96 ">
+        <div className="shadow-sm p-4 rounded-2xl min-h-96 border ">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="px-2 text-lg">Recent Transactions</h2>
@@ -328,7 +328,7 @@ export default function DashboardHomePage() {
             </Button>
           </div>
           <table className="w-full border-collapse text-sm mt-2">
-            <thead className="bg-slate-200">
+            <thead>
               <tr className="border-b border-slate-200">
                 <th className="text-left font-medium text-slate-500 text-xs p-3">
                   Description
