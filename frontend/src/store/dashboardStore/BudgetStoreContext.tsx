@@ -56,6 +56,54 @@ export function BudgetStoreProvider({
       amount: 2500,
       date: new Date().toISOString(),
     },
+    {
+      id: crypto.randomUUID(),
+      category: "Salariu",
+      amount: 5000,
+      date: "2026-06-15T10:30:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      category: "Investitii",
+      amount: 2500,
+      date: "2026-05-20T10:30:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      category: "Salariu",
+      amount: 5000,
+      date: "2026-04-10T10:30:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      category: "Investitii",
+      amount: 2500,
+      date: "2026-03-25T10:30:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      category: "Salariu",
+      amount: 5000,
+      date: "2026-02-12T10:30:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      category: "Investitii",
+      amount: 2500,
+      date: "2026-01-18T10:30:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      category: "Salariu",
+      amount: 5000,
+      date: "2025-12-05T10:30:00.000Z",
+    },
+    {
+      id: crypto.randomUUID(),
+      category: "Investitii",
+      amount: 2500,
+      date: "2025-11-22T10:30:00.000Z",
+    },
   ]);
   const [expenseItems, setExpenseItems] = useState<BudgetItem[]>([
     {

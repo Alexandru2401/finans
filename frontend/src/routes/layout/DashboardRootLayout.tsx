@@ -10,8 +10,8 @@ export default function DashboardRootLayout() {
       <TooltipProvider>
         <div className="flex h-screen overflow-hidden">
           <DashboardMainNavigation />
-          {/* test test test */}
-          <main className="flex-1 overflow-y-auto px-4 py-6 bg-gray-100">
+
+          <main className="flex-1 overflow-y-auto md:px-4 py-6 bg-gray-100">
             <div className="text-right">
               <ProfileBadge />
             </div>

@@ -17,12 +17,14 @@ import {
   Settings,
   Crown,
 } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function ProfileBadge() {
   const [openProfile, setOpenProfile] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const { dark, toggleTheme } = useTheme();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -54,9 +56,9 @@ export default function ProfileBadge() {
   }
 
   return (
-    <div className="flex justify-end px-5 relative" ref={dropdownRef}>
+    <div className="flex justify-end px-2 md:px-5 relative" ref={dropdownRef}>
       <Avatar
-        className="cursor-pointer ring-2 ring-offset-2 ring-transparent hover:ring-primary transition-all w-12 h-12"
+        className="cursor-pointer ring-2 ring-offset-2 ring-transparent hover:ring-primary transition-all h-8 w-8 md:w-12 md:h-12"
         onClick={() => setOpenProfile(!openProfile)}
       >
         <AvatarImage src="https://github.com/shadcn.png" alt="User avatar" />
@@ -64,10 +66,10 @@ export default function ProfileBadge() {
       </Avatar>
 
       {openProfile && (
-        <Card className="absolute top-0 right-0 mt-16 w-80 shadow-xl border-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-          <CardHeader className="pb-3">
+        <Card className="absolute top-0 right-0 mt-10 md:mt-16 w-80 shadow-xl border-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+          <CardHeader className="md:pb-3">
             <div className="flex items-center gap-3">
-              <Avatar className="h-12 w-12">
+              <Avatar className="h-8 w-8 md:w-12 md:h-12">
                 <AvatarImage
                   src="https://github.com/shadcn.png"
                   alt="User avatar"
@@ -86,17 +88,17 @@ export default function ProfileBadge() {
           <Separator />
 
           <CardContent className="p-0">
-            <div className="p-4 space-y-4">
+            <div className="p-2 md:p-4 space-y-2 md:space-y-4">
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-semibold flex items-center gap-2">
+                <h4 className="text-sm font-semibold flex items-center gap-2 px-3">
                   <Settings className="h-4 w-4" />
                   Profile Settings
                 </h4>
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
+              <div className="flex items-center justify-between p-3 rounded-lg transition-colors">
                 <div className="flex items-center gap-3">
-                  {darkMode ? (
+                  {dark ? (
                     <Moon className="h-4 w-4 text-primary" />
                   ) : (
                     <Sun className="h-4 w-4 text-primary" />
@@ -110,8 +112,8 @@ export default function ProfileBadge() {
                 </div>
                 <Switch
                   id="dark-mode"
-                  checked={darkMode}
-                  onCheckedChange={setDarkMode}
+                  checked={dark}
+                  onCheckedChange={toggleTheme}
                 />
               </div>
 
@@ -137,7 +139,7 @@ export default function ProfileBadge() {
 
             <div className="p-4">
               <div className="flex items-center justify-between p-3 rounded-lg bg-linear-to-r from-primary/10 to-primary/5 border border-primary/20">
-                <div className="flex items-center gap-3">
+                <div className="flex items-start gap-3">
                   <Crown className="h-4 w-4 text-primary" />
                   <div>
                     <p className="text-sm font-medium">Current Plan</p>

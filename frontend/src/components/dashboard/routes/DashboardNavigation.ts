@@ -18,13 +18,14 @@ export type DashboardNavItem = {
 
 export type DashboardNavSection = {
   items: DashboardNavItem[];
+  title?: string;
 };
 
 export const dashboardNavigation: DashboardNavSection[] = [
   {
     items: [
       {
-        label: "Dashboard",
+        label: "Overview",
         to: "/dashboard",
         icon: LayoutDashboard,
       },
@@ -34,18 +35,14 @@ export const dashboardNavigation: DashboardNavSection[] = [
         icon: PiggyBank,
       },
     ],
+    title: "Dashobard",
   },
   {
     items: [
       {
-        label: "Complete Profile",
-        to: "/dashboard/complete-profile",
+        label: "Transactions",
+        to: "/dashboard/transactions",
         icon: UserRoundPen,
-      },
-      {
-        label: "Profile",
-        to: "/dashboard/profile",
-        icon: UserRound,
       },
       {
         label: "Analytics",
@@ -53,6 +50,7 @@ export const dashboardNavigation: DashboardNavSection[] = [
         icon: ChartNoAxesCombined,
       },
     ],
+    title: "Budget info",
   },
   {
     items: [
@@ -62,10 +60,11 @@ export const dashboardNavigation: DashboardNavSection[] = [
         icon: CircleFadingArrowUp,
       },
       {
-        label: "Settings",
-        to: "/dashboard/settings",
-        icon: Settings,
+        label: "Profile",
+        to: "/dashboard/profile",
+        icon: UserRound,
       },
     ],
+    title: "Settings",
   },
 ];
