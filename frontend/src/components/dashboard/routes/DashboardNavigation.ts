@@ -24,7 +24,7 @@ export const dashboardNavigation: DashboardNavSection[] = [
   {
     items: [
       {
-        label: "Dashboard",
+        label: "Overview",
         to: "/dashboard",
         icon: LayoutDashboard,
       },

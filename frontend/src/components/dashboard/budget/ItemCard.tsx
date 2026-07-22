@@ -170,9 +170,8 @@ export default function ItemCard({
                 className="rounded-full cursor-pointer"
               >
                 <ChevronDown
-                  className={`transition-transform duration-200 ${
-                    expanded[section.section] ? "rotate-180" : "rotate-0"
-                  }`}
+                  className={`transition-transform duration-200 ${expanded[section.section] ? "rotate-180" : "rotate-0"
+                    }`}
                 />
               </Button>
             </CardTitle>
@@ -184,7 +183,7 @@ export default function ItemCard({
         </CardHeader>
 
         {expanded[section.section] && (
-          <CardContent>
+          <CardContent className="h-80 overflow-y-auto">
             {section.items.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-4 py-6">
                 <p className="text-sm text-slate-600">No entries yet.</p>
@@ -303,10 +302,10 @@ export default function ItemCard({
                 <p className="font-medium">
                   {viewingItem.date
                     ? new Date(viewingItem.date).toLocaleDateString("ro-RO", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })
                     : "—"}
                 </p>
               </div>
