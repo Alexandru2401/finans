@@ -29,9 +29,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AlertTriangle, Badge, ChevronDown, Info, Pin, Search, TrendingUp, X } from "lucide-react";
+import {
+  AlertTriangle,
+  ChevronDown,
+  Info,
+  Pin,
+  Search,
+  TrendingUp,
+  X,
+} from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis } from "recharts";
-
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import AnalyticsRightColumn from "./AnalyticsRightColumn";
 
@@ -205,12 +213,19 @@ export default function AnalyticsPage() {
               >
                 To
               </Label>
-              <Input id="filter-to" type="date" className="w-[150px]" disabled />
+              <Input
+                id="filter-to"
+                type="date"
+                className="w-[150px]"
+                disabled
+              />
             </div>
 
             {/* Categorii — multi-select grupat pe tip */}
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Categories</Label>
+              <Label className="text-xs text-muted-foreground">
+                Categories
+              </Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -239,24 +254,24 @@ export default function AnalyticsPage() {
                   </div>
 
                   <div className="max-h-[280px] overflow-y-auto p-1">
-                    {(
-                      Object.keys(CATEGORIES_BY_TYPE) as BudgetType[]
-                    ).map((type) => (
-                      <div key={type} className="mb-1">
-                        <p className="px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                          {type}
-                        </p>
-                        {CATEGORIES_BY_TYPE[type].map((cat) => (
-                          <Label
-                            key={`${type}-${cat.value}`}
-                            className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm font-normal hover:bg-accent"
-                          >
-                            <Checkbox id={`cat-${type}-${cat.value}`} />
-                            {cat.label}
-                          </Label>
-                        ))}
-                      </div>
-                    ))}
+                    {(Object.keys(CATEGORIES_BY_TYPE) as BudgetType[]).map(
+                      (type) => (
+                        <div key={type} className="mb-1">
+                          <p className="px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                            {type}
+                          </p>
+                          {CATEGORIES_BY_TYPE[type].map((cat) => (
+                            <Label
+                              key={`${type}-${cat.value}`}
+                              className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm font-normal hover:bg-accent"
+                            >
+                              <Checkbox id={`cat-${type}-${cat.value}`} />
+                              {cat.label}
+                            </Label>
+                          ))}
+                        </div>
+                      ),
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between border-t p-2">
@@ -370,7 +385,10 @@ export default function AnalyticsPage() {
             <CardDescription>January – June 2024</CardDescription>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={barChartConfig} className="max-h-[280px] w-full">
+            <ChartContainer
+              config={barChartConfig}
+              className="max-h-[280px] w-full"
+            >
               <BarChart accessibilityLayer data={chartData}>
                 <CartesianGrid vertical={false} />
                 <XAxis
@@ -411,7 +429,10 @@ export default function AnalyticsPage() {
             <CardDescription>January – June 2024</CardDescription>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={expensesConfig} className="max-h-[280px] w-full">
+            <ChartContainer
+              config={expensesConfig}
+              className="max-h-[280px] w-full"
+            >
               <LineChart
                 accessibilityLayer
                 data={chartData}
