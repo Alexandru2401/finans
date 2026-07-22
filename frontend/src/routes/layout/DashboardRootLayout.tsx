@@ -11,8 +11,8 @@ export default function DashboardRootLayout() {
         <div className="flex h-screen overflow-hidden">
           <DashboardMainNavigation />
 
-          <main className="flex-1 overflow-y-auto md:px-4 py-6 bg-gray-100">
-            <div className="text-right">
+          <main className="flex-1 overflow-y-auto md:px-4 py-6">
+            <div className="text-right mb-2">
               <ProfileBadge />
             </div>
             <Outlet />

@@ -40,7 +40,7 @@ export const description = "A simple pie chart";
 const chartData = [
   { budgetType: "income", money: 275, fill: "#059669" },
   { budgetType: "spendings", money: 200, fill: "#dc2626" },
-  { budgetType: "savings", money: 187, fill: "#7c3aed" },
+  { budgetType: "savings", money: 187, fill: "#3874FF" },
 ];
 
 const chartConfig = {
@@ -88,10 +88,11 @@ export default function DashboardHomePage() {
     { category: "Other", amount: 1450, percentage: 20 },
   ];
 
+
   return (
-    <section className="py-8 px-4 max-w-7xl mx-auto">
+    <section className="px-4 max-w-8xl mx-auto">
       {/* Header */}
-      <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+      <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
           <h1 className="text-2xl font-bold mb-2">Welcome back, User!</h1>
           <p className="text-sm text-muted-foreground mt-1">
@@ -156,9 +157,9 @@ export default function DashboardHomePage() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-violet-200 bg-violet-50/60 p-4 dark:border-violet-900 dark:bg-violet-950/30">
+              <div className="rounded-lg border border-[#3874FF]/50 bg-[#3874FF]/20 p-4 dark:border-[#3874FF] dark:bg-violet-950/30">
                 <p className="text-sm text-muted-foreground">Total savings</p>
-                <p className="mt-1 text-lg font-semibold tabular-nums text-violet-700 dark:text-violet-400">
+                <p className="mt-1 text-lg font-semibold tabular-nums text-[#3874FF] dark:text-violet-400">
                   $5,200
                 </p>
                 <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
@@ -211,7 +212,6 @@ export default function DashboardHomePage() {
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <CardTitle className="flex items-center gap-2 text-base">
-                    <CreditCard className="h-5 w-5 text-primary" />
                     Spendings Overview
                   </CardTitle>
                   <CardDescription>Your expenses this period</CardDescription>
@@ -258,7 +258,7 @@ export default function DashboardHomePage() {
       </div>
 
       {/* Trend + Recent transactions */}
-      <div className="grid gap-6 mb-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card className="flex flex-col">
           <CardHeader>
             <div className="flex items-start justify-between gap-2">
