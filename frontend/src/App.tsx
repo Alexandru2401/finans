@@ -3,7 +3,7 @@ import Login from "./pages/auth/Login";
 import SignIn from "./pages/auth/Signin";
 import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
 import BudgetPage from "./pages/dashboard/BudgetPage";
-import CompleteProfilePage from "./pages/dashboard/CompleteProfilePage";
+import TransactionsPage from "./pages/dashboard/TransactionsPage";
 import DashboardHomePage from "./pages/dashboard/DashboardHomePage";
 import ProfilePage from "./pages/dashboard/ProfilePage";
 import SettingsPage from "./pages/dashboard/SettingsPage";
@@ -92,8 +92,8 @@ const router = createBrowserRouter([
         element: <BudgetPage />,
       },
       {
-        path: "/dashboard/complete-profile",
-        element: <CompleteProfilePage />,
+        path: "/dashboard/transactions",
+        element: <TransactionsPage />,
       },
       {
         path: "/dashboard/profile",

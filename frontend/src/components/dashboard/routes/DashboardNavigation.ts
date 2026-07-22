@@ -38,8 +38,8 @@ export const dashboardNavigation: DashboardNavSection[] = [
   {
     items: [
       {
-        label: "Complete Profile",
-        to: "/dashboard/complete-profile",
+        label: "Transactions",
+        to: "/dashboard/transactions",
         icon: UserRoundPen,
       },
       {

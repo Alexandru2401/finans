@@ -10,6 +10,7 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { CreditCard, TrendingUp } from "lucide-react";
 import { Pie, PieChart } from "recharts";
+import { Link } from "react-router";
 
 import {
   ChartContainer,
@@ -61,11 +62,11 @@ export default function DashboardHomePage() {
   ];
 
   return (
-    <section className="py-8 px-4 md:px-8 max-w-7xl mx-auto">
+    <section className="py-8 px-4 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Welcome back, User!</h1>
-        <p className="text-muted-foreground text-lg">
+        <h1 className="text-2xl font-bold mb-2">Welcome back, User!</h1>
+        <p className="text-sm text-slate-600 mt-1">
           Take a look over your financial dashboard from last month.
         </p>
       </div>
@@ -73,7 +74,7 @@ export default function DashboardHomePage() {
       {/* Top Cards Grid - 2 columns */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
         {/* Financial Overview Card */}
-        <div className="shadow-md flex flex-col border justify-between gap-4 p-2 rounded-2xl col-span-1 md:col-span-2">
+        <div className="shadow-md max- flex flex-col border gap-2 p-1 rounded-2xl col-span-1 md:col-span-2">
           <div>
             <Card className="border-0 shadow-none bg-transparent">
               <CardHeader>
@@ -99,7 +100,7 @@ export default function DashboardHomePage() {
             <Card className="border border-green-200 bg-green-50/60 w-full">
               <CardHeader>
                 <CardTitle className="flex items-center gap-1 text-sm">
-                  Total incoming money
+                  Total income
                 </CardTitle>
               </CardHeader>
 
@@ -117,7 +118,7 @@ export default function DashboardHomePage() {
             <Card className="border border-green-200 bg-red-50/60 w-full">
               <CardHeader>
                 <CardTitle className="flex items-center gap-1 text-sm">
-                  Total incoming money
+                  Total spendings
                 </CardTitle>
               </CardHeader>
 
@@ -135,7 +136,7 @@ export default function DashboardHomePage() {
             <Card className="border border-green-200 bg-blue-50/60 w-full">
               <CardHeader>
                 <CardTitle className="flex items-center gap-1 text-sm">
-                  Total incoming money
+                  Total savings
                 </CardTitle>
               </CardHeader>
 
@@ -323,9 +324,9 @@ export default function DashboardHomePage() {
                 Here are your latest financial transactions.
               </p>
             </div>
-            <Button variant="outline" size="sm" className="ml-2 mb-4">
+            <Link to="transactions"><Button variant="outline" size="sm" className="ml-2 mb-4">
               See all
-            </Button>
+            </Button></Link>
           </div>
           <table className="w-full border-collapse text-sm mt-2">
             <thead>
