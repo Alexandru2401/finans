@@ -23,7 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CreditCard, TrendingDown, TrendingUp } from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import { Link } from "react-router";
 import { Pie, PieChart } from "recharts";
 
@@ -87,7 +87,6 @@ export default function DashboardHomePage() {
     { category: "Utilities", amount: 150, percentage: 2 },
     { category: "Other", amount: 1450, percentage: 20 },
   ];
-
 
   return (
     <section className="px-4 max-w-8xl mx-auto">

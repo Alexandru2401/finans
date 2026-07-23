@@ -39,7 +39,7 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type BudgetType = "income" | "expenses" | "savings";
 import type {
@@ -233,16 +233,18 @@ export default function BudgetPage() {
     totalIncome > 0 ? Math.min((netBalance / totalIncome) * 100, 100) : 0;
 
   return (
-    <section className="relative py-8 px-4 max-w-7xl mx-auto">
+    <section className="relative py-4 px-4 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-6">
-        <div>
+        <div className="flex flex-col">
           <h1 className="text-2xl font-bold">Budget Overview</h1>
           <p className="text-sm text-muted-foreground mt-1">
             Track income, expenses, savings and add new budget items quickly.
           </p>
+        </div>
 
-          {/* TOGGLES */}
+        {/* TOGGLES */}
+        <div className="flex flex-col items-end">
           <div className="flex items-center gap-2 mt-4">
             <Button
               variant="ghost"
@@ -270,81 +272,28 @@ export default function BudgetPage() {
               Your Target
               <ChevronDown size={14} className="opacity-60" />
             </Button>
+
+            <Button
+              variant="default"
+              onClick={() => setShowForm((prev) => !prev)}
+              className="cursor-pointer max-w-34 md:w-auto"
+            >
+              <Plus size={16} />
+              {showForm ? "Close" : "Add new entry"}
+            </Button>
           </div>
         </div>
-
-        <Button
-          variant="default"
-          onClick={() => setShowForm((prev) => !prev)}
-          className="cursor-pointer w-34 md:w-auto"
-        >
-          <Plus size={16} />
-          {showForm ? "Close" : "Add new entry"}
-        </Button>
       </div>
 
       {/* ===== FILTERS PANEL (randat static — leaga-l de un state showFilters) ===== */}
       {/* DE FACUT SHEET DIN DREAPTA PE MOBILE */}
       <div className="grid grid-cols-3 gap-6">
-
         {/* ===== TARGETS PANEL (randat static — leaga-l de un state showTargets) ===== */}
-        {/* DE FACUT CARUSEL PE MOBILE */}
-        {/* <Card className="mb-6 border-dashed py-4">
-          <CardContent className="px-4">
-            <div className="flex flex-wrap items-end gap-3">
-              <div className="flex flex-col gap-1.5">
-                <Label
-                  htmlFor="target-income"
-                  className="text-xs text-muted-foreground"
-                >
-                  Income target
-                </Label>
-                <Input
-                  id="target-income"
-                  type="number"
-                  defaultValue={budgetTargets.income}
-                  className="w-[130px]"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label
-                  htmlFor="target-expenses"
-                  className="text-xs text-muted-foreground"
-                >
-                  Expenses limit
-                </Label>
-                <Input
-                  id="target-expenses"
-                  type="number"
-                  defaultValue={budgetTargets.expenses}
-                  className="w-[130px]"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label
-                  htmlFor="target-savings"
-                  className="text-xs text-muted-foreground"
-                >
-                  Savings goal
-                </Label>
-                <Input
-                  id="target-savings"
-                  type="number"
-                  defaultValue={budgetTargets.savings}
-                  className="w-[130px]"
-                />
-              </div>
-              <Button size="sm" className="cursor-pointer">
-                Save targets
-              </Button>
-            </div>
-          </CardContent>
-        </Card> */}
 
         {/* Summary cards */}
         <div className="col-span-2 space-y-6 mb-8">
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-            <Card className="border border-green-200 bg-green-50/60 dark:border-green-900 dark:bg-green-950/30">
+            <Card className="border bg-accent">
               <CardHeader>
                 <CardTitle className="flex items-center gap-1 text-lg">
                   <ArrowUpRight className="text-green-600 dark:text-green-400" />{" "}
@@ -354,7 +303,7 @@ export default function BudgetPage() {
               </CardHeader>
 
               <CardContent>
-                <p className="text-xl font-semibold text-green-700 dark:text-green-400">
+                <p className="text-xl font-semibold">
                   ${totalIncome.toFixed(2)}
                 </p>
                 <div className="mt-3 space-y-1">
@@ -372,7 +321,7 @@ export default function BudgetPage() {
               </CardContent>
             </Card>
 
-            <Card className="border border-red-200 bg-red-50/60 dark:border-red-900 dark:bg-red-950/30">
+            <Card className="border bg-accent">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <ArrowDownRight className="text-red-600 dark:text-red-400" />{" "}
@@ -381,7 +330,7 @@ export default function BudgetPage() {
                 <CardDescription>Total spending this period</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-xl font-semibold text-red-700 dark:text-red-400">
+                <p className="text-xl font-semibold ">
                   ${totalExpenses.toFixed(2)}
                 </p>
                 <div className="mt-3 space-y-1">
@@ -391,7 +340,7 @@ export default function BudgetPage() {
                   </div>
                   <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
                     <div
-                      className={`h-1.5 rounded-full transition-all ${getBarColor(expensesPct, true)}`}
+                      className={`h-1.5 rounded-full transition-all bg-red-500`}
                       style={{ width: `${expensesPct}%` }}
                     />
                   </div>
@@ -399,15 +348,16 @@ export default function BudgetPage() {
               </CardContent>
             </Card>
 
-            <Card className="border border-sky-200 bg-sky-50/60 dark:border-sky-900 dark:bg-sky-950/30">
+            <Card className="border  bg-accent">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
-                  <PiggyBank className="text-sky-600 dark:text-sky-400" /> Savings
+                  <PiggyBank className="text-sky-600 dark:text-sky-400" />{" "}
+                  Savings
                 </CardTitle>
                 <CardDescription>Money you are setting aside</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-xl font-semibold text-sky-700 dark:text-sky-400">
+                <p className="text-xl font-semibold">
                   ${totalSavings.toFixed(2)}
                 </p>
                 <div className="mt-3 space-y-1">
@@ -425,7 +375,7 @@ export default function BudgetPage() {
               </CardContent>
             </Card>
 
-            <Card className="border border-violet-200 bg-violet-50/60 dark:border-violet-900 dark:bg-violet-950/30">
+            <Card className="border bg-accent">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <DollarSign className="text-violet-600 dark:text-violet-400" />{" "}
@@ -434,9 +384,7 @@ export default function BudgetPage() {
                 <CardDescription>Income minus expenses</CardDescription>
               </CardHeader>
               <CardContent>
-                <p
-                  className={`text-xl font-semibold ${netBalance >= 0 ? "text-emerald-700 dark:text-emerald-400" : "text-rose-700 dark:text-rose-400"}`}
-                >
+                <p className={`text-xl font-semibold`}>
                   ${netBalance.toFixed(2)}
                 </p>
                 <div className="mt-3 space-y-1">
@@ -446,7 +394,7 @@ export default function BudgetPage() {
                   </div>
                   <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
                     <div
-                      className={`h-1.5 rounded-full transition-all ${netBalance >= 0 ? "bg-emerald-500" : "bg-rose-500"}`}
+                      className={`h-1.5 rounded-full transition-all ${netBalance >= 0 ? "bg-violet-500" : "bg-violet-500"}`}
                       style={{ width: `${Math.abs(savingsRate)}%` }}
                     />
                   </div>
@@ -478,12 +426,11 @@ export default function BudgetPage() {
                 </TabsContent>
               ))}
             </Tabs>
-
           </div>
         </div>
 
         <div className="grid-cols-2">
-          <Card className="mb-4 border-dashed py-4">
+          <Card className="mb-4 border-dashed py-4 bg-accent">
             <CardContent className="px-4">
               <div className="flex flex-wrap items-end gap-3">
                 {/* Perioada */}
@@ -532,12 +479,19 @@ export default function BudgetPage() {
                   >
                     To
                   </Label>
-                  <Input id="filter-to" type="date" className="w-[150px]" disabled />
+                  <Input
+                    id="filter-to"
+                    type="date"
+                    className="w-[150px]"
+                    disabled
+                  />
                 </div>
 
                 {/* Categorii — multi-select grupat pe tip */}
                 <div className="flex flex-col gap-1.5">
-                  <Label className="text-xs text-muted-foreground">Categories</Label>
+                  <Label className="text-xs text-muted-foreground">
+                    Categories
+                  </Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -566,24 +520,24 @@ export default function BudgetPage() {
                       </div>
 
                       <div className="max-h-[280px] overflow-y-auto p-1">
-                        {(
-                          Object.keys(CATEGORIES_BY_TYPE) as BudgetType[]
-                        ).map((type) => (
-                          <div key={type} className="mb-1">
-                            <p className="px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                              {type}
-                            </p>
-                            {CATEGORIES_BY_TYPE[type].map((cat) => (
-                              <Label
-                                key={`${type}-${cat.value}`}
-                                className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm font-normal hover:bg-accent"
-                              >
-                                <Checkbox id={`cat-${type}-${cat.value}`} />
-                                {cat.label}
-                              </Label>
-                            ))}
-                          </div>
-                        ))}
+                        {(Object.keys(CATEGORIES_BY_TYPE) as BudgetType[]).map(
+                          (type) => (
+                            <div key={type} className="mb-1">
+                              <p className="px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                {type}
+                              </p>
+                              {CATEGORIES_BY_TYPE[type].map((cat) => (
+                                <Label
+                                  key={`${type}-${cat.value}`}
+                                  className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm font-normal hover:bg-accent"
+                                >
+                                  <Checkbox id={`cat-${type}-${cat.value}`} />
+                                  {cat.label}
+                                </Label>
+                              ))}
+                            </div>
+                          ),
+                        )}
                       </div>
 
                       <div className="flex items-center justify-between border-t p-2">
@@ -689,7 +643,6 @@ export default function BudgetPage() {
             </CardContent>
           </Card>
         </div>
-
       </div>
 
       {/* Slide-in form */}
