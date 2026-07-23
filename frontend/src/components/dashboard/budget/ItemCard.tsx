@@ -156,7 +156,7 @@ export default function ItemCard({
   console.log(section);
 
   return (
-    <>
+    <div className="w-full">
       <Card>
         <CardHeader className="items-center">
           <div>
@@ -510,6 +510,6 @@ export default function ItemCard({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

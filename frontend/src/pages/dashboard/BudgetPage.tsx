@@ -39,6 +39,8 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
 type BudgetType = "income" | "expenses" | "savings";
 import type {
   BudgetItem,
@@ -282,392 +284,412 @@ export default function BudgetPage() {
       </div>
 
       {/* ===== FILTERS PANEL (randat static — leaga-l de un state showFilters) ===== */}
-      <Card className="mb-4 border-dashed py-4">
-        <CardContent className="px-4">
-          <div className="flex flex-wrap items-end gap-3">
-            {/* Perioada */}
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="filter-period"
-                className="text-xs text-muted-foreground"
-              >
-                Period
-              </Label>
-              <Select>
-                <SelectTrigger id="filter-period" className="w-[170px]">
-                  <SelectValue placeholder="This month" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="this-month">This month</SelectItem>
-                  <SelectItem value="last-month">Last month</SelectItem>
-                  <SelectItem value="last-3">Last 3 months</SelectItem>
-                  <SelectItem value="last-6">Last 6 months</SelectItem>
-                  <SelectItem value="this-year">This year</SelectItem>
-                  <SelectItem value="all">All time</SelectItem>
-                  <SelectItem value="custom">Custom range…</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+      {/* DE FACUT SHEET DIN DREAPTA PE MOBILE */}
+      <div className="grid grid-cols-3 gap-6">
 
-            {/* Interval custom — vizibil doar cand period === "custom" */}
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="filter-from"
-                className="text-xs text-muted-foreground"
-              >
-                From
-              </Label>
-              <Input
-                id="filter-from"
-                type="date"
-                className="w-[150px]"
-                disabled
-              />
+        {/* ===== TARGETS PANEL (randat static — leaga-l de un state showTargets) ===== */}
+        {/* DE FACUT CARUSEL PE MOBILE */}
+        {/* <Card className="mb-6 border-dashed py-4">
+          <CardContent className="px-4">
+            <div className="flex flex-wrap items-end gap-3">
+              <div className="flex flex-col gap-1.5">
+                <Label
+                  htmlFor="target-income"
+                  className="text-xs text-muted-foreground"
+                >
+                  Income target
+                </Label>
+                <Input
+                  id="target-income"
+                  type="number"
+                  defaultValue={budgetTargets.income}
+                  className="w-[130px]"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label
+                  htmlFor="target-expenses"
+                  className="text-xs text-muted-foreground"
+                >
+                  Expenses limit
+                </Label>
+                <Input
+                  id="target-expenses"
+                  type="number"
+                  defaultValue={budgetTargets.expenses}
+                  className="w-[130px]"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label
+                  htmlFor="target-savings"
+                  className="text-xs text-muted-foreground"
+                >
+                  Savings goal
+                </Label>
+                <Input
+                  id="target-savings"
+                  type="number"
+                  defaultValue={budgetTargets.savings}
+                  className="w-[130px]"
+                />
+              </div>
+              <Button size="sm" className="cursor-pointer">
+                Save targets
+              </Button>
             </div>
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="filter-to"
-                className="text-xs text-muted-foreground"
-              >
-                To
-              </Label>
-              <Input id="filter-to" type="date" className="w-[150px]" disabled />
-            </div>
+          </CardContent>
+        </Card> */}
 
-            {/* Categorii — multi-select grupat pe tip */}
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Categories</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="w-[200px] cursor-pointer justify-between font-normal"
-                  >
-                    <span className="truncate text-muted-foreground">
-                      All categories
-                    </span>
-                    <ChevronDown size={16} className="opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent align="start" className="w-[260px] p-0">
-                  <div className="border-b p-2">
-                    <div className="relative">
-                      <Search
-                        size={14}
-                        className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground"
-                        aria-hidden="true"
-                      />
-                      <Input
-                        placeholder="Search category…"
-                        className="h-8 pl-8 text-sm"
-                      />
-                    </div>
+        {/* Summary cards */}
+        <div className="col-span-2 space-y-6 mb-8">
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+            <Card className="border border-green-200 bg-green-50/60 dark:border-green-900 dark:bg-green-950/30">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-1 text-lg">
+                  <ArrowUpRight className="text-green-600 dark:text-green-400" />{" "}
+                  Income
+                </CardTitle>
+                <CardDescription>Total incoming money</CardDescription>
+              </CardHeader>
+
+              <CardContent>
+                <p className="text-xl font-semibold text-green-700 dark:text-green-400">
+                  ${totalIncome.toFixed(2)}
+                </p>
+                <div className="mt-3 space-y-1">
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>{Math.round(incomePct)}% of target</span>
+                    <span>${budgetTargets.income.toLocaleString()}</span>
                   </div>
+                  <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
+                    <div
+                      className={`h-1.5 rounded-full transition-all ${getBarColor(incomePct)}`}
+                      style={{ width: `${incomePct}%` }}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-                  <div className="max-h-[280px] overflow-y-auto p-1">
-                    {(
-                      Object.keys(CATEGORIES_BY_TYPE) as BudgetType[]
-                    ).map((type) => (
-                      <div key={type} className="mb-1">
-                        <p className="px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                          {type}
-                        </p>
-                        {CATEGORIES_BY_TYPE[type].map((cat) => (
-                          <Label
-                            key={`${type}-${cat.value}`}
-                            className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm font-normal hover:bg-accent"
-                          >
-                            <Checkbox id={`cat-${type}-${cat.value}`} />
-                            {cat.label}
-                          </Label>
+            <Card className="border border-red-200 bg-red-50/60 dark:border-red-900 dark:bg-red-950/30">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <ArrowDownRight className="text-red-600 dark:text-red-400" />{" "}
+                  Expenses
+                </CardTitle>
+                <CardDescription>Total spending this period</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-xl font-semibold text-red-700 dark:text-red-400">
+                  ${totalExpenses.toFixed(2)}
+                </p>
+                <div className="mt-3 space-y-1">
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>{Math.round(expensesPct)}% of limit</span>
+                    <span>${budgetTargets.expenses.toLocaleString()}</span>
+                  </div>
+                  <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
+                    <div
+                      className={`h-1.5 rounded-full transition-all ${getBarColor(expensesPct, true)}`}
+                      style={{ width: `${expensesPct}%` }}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border border-sky-200 bg-sky-50/60 dark:border-sky-900 dark:bg-sky-950/30">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <PiggyBank className="text-sky-600 dark:text-sky-400" /> Savings
+                </CardTitle>
+                <CardDescription>Money you are setting aside</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-xl font-semibold text-sky-700 dark:text-sky-400">
+                  ${totalSavings.toFixed(2)}
+                </p>
+                <div className="mt-3 space-y-1">
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>{Math.round(savingsPct)}% of goal</span>
+                    <span>${budgetTargets.savings.toLocaleString()}</span>
+                  </div>
+                  <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
+                    <div
+                      className={`h-1.5 rounded-full transition-all ${getBarColor(savingsPct)}`}
+                      style={{ width: `${savingsPct}%` }}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border border-violet-200 bg-violet-50/60 dark:border-violet-900 dark:bg-violet-950/30">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <DollarSign className="text-violet-600 dark:text-violet-400" />{" "}
+                  Net balance
+                </CardTitle>
+                <CardDescription>Income minus expenses</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p
+                  className={`text-xl font-semibold ${netBalance >= 0 ? "text-emerald-700 dark:text-emerald-400" : "text-rose-700 dark:text-rose-400"}`}
+                >
+                  ${netBalance.toFixed(2)}
+                </p>
+                <div className="mt-3 space-y-1">
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>Net margin</span>
+                    <span>{Math.round(savingsRate)}%</span>
+                  </div>
+                  <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
+                    <div
+                      className={`h-1.5 rounded-full transition-all ${netBalance >= 0 ? "bg-emerald-500" : "bg-rose-500"}`}
+                      style={{ width: `${Math.abs(savingsRate)}%` }}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* // DE ADAUGAT DOAR ULTIMELE 5 TRANZACTII PT FIECARE DE AICI, RESUL LE VEDE IN TRANSATION, ELIMIN SI SCROLL SI TOT */}
+          {/* Item sections */}
+          <div className="grid items-start gap-6">
+            <Tabs defaultValue="income" className="w-full">
+              <TabsList>
+                {sections.map((section) => (
+                  <TabsTrigger key={section.section} value={section.section}>
+                    {section.title}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {sections.map((section) => (
+                <TabsContent key={section.section} value={section.section}>
+                  <ItemCard
+                    section={section}
+                    expanded={expanded}
+                    handleToggle={handleToggle}
+                    onShowForm={() => setShowForm(true)}
+                  />
+                </TabsContent>
+              ))}
+            </Tabs>
+
+          </div>
+        </div>
+
+        <div className="grid-cols-2">
+          <Card className="mb-4 border-dashed py-4">
+            <CardContent className="px-4">
+              <div className="flex flex-wrap items-end gap-3">
+                {/* Perioada */}
+                <div className="flex flex-col gap-1.5">
+                  <Label
+                    htmlFor="filter-period"
+                    className="text-xs text-muted-foreground"
+                  >
+                    Period
+                  </Label>
+                  <Select>
+                    <SelectTrigger id="filter-period" className="w-[170px]">
+                      <SelectValue placeholder="This month" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="this-month">This month</SelectItem>
+                      <SelectItem value="last-month">Last month</SelectItem>
+                      <SelectItem value="last-3">Last 3 months</SelectItem>
+                      <SelectItem value="last-6">Last 6 months</SelectItem>
+                      <SelectItem value="this-year">This year</SelectItem>
+                      <SelectItem value="all">All time</SelectItem>
+                      <SelectItem value="custom">Custom range…</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Interval custom — vizibil doar cand period === "custom" */}
+                <div className="flex flex-col gap-1.5">
+                  <Label
+                    htmlFor="filter-from"
+                    className="text-xs text-muted-foreground"
+                  >
+                    From
+                  </Label>
+                  <Input
+                    id="filter-from"
+                    type="date"
+                    className="w-[150px]"
+                    disabled
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label
+                    htmlFor="filter-to"
+                    className="text-xs text-muted-foreground"
+                  >
+                    To
+                  </Label>
+                  <Input id="filter-to" type="date" className="w-[150px]" disabled />
+                </div>
+
+                {/* Categorii — multi-select grupat pe tip */}
+                <div className="flex flex-col gap-1.5">
+                  <Label className="text-xs text-muted-foreground">Categories</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-[200px] cursor-pointer justify-between font-normal"
+                      >
+                        <span className="truncate text-muted-foreground">
+                          All categories
+                        </span>
+                        <ChevronDown size={16} className="opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent align="start" className="w-[260px] p-0">
+                      <div className="border-b p-2">
+                        <div className="relative">
+                          <Search
+                            size={14}
+                            className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+                            aria-hidden="true"
+                          />
+                          <Input
+                            placeholder="Search category…"
+                            className="h-8 pl-8 text-sm"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="max-h-[280px] overflow-y-auto p-1">
+                        {(
+                          Object.keys(CATEGORIES_BY_TYPE) as BudgetType[]
+                        ).map((type) => (
+                          <div key={type} className="mb-1">
+                            <p className="px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                              {type}
+                            </p>
+                            {CATEGORIES_BY_TYPE[type].map((cat) => (
+                              <Label
+                                key={`${type}-${cat.value}`}
+                                className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm font-normal hover:bg-accent"
+                              >
+                                <Checkbox id={`cat-${type}-${cat.value}`} />
+                                {cat.label}
+                              </Label>
+                            ))}
+                          </div>
                         ))}
                       </div>
-                    ))}
+
+                      <div className="flex items-center justify-between border-t p-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="cursor-pointer text-xs"
+                        >
+                          Clear
+                        </Button>
+                        <Button size="sm" className="cursor-pointer text-xs">
+                          Apply
+                        </Button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+
+                {/* Search pe note */}
+                <div className="flex flex-col gap-1.5">
+                  <Label
+                    htmlFor="filter-search"
+                    className="text-xs text-muted-foreground"
+                  >
+                    Search
+                  </Label>
+                  <div className="relative">
+                    <Search
+                      size={16}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                    <Input
+                      id="filter-search"
+                      type="search"
+                      placeholder="Notes…"
+                      className="w-[200px] pl-9"
+                    />
                   </div>
+                </div>
 
-                  <div className="flex items-center justify-between border-t p-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="cursor-pointer text-xs"
-                    >
-                      Clear
-                    </Button>
-                    <Button size="sm" className="cursor-pointer text-xs">
-                      Apply
-                    </Button>
+                {/* Interval suma */}
+                <div className="flex flex-col gap-1.5">
+                  <Label
+                    htmlFor="filter-min"
+                    className="text-xs text-muted-foreground"
+                  >
+                    Amount
+                  </Label>
+                  <div className="flex items-center gap-1.5">
+                    <Input
+                      id="filter-min"
+                      type="number"
+                      placeholder="Min"
+                      className="w-[90px]"
+                    />
+                    <span className="text-muted-foreground">–</span>
+                    <Input
+                      type="number"
+                      placeholder="Max"
+                      className="w-[90px]"
+                      aria-label="Maximum amount"
+                    />
                   </div>
-                </PopoverContent>
-              </Popover>
-            </div>
+                </div>
 
-            {/* Search pe note */}
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="filter-search"
-                className="text-xs text-muted-foreground"
-              >
-                Search
-              </Label>
-              <div className="relative">
-                <Search
-                  size={16}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <Input
-                  id="filter-search"
-                  type="search"
-                  placeholder="Notes…"
-                  className="w-[200px] pl-9"
-                />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="cursor-pointer text-muted-foreground"
+                >
+                  <X size={16} />
+                  Clear all
+                </Button>
               </div>
-            </div>
 
-            {/* Interval suma */}
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="filter-min"
-                className="text-xs text-muted-foreground"
-              >
-                Amount
-              </Label>
-              <div className="flex items-center gap-1.5">
-                <Input
-                  id="filter-min"
-                  type="number"
-                  placeholder="Min"
-                  className="w-[90px]"
-                />
-                <span className="text-muted-foreground">–</span>
-                <Input
-                  type="number"
-                  placeholder="Max"
-                  className="w-[90px]"
-                  aria-label="Maximum amount"
-                />
-              </div>
-            </div>
+              {/* Chip-uri cu filtrele active */}
+              <div className="mt-3 flex flex-wrap items-center gap-2 border-t pt-3">
+                <span className="text-xs text-muted-foreground">Active:</span>
 
-            <Button
-              variant="ghost"
-              size="sm"
-              className="cursor-pointer text-muted-foreground"
-            >
-              <X size={16} />
-              Clear all
-            </Button>
-          </div>
+                <Badge variant="secondary" className="gap-1 pr-1 font-normal">
+                  Period: This month
+                  <button
+                    type="button"
+                    aria-label="Remove period filter"
+                    className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
+                  >
+                    <X size={12} />
+                  </button>
+                </Badge>
 
-          {/* Chip-uri cu filtrele active */}
-          <div className="mt-3 flex flex-wrap items-center gap-2 border-t pt-3">
-            <span className="text-xs text-muted-foreground">Active:</span>
-
-            <Badge variant="secondary" className="gap-1 pr-1 font-normal">
-              Period: This month
-              <button
-                type="button"
-                aria-label="Remove period filter"
-                className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
-              >
-                <X size={12} />
-              </button>
-            </Badge>
-
-            <Badge variant="secondary" className="gap-1 pr-1 font-normal">
-              Category: Rent
-              <button
-                type="button"
-                aria-label="Remove category filter"
-                className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
-              >
-                <X size={12} />
-              </button>
-            </Badge>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* ===== TARGETS PANEL (randat static — leaga-l de un state showTargets) ===== */}
-      <Card className="mb-6 border-dashed py-4">
-        <CardContent className="px-4">
-          <div className="flex flex-wrap items-end gap-3">
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="target-income"
-                className="text-xs text-muted-foreground"
-              >
-                Income target
-              </Label>
-              <Input
-                id="target-income"
-                type="number"
-                defaultValue={budgetTargets.income}
-                className="w-[130px]"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="target-expenses"
-                className="text-xs text-muted-foreground"
-              >
-                Expenses limit
-              </Label>
-              <Input
-                id="target-expenses"
-                type="number"
-                defaultValue={budgetTargets.expenses}
-                className="w-[130px]"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="target-savings"
-                className="text-xs text-muted-foreground"
-              >
-                Savings goal
-              </Label>
-              <Input
-                id="target-savings"
-                type="number"
-                defaultValue={budgetTargets.savings}
-                className="w-[130px]"
-              />
-            </div>
-            <Button size="sm" className="cursor-pointer">
-              Save targets
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Summary cards */}
-      <div className="space-y-6 mb-8">
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="border border-green-200 bg-green-50/60 dark:border-green-900 dark:bg-green-950/30">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-1 text-lg">
-                <ArrowUpRight className="text-green-600 dark:text-green-400" />{" "}
-                Income
-              </CardTitle>
-              <CardDescription>Total incoming money</CardDescription>
-            </CardHeader>
-
-            <CardContent>
-              <p className="text-xl font-semibold text-green-700 dark:text-green-400">
-                ${totalIncome.toFixed(2)}
-              </p>
-              <div className="mt-3 space-y-1">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>{Math.round(incomePct)}% of target</span>
-                  <span>${budgetTargets.income.toLocaleString()}</span>
-                </div>
-                <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
-                  <div
-                    className={`h-1.5 rounded-full transition-all ${getBarColor(incomePct)}`}
-                    style={{ width: `${incomePct}%` }}
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border border-red-200 bg-red-50/60 dark:border-red-900 dark:bg-red-950/30">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <ArrowDownRight className="text-red-600 dark:text-red-400" />{" "}
-                Expenses
-              </CardTitle>
-              <CardDescription>Total spending this period</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-xl font-semibold text-red-700 dark:text-red-400">
-                ${totalExpenses.toFixed(2)}
-              </p>
-              <div className="mt-3 space-y-1">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>{Math.round(expensesPct)}% of limit</span>
-                  <span>${budgetTargets.expenses.toLocaleString()}</span>
-                </div>
-                <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
-                  <div
-                    className={`h-1.5 rounded-full transition-all ${getBarColor(expensesPct, true)}`}
-                    style={{ width: `${expensesPct}%` }}
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border border-sky-200 bg-sky-50/60 dark:border-sky-900 dark:bg-sky-950/30">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <PiggyBank className="text-sky-600 dark:text-sky-400" /> Savings
-              </CardTitle>
-              <CardDescription>Money you are setting aside</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-xl font-semibold text-sky-700 dark:text-sky-400">
-                ${totalSavings.toFixed(2)}
-              </p>
-              <div className="mt-3 space-y-1">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>{Math.round(savingsPct)}% of goal</span>
-                  <span>${budgetTargets.savings.toLocaleString()}</span>
-                </div>
-                <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
-                  <div
-                    className={`h-1.5 rounded-full transition-all ${getBarColor(savingsPct)}`}
-                    style={{ width: `${savingsPct}%` }}
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border border-violet-200 bg-violet-50/60 dark:border-violet-900 dark:bg-violet-950/30">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <DollarSign className="text-violet-600 dark:text-violet-400" />{" "}
-                Net balance
-              </CardTitle>
-              <CardDescription>Income minus expenses</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p
-                className={`text-xl font-semibold ${netBalance >= 0 ? "text-emerald-700 dark:text-emerald-400" : "text-rose-700 dark:text-rose-400"}`}
-              >
-                ${netBalance.toFixed(2)}
-              </p>
-              <div className="mt-3 space-y-1">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Net margin</span>
-                  <span>{Math.round(savingsRate)}%</span>
-                </div>
-                <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
-                  <div
-                    className={`h-1.5 rounded-full transition-all ${netBalance >= 0 ? "bg-emerald-500" : "bg-rose-500"}`}
-                    style={{ width: `${Math.abs(savingsRate)}%` }}
-                  />
-                </div>
+                <Badge variant="secondary" className="gap-1 pr-1 font-normal">
+                  Category: Rent
+                  <button
+                    type="button"
+                    aria-label="Remove category filter"
+                    className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
+                  >
+                    <X size={12} />
+                  </button>
+                </Badge>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* // DE ADAUGAT DOAR ULTIMELE 5 TRANZACTII PT FIECARE DE AICI, RESUL LE VEDE IN TRANSATION, ELIMIN SI SCROLL SI TOT */}
-        {/* Item sections */}
-        <div className="grid items-start gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {sections.map((section) => (
-            <ItemCard
-              onShowForm={() => setShowForm(true)}
-              key={section.section}
-              section={section}
-              expanded={expanded}
-              handleToggle={handleToggle}
-            />
-          ))}
-        </div>
       </div>
 
       {/* Slide-in form */}
