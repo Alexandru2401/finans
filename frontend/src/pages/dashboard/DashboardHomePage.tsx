@@ -23,9 +23,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CreditCard, Plus, TrendingDown, TrendingUp } from "lucide-react";
-import { Pie, PieChart } from "recharts";
+import { CreditCard, TrendingDown, TrendingUp } from "lucide-react";
 import { Link } from "react-router";
+import { Pie, PieChart } from "recharts";
 
 import {
   ChartContainer,
@@ -286,23 +286,32 @@ export default function DashboardHomePage() {
                 >
                   <defs>
                     <linearGradient id="income" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#059669" stopOpacity={0.15} />
+                      <stop
+                        offset="5%"
+                        stopColor="#059669"
+                        stopOpacity={0.15}
+                      />
                       <stop offset="95%" stopColor="#059669" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="expenses" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#dc2626" stopOpacity={0.15} />
+                      <stop
+                        offset="5%"
+                        stopColor="#dc2626"
+                        stopOpacity={0.15}
+                      />
                       <stop offset="95%" stopColor="#dc2626" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="savings" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.15} />
+                      <stop
+                        offset="5%"
+                        stopColor="#7c3aed"
+                        stopOpacity={0.15}
+                      />
                       <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
                     </linearGradient>
                   </defs>
 
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke="var(--border)"
-                  />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                   <XAxis
                     dataKey="month"
                     tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
@@ -393,7 +402,9 @@ export default function DashboardHomePage() {
                 </TableHeader>
                 <TableBody>
                   <TableRow>
-                    <TableCell className="font-medium">Stripe Payment</TableCell>
+                    <TableCell className="font-medium">
+                      Stripe Payment
+                    </TableCell>
                     <TableCell>
                       <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
                         Sales
@@ -423,7 +434,9 @@ export default function DashboardHomePage() {
                   </TableRow>
 
                   <TableRow>
-                    <TableCell className="font-medium">Software Tools</TableCell>
+                    <TableCell className="font-medium">
+                      Software Tools
+                    </TableCell>
                     <TableCell>
                       <span className="rounded-full bg-purple-50 px-2.5 py-1 text-xs font-medium text-purple-700 dark:bg-purple-950 dark:text-purple-400">
                         SaaS
@@ -438,7 +451,9 @@ export default function DashboardHomePage() {
                   </TableRow>
 
                   <TableRow>
-                    <TableCell className="font-medium">Client Invoice</TableCell>
+                    <TableCell className="font-medium">
+                      Client Invoice
+                    </TableCell>
                     <TableCell>
                       <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
                         Sales
@@ -453,7 +468,9 @@ export default function DashboardHomePage() {
                   </TableRow>
 
                   <TableRow>
-                    <TableCell className="font-medium">Stripe Payment</TableCell>
+                    <TableCell className="font-medium">
+                      Stripe Payment
+                    </TableCell>
                     <TableCell>
                       <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
                         Sales

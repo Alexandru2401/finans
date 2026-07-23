@@ -43,9 +43,6 @@ const savingsConfig = {
   forecast: { label: "Forecast", color: "var(--chart-3)" },
 } satisfies ChartConfig;
 
-const breakdownConfig = {
-  amount: { label: "Sumă" },
-} satisfies ChartConfig;
 
 // ─── Tip card (Idee 2) ────────────────────────────────────────────────────────
 

@@ -655,6 +655,7 @@ export default function BudgetPage() {
           </Card>
         </div>
 
+        {/* // DE ADAUGAT DOAR ULTIMELE 5 TRANZACTII PT FIECARE DE AICI, RESUL LE VEDE IN TRANSATION, ELIMIN SI SCROLL SI TOT */}
         {/* Item sections */}
         <div className="grid items-start gap-6 md:grid-cols-2 xl:grid-cols-3">
           {sections.map((section) => (

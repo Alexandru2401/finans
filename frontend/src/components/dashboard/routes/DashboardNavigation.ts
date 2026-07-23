@@ -1,11 +1,10 @@
 import {
+  ChartNoAxesCombined,
+  CircleFadingArrowUp,
   LayoutDashboard,
   PiggyBank,
-  UserRoundPen,
   UserRound,
-  ChartNoAxesCombined,
-  Settings,
-  CircleFadingArrowUp,
+  UserRoundPen
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
