@@ -26,6 +26,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../ui/card";
@@ -173,18 +174,14 @@ export default function ItemCard({
             <CardTitle className="flex items-center justify-between gap-2 text-lg">
               {section.title}
               <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => handleToggle(section.section)}
-                className="rounded-full cursor-pointer"
+                variant="outline"
+                // onClick={() => setShowForm((prev) => !prev)}
+                className="cursor-pointer max-w-34 md:w-auto"
               >
-                <ChevronDown
-                  className={`transition-transform duration-200 ${
-                    expanded[section.section] ? "rotate-180" : "rotate-0"
-                  }`}
-                />
+                <Plus size={16} />
+                Add more items
               </Button>
+
             </CardTitle>
             <CardDescription className="text-xs text-slate-600 font-medium">
               Total: ${section.total.toFixed(2)} · {section.items.length} item
@@ -194,7 +191,7 @@ export default function ItemCard({
         </CardHeader>
 
         {expanded[section.section] && (
-          <CardContent className="h-90 overflow-hidden">
+          <CardContent className="overflow-hidden">
             {section.items.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-4 py-6">
                 <p className="text-sm text-slate-600">No entries yet.</p>
@@ -208,11 +205,11 @@ export default function ItemCard({
                 </Button>
               </div>
             ) : (
-              <div className="space-y-3">
-                {section.items.map((item) => (
+              <div className="space-y-1">
+                {section.items.slice(0, 5).map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center gap-3 rounded-lg border border-border/50 px-3 py-2.5"
+                    className="flex items-center gap-3 rounded-lg border border-border/50 px-3 py-1.5"
                   >
                     <div
                       className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${styles.bubble}`}
@@ -279,6 +276,17 @@ export default function ItemCard({
             )}
           </CardContent>
         )}
+
+        <CardFooter>
+          <Button
+            variant="ghost"
+            // onClick={() => setShowForm((prev) => !prev)}
+            className="cursor-pointer max-w-34 md:w-auto"
+          >
+            <Plus size={16} />
+            Add more items
+          </Button>
+        </CardFooter>
       </Card>
 
       {/* ── VIEW DETAILS MODAL ── */}
@@ -311,10 +319,10 @@ export default function ItemCard({
                 <p className="font-medium">
                   {viewingItem.date
                     ? new Date(viewingItem.date).toLocaleDateString("ro-RO", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })
                     : "—"}
                 </p>
               </div>
@@ -519,6 +527,8 @@ export default function ItemCard({
           </div>
         </div>
       )}
+
+
     </div>
   );
 }

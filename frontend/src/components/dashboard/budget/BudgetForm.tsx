@@ -145,38 +145,38 @@ export default function BudgetForm({
           min="0"
         />
       </div>
+       <div className="space-y-2">
+          <Label>Date</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                data-empty={!formDate}
+                className="w-full justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
+              >
+                {formDate ? format(formDate, "PPP") : <span>Pick a date</span>}
+                <ChevronDownIcon />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={formDate}
+                onSelect={(d) => {
+                  setFormDate(d);
+                  setFormData((prev) => ({
+                    ...prev,
+                    date: d ? d.toISOString().split("T")[0] : "",
+                  }));
+                }}
+                defaultMonth={formDate}
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
 
       {/* Date */}
-      <div className="space-y-2">
-        <Label>Date</Label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              type="button"
-              variant="outline"
-              data-empty={!formDate}
-              className="w-full justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
-            >
-              {formDate ? format(formDate, "PPP") : <span>Pick a date</span>}
-              <ChevronDownIcon />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={formDate}
-              onSelect={(d) => {
-                setFormDate(d);
-                setFormData((prev) => ({
-                  ...prev,
-                  date: d ? d.toISOString().split("T")[0] : "",
-                }));
-              }}
-              defaultMonth={formDate}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
 
       {/* Notes */}
       <div className="space-y-2">
