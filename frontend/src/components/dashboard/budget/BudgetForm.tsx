@@ -132,20 +132,21 @@ export default function BudgetForm({
       </div>
 
       {/* Amount */}
-      <div className="space-y-2">
-        <Label htmlFor="amount">Amount</Label>
-        <Input
-          id="amount"
-          name="amount"
-          type="number"
-          value={formData.amount}
-          onChange={handleChange}
-          placeholder="0.00"
-          step="0.01"
-          min="0"
-        />
-      </div>
-       <div className="space-y-2">
+      <div className="flex justify-between">
+        <div className="space-y-2">
+          <Label htmlFor="amount">Amount</Label>
+          <Input
+            id="amount"
+            name="amount"
+            type="number"
+            value={formData.amount}
+            onChange={handleChange}
+            placeholder="0.00"
+            step="0.01"
+            min="0"
+          />
+        </div>
+        <div className="space-y-2">
           <Label>Date</Label>
           <Popover>
             <PopoverTrigger asChild>
@@ -174,7 +175,7 @@ export default function BudgetForm({
               />
             </PopoverContent>
           </Popover>
-        </div>
+        </div></div>
 
       {/* Date */}
 

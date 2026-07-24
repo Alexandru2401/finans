@@ -597,7 +597,7 @@ export default function BudgetPage() {
         </>
       )}
 
-      {openFilters && <Card className="mb-4 border border-slate-800 py-4 absolute top-20 max-w-1/3 right-0">
+      {openFilters && <Card className="mb-4 border border-slate-800 py-4 absolute top-39 md:top-20 max-w-1/2 md:max-w-1/3 md:right-15">
         <CardContent className="px-4">
           <div className="flex flex-wrap items-end gap-3">
             {/* Perioada */}

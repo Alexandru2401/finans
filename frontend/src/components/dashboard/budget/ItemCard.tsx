@@ -10,16 +10,16 @@ import type {
 } from "@/store/dashboardStore/BudgetStoreContext";
 import { format } from "date-fns/format";
 import {
-  ChevronDown,
   ChevronDownIcon,
   FileText,
   Minus,
   Pencil,
   PiggyBank,
   Plus,
-  Trash2,
+  Trash2
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router";
 import type { Section } from "../../../pages/dashboard/BudgetPage";
 import { Button } from "../../ui/button";
 import {
@@ -173,15 +173,15 @@ export default function ItemCard({
           <div>
             <CardTitle className="flex items-center justify-between gap-2 text-lg">
               {section.title}
-              <Button
-                variant="outline"
-                // onClick={() => setShowForm((prev) => !prev)}
-                className="cursor-pointer max-w-34 md:w-auto"
-              >
-                <Plus size={16} />
-                Add more items
-              </Button>
-
+              <Link to="/dashboard/transactions">
+                <Button
+                  variant="outline"
+                  // onClick={() => setShowForm((prev) => !prev)}
+                  className="cursor-pointer max-w-34 md:w-auto"
+                >
+                  See all
+                </Button>
+              </Link>
             </CardTitle>
             <CardDescription className="text-xs text-slate-600 font-medium">
               Total: ${section.total.toFixed(2)} · {section.items.length} item
