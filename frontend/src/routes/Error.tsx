@@ -28,8 +28,6 @@ export default function NotFoundPage() {
             Back to home
           </Link>
         </Button>
-
-
       </div>
     </div>
   );
