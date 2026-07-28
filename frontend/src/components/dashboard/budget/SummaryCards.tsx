@@ -1,0 +1,131 @@
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowDownRight, ArrowUpRight, DollarSign, PiggyBank } from "lucide-react";
+
+import { CardContent, } from "@/components/ui/card";
+
+interface SummaryProps {
+    totalIncome: number,
+    incomePct: number,
+    budgetTargets: { income: number; expenses: number; savings: number };
+    getBarColor: (pct: number, isExpenses?: boolean) => string;
+    totalExpenses: number,
+    expensesPct: number,
+    totalSavings: number,
+    savingsPct: number,
+    netBalance: number,
+    savingsRate: number
+}
+
+
+export default function SummaryCards({ totalIncome, incomePct, budgetTargets, getBarColor, totalExpenses, expensesPct, totalSavings, savingsPct, netBalance, savingsRate }: SummaryProps) {
+    return <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="border">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-1 text-lg">
+                    <ArrowUpRight className="text-green-600 dark:text-green-400" />{" "}
+                    Income
+                </CardTitle>
+
+            </CardHeader>
+
+            <CardContent>
+                <p className="text-xl font-semibold">
+                    ${totalIncome.toFixed(2)}
+                </p>
+                <div className="mt-3 space-y-1">
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>{Math.round(incomePct)}% of target</span>
+                        <span>${budgetTargets.income.toLocaleString()}</span>
+                    </div>
+                    <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
+                        <div
+                            className={`h-1.5 rounded-full transition-all ${getBarColor(incomePct)}`}
+                            style={{ width: `${incomePct}%` }}
+                        />
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+
+        <Card className="border">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                    <ArrowDownRight className="text-red-600 dark:text-red-400" />{" "}
+                    Expenses
+                </CardTitle>
+
+            </CardHeader>
+            <CardContent>
+                <p className="text-xl font-semibold ">
+                    ${totalExpenses.toFixed(2)}
+                </p>
+                <div className="mt-3 space-y-1">
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>{Math.round(expensesPct)}% of limit</span>
+                        <span>${budgetTargets.expenses.toLocaleString()}</span>
+                    </div>
+                    <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
+                        <div
+                            className={`h-1.5 rounded-full transition-all bg-red-500`}
+                            style={{ width: `${expensesPct}%` }}
+                        />
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+
+        <Card className="border">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                    <PiggyBank className="text-sky-600 dark:text-sky-400" />{" "}
+                    Savings
+                </CardTitle>
+
+            </CardHeader>
+            <CardContent>
+                <p className="text-xl font-semibold">
+                    ${totalSavings.toFixed(2)}
+                </p>
+                <div className="mt-3 space-y-1">
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>{Math.round(savingsPct)}% of goal</span>
+                        <span>${budgetTargets.savings.toLocaleString()}</span>
+                    </div>
+                    <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
+                        <div
+                            className={`h-1.5 rounded-full transition-all ${getBarColor(savingsPct)}`}
+                            style={{ width: `${savingsPct}%` }}
+                        />
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+
+        <Card className="border">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                    <DollarSign className="text-violet-600 dark:text-violet-400" />{" "}
+                    Net balance
+                </CardTitle>
+
+            </CardHeader>
+            <CardContent>
+                <p className={`text-xl font-semibold`}>
+                    ${netBalance.toFixed(2)}
+                </p>
+                <div className="mt-3 space-y-1">
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>Net margin</span>
+                        <span>{Math.round(savingsRate)}%</span>
+                    </div>
+                    <div className="h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-800">
+                        <div
+                            className={`h-1.5 rounded-full transition-all ${netBalance >= 0 ? "bg-violet-500" : "bg-violet-500"}`}
+                            style={{ width: `${Math.abs(savingsRate)}%` }}
+                        />
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    </div>
+}
