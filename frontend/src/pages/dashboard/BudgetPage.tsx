@@ -1,14 +1,13 @@
 import BudgetForm from "@/components/dashboard/budget/BudgetForm";
 import ItemCard from "@/components/dashboard/budget/ItemCard";
 import { Button } from "@/components/ui/button";
-import { useBudgetStore } from "@/store/dashboardStore/BudgetStoreContext";
 import {
   ChevronDown,
   Plus,
   SlidersHorizontal,
-  Target
+  Target,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import BudgetFilters from "@/components/dashboard/budget/BudgetFilters";
 import ExtraInfo from "@/components/dashboard/budget/ExtraInfo";
@@ -16,19 +15,24 @@ import Insights from "@/components/dashboard/budget/Insights";
 import SummaryCards from "@/components/dashboard/budget/SummaryCards";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type {
-  BudgetItem,
-  NewBudgetItem,
-} from "@/store/dashboardStore/BudgetStoreContext";
-
-
+import {
+  getBudgetData,
+  addIncomeItem as apiAddIncome,
+  addExpenseItem as apiAddExpense,
+  addSavingsItem as apiAddSavings,
+  editIncomeItem as apiEditIncome,
+  editExpenseItem as apiEditExpense,
+  editSavingsItem as apiEditSavings,
+  deleteIncomeItem as apiDeleteIncome,
+  deleteExpenseItem as apiDeleteExpense,
+  deleteSavingsItem as apiDeleteSavings,
+  type BudgetItem,
+  type NewBudgetItem,
+} from "@/api/budget";
 
 type BudgetType = "income" | "expenses" | "savings";
 
-const CATEGORIES_BY_TYPE: Record<
-  BudgetType,
-  { value: string; label: string }[]
-> = {
+const CATEGORIES_BY_TYPE: Record<BudgetType, { value: string; label: string }[]> = {
   income: [
     { value: "salary", label: "Salary" },
     { value: "freelance", label: "Freelance" },
@@ -71,33 +75,13 @@ export interface Section {
 }
 
 export default function BudgetPage() {
-  const {
-    incomeItems,
-    expenseItems,
-    savingsItems,
-    totalIncome,
-    totalExpenses,
-    totalSavings,
-    addIncomeItem,
-    addExpenseItem,
-    addSavingsItem,
-    deleteIncomeItem,
-    deleteExpenseItem,
-    deleteSavingsItem,
-    editIncomeItem,
-    editExpenseItem,
-    editSavingsItem,
-  } = useBudgetStore();
+  const [incomeItems, setIncomeItems] = useState<BudgetItem[]>([]);
+  const [expenseItems, setExpenseItems] = useState<BudgetItem[]>([]);
+  const [savingsItems, setSavingsItems] = useState<BudgetItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [showForm, setShowForm] = useState(false);
-  // const [formDate, setFormDate] = useState<Date | undefined>(new Date());
-  const [expanded, setExpanded] = useState({
-    income: true,
-    expenses: true,
-    savings: true,
-  });
-
-  const [openFilters, setOpenFilters] = useState(false)
+  const [openFilters, setOpenFilters] = useState(false);
   const [formData, setFormData] = useState({
     type: "expenses" as BudgetType,
     category: "groceries",
@@ -106,46 +90,57 @@ export default function BudgetPage() {
     date: new Date().toISOString().split("T")[0],
   });
 
+  useEffect(() => {
+    getBudgetData()
+      .then((res) => {
+        if (res.ok) {
+          setIncomeItems(res.data.income);
+          setExpenseItems(res.data.expenses);
+          setSavingsItems(res.data.savings);
+        }
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const totalIncome = useMemo(
+    () => incomeItems.reduce((s, i) => s + i.amount, 0),
+    [incomeItems],
+  );
+  const totalExpenses = useMemo(
+    () => expenseItems.reduce((s, i) => s + i.amount, 0),
+    [expenseItems],
+  );
+  const totalSavings = useMemo(
+    () => savingsItems.reduce((s, i) => s + i.amount, 0),
+    [savingsItems],
+  );
   const netBalance = useMemo(
     () => totalIncome - totalExpenses,
     [totalIncome, totalExpenses],
   );
 
-  function handleToggle(section: keyof typeof expanded) {
-    setExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
-  }
-
-  // function handleChange(
-  //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  // ) {
-  //   const { name, value } = event.target;
-  //   setFormData((prev) => ({ ...prev, [name]: value }));
-  // }
-
-  // function handleTypeChange(value: BudgetType) {
-  //   const firstCategory = CATEGORIES_BY_TYPE[value][0].value;
-  //   setFormData((prev) => ({ ...prev, type: value, category: firstCategory }));
-  // }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     const amount = Number(formData.amount);
     if (!amount || Number.isNaN(amount)) return;
 
-    const payload = {
-      type: formData.type,
+    const payload: NewBudgetItem = {
       category: formData.category,
-      amount: Number(formData.amount),
+      amount,
       notes: formData.notes.trim(),
       date: formData.date,
     };
 
-    if (formData.type === "income") addIncomeItem(payload);
-    else if (formData.type === "expenses") addExpenseItem(payload);
-    else addSavingsItem(payload);
-
-    console.log("Payload:", payload);
+    if (formData.type === "income") {
+      const res = await apiAddIncome(payload);
+      if (res.ok) setIncomeItems((prev) => [...prev, res.data]);
+    } else if (formData.type === "expenses") {
+      const res = await apiAddExpense(payload);
+      if (res.ok) setExpenseItems((prev) => [...prev, res.data]);
+    } else {
+      const res = await apiAddSavings(payload);
+      if (res.ok) setSavingsItems((prev) => [...prev, res.data]);
+    }
 
     setFormData((prev) => ({
       ...prev,
@@ -156,38 +151,39 @@ export default function BudgetPage() {
     }));
   }
 
+  async function deleteIncomeItem(id: string) {
+    const res = await apiDeleteIncome(id);
+    if (res.ok) setIncomeItems((prev) => prev.filter((i) => i.id !== id));
+  }
+  async function deleteExpenseItem(id: string) {
+    const res = await apiDeleteExpense(id);
+    if (res.ok) setExpenseItems((prev) => prev.filter((i) => i.id !== id));
+  }
+  async function deleteSavingsItem(id: string) {
+    const res = await apiDeleteSavings(id);
+    if (res.ok) setSavingsItems((prev) => prev.filter((i) => i.id !== id));
+  }
+
+  async function editIncomeItem(id: string, payload: Partial<NewBudgetItem>) {
+    const res = await apiEditIncome(id, payload);
+    if (res.ok) setIncomeItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
+  }
+  async function editExpenseItem(id: string, payload: Partial<NewBudgetItem>) {
+    const res = await apiEditExpense(id, payload);
+    if (res.ok) setExpenseItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
+  }
+  async function editSavingsItem(id: string, payload: Partial<NewBudgetItem>) {
+    const res = await apiEditSavings(id, payload);
+    if (res.ok) setSavingsItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
+  }
+
   const sections = [
-    {
-      title: "Income",
-      items: incomeItems,
-      total: totalIncome,
-      section: "income" as const,
-      onDelete: deleteIncomeItem,
-      onEdit: editIncomeItem,
-    },
-    {
-      title: "Expenses",
-      items: expenseItems,
-      total: totalExpenses,
-      section: "expenses" as const,
-      onDelete: deleteExpenseItem,
-      onEdit: editExpenseItem,
-    },
-    {
-      title: "Savings",
-      items: savingsItems,
-      total: totalSavings,
-      section: "savings" as const,
-      onDelete: deleteSavingsItem,
-      onEdit: editSavingsItem,
-    },
+    { title: "Income", items: incomeItems, total: totalIncome, section: "income" as const, onDelete: deleteIncomeItem, onEdit: editIncomeItem },
+    { title: "Expenses", items: expenseItems, total: totalExpenses, section: "expenses" as const, onDelete: deleteExpenseItem, onEdit: editExpenseItem },
+    { title: "Savings", items: savingsItems, total: totalSavings, section: "savings" as const, onDelete: deleteSavingsItem, onEdit: editSavingsItem },
   ];
 
-  const budgetTargets = {
-    income: 8000,
-    expenses: 4000,
-    savings: 1500,
-  };
+  const budgetTargets = { income: 8000, expenses: 4000, savings: 1500 };
 
   const getBarColor = (pct: number, isExpenses = false) => {
     if (isExpenses) {
@@ -201,20 +197,20 @@ export default function BudgetPage() {
   };
 
   const incomePct = Math.min((totalIncome / budgetTargets.income) * 100, 100);
-  const expensesPct = Math.min(
-    (totalExpenses / budgetTargets.expenses) * 100,
-    100,
-  );
-  const savingsPct = Math.min(
-    (totalSavings / budgetTargets.savings) * 100,
-    100,
-  );
-  const savingsRate =
-    totalIncome > 0 ? Math.min((netBalance / totalIncome) * 100, 100) : 0;
+  const expensesPct = Math.min((totalExpenses / budgetTargets.expenses) * 100, 100);
+  const savingsPct = Math.min((totalSavings / budgetTargets.savings) * 100, 100);
+  const savingsRate = totalIncome > 0 ? Math.min((netBalance / totalIncome) * 100, 100) : 0;
+
+  if (loading) {
+    return (
+      <section className="py-4 px-4 max-w-7xl mx-auto">
+        <p className="text-sm text-muted-foreground">Loading…</p>
+      </section>
+    );
+  }
 
   return (
     <section className="relative py-4 px-4 max-w-7xl mx-auto">
-      {/* Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-6">
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold">Budget Overview</h1>
@@ -223,11 +219,10 @@ export default function BudgetPage() {
           </p>
         </div>
 
-        {/* TOGGLES */}
         <div className="flex flex-col md:items-end">
           <div className="flex items-center gap-2 mt-4">
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               className="cursor-pointer gap-2 text-muted-foreground data-[active=true]:bg-accent data-[active=true]:text-foreground"
               data-active="true"
@@ -235,15 +230,10 @@ export default function BudgetPage() {
             >
               <SlidersHorizontal size={16} />
               Filters
-
               <ChevronDown size={14} className="opacity-60" />
             </Button>
 
-            <Button
-              variant="ghost"
-              size="sm"
-              className="cursor-pointer gap-2 text-muted-foreground"
-            >
+            <Button variant="ghost" size="sm" className="cursor-pointer gap-2 text-muted-foreground">
               <Target size={16} />
               Your Target
               <ChevronDown size={14} className="opacity-60" />
@@ -261,11 +251,10 @@ export default function BudgetPage() {
         </div>
       </div>
 
-
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Summary cards */}
         <div className="col-span-2 space-y-3">
-          <SummaryCards totalIncome={totalIncome}
+          <SummaryCards
+            totalIncome={totalIncome}
             incomePct={incomePct}
             budgetTargets={budgetTargets}
             getBarColor={getBarColor}
@@ -274,14 +263,14 @@ export default function BudgetPage() {
             totalSavings={totalSavings}
             savingsPct={savingsPct}
             netBalance={netBalance}
-            savingsRate={savingsRate} />
+            savingsRate={savingsRate}
+          />
 
-          {/* Item sections */}
           <div className="grid items-start gap-6">
             <Tabs defaultValue="income" className="w-full">
               <TabsList>
                 {sections.map((section) => (
-                  <TabsTrigger key={section.section} value={section.section}>
+                  <TabsTrigger key={section.section} value={section.section} className="cursor-pointer">
                     {section.title}
                   </TabsTrigger>
                 ))}
@@ -289,12 +278,7 @@ export default function BudgetPage() {
 
               {sections.map((section) => (
                 <TabsContent key={section.section} value={section.section}>
-                  <ItemCard
-                    section={section}
-                    expanded={expanded}
-                    handleToggle={handleToggle}
-                    onShowForm={() => setShowForm(true)}
-                  />
+                  <ItemCard section={section} onShowForm={() => setShowForm(true)} />
                 </TabsContent>
               ))}
             </Tabs>
@@ -302,22 +286,14 @@ export default function BudgetPage() {
         </div>
 
         <div className="flex flex-col md:flex-row md:justify-between lg:flex-col gap-6">
-          {/* Insight */}
           <Insights />
-
-          {/* Extra info */}
           <ExtraInfo />
         </div>
-
       </div>
 
-      {/* Slide-in form */}
       {showForm && (
         <>
-          <div
-            className="fixed inset-0 z-40 bg-black/30"
-            onClick={() => setShowForm(false)}
-          />
+          <div className="fixed inset-0 z-40 bg-black/30" onClick={() => setShowForm(false)} />
           <aside className="fixed inset-y-0 right-0 z-50 max-w-md overflow-y-auto bg-background shadow-2xl border-l border-muted/30 md:max-w-xl lg:max-w-2xl">
             <div className="flex items-center justify-between border-b border-muted/20 px-6 py-4">
               <div>
@@ -326,27 +302,24 @@ export default function BudgetPage() {
                   Choose whether it's income, expense or savings.
                 </p>
               </div>
-              <Button
-                variant="ghost"
-                onClick={() => setShowForm(false)}
-                className="cursor-pointer"
-              >
+              <Button variant="ghost" onClick={() => setShowForm(false)} className="cursor-pointer">
                 Close
               </Button>
             </div>
 
             <div className="p-6">
-              <BudgetForm
-                formData={formData}
-                setFormData={setFormData}
-                handleSubmit={handleSubmit}
-              />
+              <BudgetForm formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} />
             </div>
           </aside>
         </>
       )}
 
-      {openFilters && <BudgetFilters />}
+      {openFilters && (
+        <>
+          <div className="fixed inset-0 z-30" onClick={() => setOpenFilters(false)} />
+          <BudgetFilters />
+        </>
+      )}
     </section>
   );
 }

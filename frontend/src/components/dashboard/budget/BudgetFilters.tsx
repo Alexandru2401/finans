@@ -56,7 +56,7 @@ const CATEGORIES_BY_TYPE: Record<
 
 
 export default function BudgetFilters() {
-    return <Card className="mb-4 border border-slate-800 py-4 absolute top-39 md:top-20 max-w-1/2 md:max-w-1/3 md:right-15">
+    return <Card className="mb-4 border border-slate-800 py-4 absolute top-39 md:top-20 max-w-1/2 md:max-w-1/3 md:right-15 z-40">
         <CardContent className="px-4">
             <div className="flex flex-wrap items-end gap-3">
                 {/* Perioada */}
@@ -68,7 +68,7 @@ export default function BudgetFilters() {
                         Period
                     </Label>
                     <Select>
-                        <SelectTrigger id="filter-period" className="w-[170px]">
+                        <SelectTrigger id="filter-period" className="w-42.5">
                             <SelectValue placeholder="This month" />
                         </SelectTrigger>
                         <SelectContent>
@@ -94,8 +94,8 @@ export default function BudgetFilters() {
                     <Input
                         id="filter-from"
                         type="date"
-                        className="w-[150px]"
-                        disabled
+                        className="w-37.5"
+
                     />
                 </div>
                 <div className="flex flex-col gap-1.5">
@@ -108,8 +108,8 @@ export default function BudgetFilters() {
                     <Input
                         id="filter-to"
                         type="date"
-                        className="w-[150px]"
-                        disabled
+                        className="w-37.5"
+
                     />
                 </div>
 
@@ -122,7 +122,7 @@ export default function BudgetFilters() {
                         <PopoverTrigger asChild>
                             <Button
                                 variant="outline"
-                                className="w-[200px] cursor-pointer justify-between font-normal"
+                                className="w-50 cursor-pointer justify-between font-normal"
                             >
                                 <span className="truncate text-muted-foreground">
                                     All categories
@@ -130,7 +130,7 @@ export default function BudgetFilters() {
                                 <ChevronDown size={16} className="opacity-50" />
                             </Button>
                         </PopoverTrigger>
-                        <PopoverContent align="start" className="w-[260px] p-0">
+                        <PopoverContent align="start" className="w-65 p-0">
                             <div className="border-b p-2">
                                 <div className="relative">
                                     <Search
@@ -145,7 +145,7 @@ export default function BudgetFilters() {
                                 </div>
                             </div>
 
-                            <div className="max-h-[280px] overflow-y-auto p-1">
+                            <div className="max-h-70 overflow-y-auto p-1">
                                 {(Object.keys(CATEGORIES_BY_TYPE) as BudgetType[]).map(
                                     (type) => (
                                         <div key={type} className="mb-1">
@@ -200,7 +200,7 @@ export default function BudgetFilters() {
                             id="filter-search"
                             type="search"
                             placeholder="Notes…"
-                            className="w-[200px] pl-9"
+                            className="w-50 pl-9"
                         />
                     </div>
                 </div>
@@ -218,13 +218,13 @@ export default function BudgetFilters() {
                             id="filter-min"
                             type="number"
                             placeholder="Min"
-                            className="w-[90px]"
+                            className="w-22.5"
                         />
                         <span className="text-muted-foreground">–</span>
                         <Input
                             type="number"
                             placeholder="Max"
-                            className="w-[90px]"
+                            className="w-22.5"
                             aria-label="Maximum amount"
                         />
                     </div>

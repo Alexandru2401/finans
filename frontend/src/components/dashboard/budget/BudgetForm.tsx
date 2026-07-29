@@ -188,7 +188,7 @@ export default function BudgetForm({
           value={formData.notes}
           onChange={handleChange}
           placeholder="Optional notes about this entry..."
-          className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-[80px] resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+          className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-20 resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
         />
       </div>
 

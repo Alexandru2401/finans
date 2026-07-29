@@ -120,12 +120,12 @@ export function BudgetStoreProvider({
     },
   ]);
   const [savingsItems, setSavingsItems] = useState<BudgetItem[]>([
-    {
-      id: crypto.randomUUID(),
-      category: "Economii",
-      amount: 1000,
-      date: new Date().toISOString(),
-    },
+    // {
+    //   id: crypto.randomUUID(),
+    //   category: "Economii",
+    //   amount: 1000,
+    //   date: new Date().toISOString(),
+    // },
   ]);
 
   const totalIncome = incomeItems.reduce((sum, item) => sum + item.amount, 0);

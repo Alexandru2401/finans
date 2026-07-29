@@ -80,15 +80,11 @@ const CATEGORIES_BY_TYPE: Record<
 
 interface ItemCardProps {
   section: Section;
-  expanded: { income: boolean; expenses: boolean; savings: boolean };
-  handleToggle: (section: "income" | "expenses" | "savings") => void;
   onShowForm: () => void;
 }
 
 export default function ItemCard({
   section,
-  expanded,
-  handleToggle,
   onShowForm,
 }: ItemCardProps) {
   const [editingItem, setEditingItem] = useState<BudgetItem | null>(null);
@@ -190,7 +186,7 @@ export default function ItemCard({
           </div>
         </CardHeader>
 
-        {expanded[section.section] && (
+        {section.section && (
           <CardContent className="overflow-hidden">
             {section.items.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-4 py-6">
@@ -277,16 +273,18 @@ export default function ItemCard({
           </CardContent>
         )}
 
-        <CardFooter>
-          <Button
-            variant="ghost"
-            // onClick={() => setShowForm((prev) => !prev)}
-            className="cursor-pointer max-w-34 md:w-auto"
-          >
-            <Plus size={16} />
-            Add more items
-          </Button>
-        </CardFooter>
+        {section.items.length > 0 && (
+          <CardFooter>
+            <Button
+              variant="ghost"
+              onClick={() => onShowForm()}
+              className="cursor-pointer max-w-34 md:w-auto"
+            >
+              <Plus size={16} />
+              Add more items
+            </Button>
+          </CardFooter>
+        )}
       </Card>
 
       {/* ── VIEW DETAILS MODAL ── */}
@@ -455,7 +453,7 @@ export default function ItemCard({
             <div className="space-y-2">
               <Label>Notes</Label>
               <textarea
-                className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-[80px] resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-20 resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                 value={editValues.notes}
                 onChange={(e) =>
                   setEditValues((v) => ({ ...v, notes: e.target.value }))
