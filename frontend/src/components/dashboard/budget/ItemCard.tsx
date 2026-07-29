@@ -172,7 +172,6 @@ export default function ItemCard({
               <Link to="/dashboard/transactions">
                 <Button
                   variant="outline"
-                  // onClick={() => setShowForm((prev) => !prev)}
                   className="cursor-pointer max-w-34 md:w-auto"
                 >
                   See all

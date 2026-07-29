@@ -78,6 +78,7 @@ export default function BudgetPage() {
   const [incomeItems, setIncomeItems] = useState<BudgetItem[]>([]);
   const [expenseItems, setExpenseItems] = useState<BudgetItem[]>([]);
   const [savingsItems, setSavingsItems] = useState<BudgetItem[]>([]);
+  const [activeTab, setActiveTab] = useState<"income" | "expenses" | "savings">("income");
   const [loading, setLoading] = useState(true);
 
   const [showForm, setShowForm] = useState(false);
@@ -267,7 +268,7 @@ export default function BudgetPage() {
           />
 
           <div className="grid items-start gap-6">
-            <Tabs defaultValue="income" className="w-full">
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="w-full">
               <TabsList>
                 {sections.map((section) => (
                   <TabsTrigger key={section.section} value={section.section} className="cursor-pointer">
@@ -287,7 +288,7 @@ export default function BudgetPage() {
 
         <div className="flex flex-col md:flex-row md:justify-between lg:flex-col gap-6">
           <Insights />
-          <ExtraInfo />
+          <ExtraInfo activeTab={activeTab} />
         </div>
       </div>
 
