@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Search } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function NotFoundPage() {
   return (

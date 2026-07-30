@@ -108,7 +108,7 @@ async function editIncomeItem(
   return { ok: true, data: { id, category: "", amount: 0, ...payload } };
 }
 
-async function deleteIncomeItem(id: string): Promise<Ok<{ success: boolean }>> {
+async function deleteIncomeItem(_id: string): Promise<Ok<{ success: boolean }>> {
   await delay();
   return { ok: true, data: { success: true } };
 }
@@ -128,7 +128,7 @@ async function editExpenseItem(
 }
 
 async function deleteExpenseItem(
-  id: string,
+  _id: string,
 ): Promise<Ok<{ success: boolean }>> {
   await delay();
   return { ok: true, data: { success: true } };
@@ -149,7 +149,7 @@ async function editSavingsItem(
 }
 
 async function deleteSavingsItem(
-  id: string,
+  _id: string,
 ): Promise<Ok<{ success: boolean }>> {
   await delay();
   return { ok: true, data: { success: true } };
@@ -180,7 +180,7 @@ export interface BudgetSummary {
 }
 
 async function getBudgetSummary(
-  period = "last-month",
+  _period = "last-month",
 ): Promise<Ok<BudgetSummary>> {
   await delay();
 
