@@ -184,7 +184,7 @@ async function getBudgetSummary(
 ): Promise<Ok<BudgetSummary>> {
   await delay();
 
-  const totalIncome = 5200;
+  const totalIncome = 15200;
   const totalExpenses = 3350;
   const totalSavings = 1750;
   const netBalance = totalIncome - totalExpenses;

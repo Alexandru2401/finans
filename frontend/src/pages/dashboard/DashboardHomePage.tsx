@@ -52,7 +52,7 @@ export default function DashboardHomePage() {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
         <NetBalance summary={summary} loading={loading} />
         <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <BalanceOverview />
+          <BalanceOverview summary={summary} loading={loading}/>
           <SpendingOverview />
         </div>
       </div>

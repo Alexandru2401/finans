@@ -43,20 +43,20 @@ export default function NetBalance({ summary, loading }: Props) {
                     </CardHeader>
 
                     <CardContent>
-                        <div className="grid gap-4 sm:grid-cols-3">
-                            <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-4 dark:border-emerald-900 dark:bg-emerald-950/30">
+                        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible sm:pb-0">
+                            <div className="min-w-[80%] snap-center shrink-0 rounded-lg border border-emerald-200 bg-emerald-50/60 p-4 dark:border-emerald-900 dark:bg-emerald-950/30 sm:min-w-0 sm:shrink">
                                 <p className="text-sm text-muted-foreground">Total income</p>
                                 <p className="mt-1 text-lg font-semibold tabular-nums text-emerald-700 dark:text-emerald-400">{fmt(summary.totalIncome)}</p>
                                 <Change pct={summary.incomeChangePct} />
                             </div>
 
-                            <div className="rounded-lg border border-red-200 bg-red-50/60 p-4 dark:border-red-900 dark:bg-red-950/30">
+                            <div className="min-w-[80%] snap-center shrink-0 rounded-lg border border-red-200 bg-red-50/60 p-4 dark:border-red-900 dark:bg-red-950/30 sm:min-w-0 sm:shrink">
                                 <p className="text-sm text-muted-foreground">Total spendings</p>
                                 <p className="mt-1 text-lg font-semibold tabular-nums text-red-700 dark:text-red-400">{fmt(summary.totalExpenses)}</p>
                                 <Change pct={summary.expensesChangePct} negativeIsBad />
                             </div>
 
-                            <div className="rounded-lg border border-[#3874FF]/50 bg-[#3874FF]/20 p-4 dark:border-[#3874FF] dark:bg-violet-950/30">
+                            <div className="min-w-[80%] snap-center shrink-0 rounded-lg border border-[#3874FF]/50 bg-[#3874FF]/20 p-4 dark:border-[#3874FF] dark:bg-violet-950/30 sm:min-w-0 sm:shrink">
                                 <p className="text-sm text-muted-foreground">Total savings</p>
                                 <p className="mt-1 text-lg font-semibold tabular-nums text-[#3874FF] dark:text-violet-400">{fmt(summary.totalSavings)}</p>
                                 <Change pct={summary.savingsChangePct} />
