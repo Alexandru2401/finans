@@ -15,6 +15,7 @@ import Insights from "@/components/dashboard/budget/Insights";
 import SummaryCards from "@/components/dashboard/budget/SummaryCards";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import TargetsPanel from "@/components/dashboard/budget/TargetsPanel";
 import {
   getBudgetData,
   addIncomeItem as apiAddIncome,
@@ -83,6 +84,10 @@ export default function BudgetPage() {
 
   const [showForm, setShowForm] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
+
+  const [openTargets, setOpenTargets] = useState(false);
+  const [budgetTargets, setBudgetTargets] = useState({ income: 8000, expenses: 4000, savings: 1500 });
+
   const [formData, setFormData] = useState({
     type: "expenses" as BudgetType,
     category: "groceries",
@@ -184,8 +189,6 @@ export default function BudgetPage() {
     { title: "Savings", items: savingsItems, total: totalSavings, section: "savings" as const, onDelete: deleteSavingsItem, onEdit: editSavingsItem },
   ];
 
-  const budgetTargets = { income: 8000, expenses: 4000, savings: 1500 };
-
   const getBarColor = (pct: number, isExpenses = false) => {
     if (isExpenses) {
       if (pct >= 100) return "bg-red-500";
@@ -234,7 +237,7 @@ export default function BudgetPage() {
               <ChevronDown size={14} className="opacity-60" />
             </Button>
 
-            <Button variant="ghost" size="sm" className="cursor-pointer gap-2 text-muted-foreground">
+            <Button variant="ghost" size="sm" onClick={() => setOpenTargets(true)} className="cursor-pointer gap-2 text-muted-foreground">
               <Target size={16} />
               Your Target
               <ChevronDown size={14} className="opacity-60" />
@@ -320,6 +323,14 @@ export default function BudgetPage() {
           <div className="fixed inset-0 z-30" onClick={() => setOpenFilters(false)} />
           <BudgetFilters />
         </>
+      )}
+
+      {openTargets && (
+        <TargetsPanel
+          targets={budgetTargets}
+          onSave={setBudgetTargets}
+          onClose={() => setOpenTargets(false)}
+        />
       )}
     </section>
   );
