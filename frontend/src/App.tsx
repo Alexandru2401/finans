@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
+import { lazy } from "react";
 import Login from "./pages/auth/Login";
 import ProtectedPage from "./pages/auth/ProtectedPage";
 import SignIn from "./pages/auth/Signin";
 import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
-import BudgetPage from "./pages/dashboard/BudgetPage";
+const BudgetPage = lazy(() => import("./pages/dashboard/BudgetPage"));
 import DashboardHomePage from "./pages/dashboard/DashboardHomePage";
 import ProfilePage from "./pages/dashboard/ProfilePage";
 import SettingsPage from "./pages/dashboard/SettingsPage";
@@ -23,6 +24,7 @@ import PublicRootLayout from "./routes/layout/PublicRootLayout";
 
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "./context/AuthContext";
+import ErrorBoundary from "./components/dashboard/ErrorBoundary";
 
 const dashboardRoutes = [
   { index: true, element: <DashboardHomePage /> },
@@ -58,8 +60,17 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <ProtectedPage />,
     errorElement: <ErrorPage />,
-    children: [{ element: <DashboardRootLayout />, children: dashboardRoutes }],
-  },
+    children: [
+      {
+        element: (
+          <ErrorBoundary>
+            <DashboardRootLayout />
+          </ErrorBoundary>
+        ),
+        children: dashboardRoutes,
+      },
+    ],
+  }
 ]);
 
 function App() {

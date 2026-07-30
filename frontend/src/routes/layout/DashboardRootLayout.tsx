@@ -3,6 +3,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BudgetStoreProvider } from "@/store/dashboardStore/BudgetStoreContext";
 import { Outlet } from "react-router";
 import DashboardMainNavigation from "../navigation/DashboardMainNavigation";
+import { Suspense } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function DashboardRootLayout() {
   return (
@@ -15,7 +17,9 @@ export default function DashboardRootLayout() {
             <div className="text-right mb-2">
               <ProfileBadge />
             </div>
-            <Outlet />
+            <Suspense fallback={<Spinner />}>
+              <Outlet />
+            </Suspense>
           </main>
         </div>
       </TooltipProvider>

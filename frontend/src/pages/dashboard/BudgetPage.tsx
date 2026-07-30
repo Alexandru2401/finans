@@ -13,6 +13,7 @@ import BudgetFilters from "@/components/dashboard/budget/BudgetFilters";
 import ExtraInfo from "@/components/dashboard/budget/ExtraInfo";
 import Insights from "@/components/dashboard/budget/Insights";
 import SummaryCards from "@/components/dashboard/budget/SummaryCards";
+import { Spinner } from "@/components/ui/spinner";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TargetsPanel from "@/components/dashboard/budget/TargetsPanel";
@@ -207,9 +208,7 @@ export default function BudgetPage() {
 
   if (loading) {
     return (
-      <section className="py-4 px-4 max-w-7xl mx-auto">
-        <p className="text-sm text-muted-foreground">Loading…</p>
-      </section>
+      <Spinner />
     );
   }
 
@@ -228,7 +227,7 @@ export default function BudgetPage() {
             <Button
               variant="outline"
               size="sm"
-              className="cursor-pointer gap-2 text-muted-foreground data-[active=true]:bg-accent data-[active=true]:text-foreground"
+              className="cursor-pointer gap-2"
               data-active="true"
               onClick={() => setOpenFilters((prev) => !prev)}
             >
@@ -237,16 +236,16 @@ export default function BudgetPage() {
               <ChevronDown size={14} className="opacity-60" />
             </Button>
 
-            <Button variant="ghost" size="sm" onClick={() => setOpenTargets(true)} className="cursor-pointer gap-2 text-muted-foreground">
+            <Button variant="outline" size="sm" onClick={() => setOpenTargets(true)} className="cursor-pointer gap-2">
               <Target size={16} />
               Your Target
-              <ChevronDown size={14} className="opacity-60" />
             </Button>
 
             <Button
               variant="default"
               onClick={() => setShowForm((prev) => !prev)}
               className="cursor-pointer max-w-34 md:w-auto"
+              size="sm"
             >
               <Plus size={16} />
               {showForm ? "Close" : "Add new entry"}
