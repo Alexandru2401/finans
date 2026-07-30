@@ -167,3 +167,42 @@ export {
   editSavingsItem,
   deleteSavingsItem,
 };
+
+export interface BudgetSummary {
+  totalIncome: number;
+  totalExpenses: number;
+  totalSavings: number;
+  netBalance: number;
+  savingsRate: number;
+  incomeChangePct: number;
+  expensesChangePct: number;
+  savingsChangePct: number;
+}
+
+async function getBudgetSummary(
+  period = "last-month",
+): Promise<Ok<BudgetSummary>> {
+  await delay();
+
+  const totalIncome = 5200;
+  const totalExpenses = 3350;
+  const totalSavings = 1750;
+  const netBalance = totalIncome - totalExpenses;
+
+  return {
+    ok: true,
+    data: {
+      totalIncome,
+      totalExpenses,
+      totalSavings,
+      netBalance,
+      savingsRate:
+        totalIncome > 0 ? Math.round((netBalance / totalIncome) * 100) : 0,
+      incomeChangePct: 3.5,
+      expensesChangePct: 3.5,
+      savingsChangePct: -3.5,
+    },
+  };
+}
+
+export { getBudgetSummary };
