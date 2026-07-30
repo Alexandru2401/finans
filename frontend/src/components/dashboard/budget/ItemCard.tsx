@@ -4,24 +4,29 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import type {
+  BudgetItem,
+  NewBudgetItem,
+} from "@/store/dashboardStore/BudgetStoreContext";
 import { format } from "date-fns/format";
 import {
-  Calendar1,
-  ChevronDown,
   ChevronDownIcon,
   FileText,
   Minus,
   Pencil,
   PiggyBank,
   Plus,
-  Trash2,
+  Trash2
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router";
+import type { Section } from "../../../pages/dashboard/BudgetPage";
 import { Button } from "../../ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../ui/card";
@@ -36,11 +41,6 @@ import {
 } from "../../ui/select";
 
 type BudgetType = "income" | "expenses" | "savings";
-import type { Section } from "../../../pages/dashboard/BudgetPage";
-import type {
-  BudgetItem,
-  NewBudgetItem,
-} from "@/store/dashboardStore/BudgetStoreContext";
 
 const CATEGORIES_BY_TYPE: Record<
   BudgetType,
@@ -80,15 +80,11 @@ const CATEGORIES_BY_TYPE: Record<
 
 interface ItemCardProps {
   section: Section;
-  expanded: { income: boolean; expenses: boolean; savings: boolean };
-  handleToggle: (section: "income" | "expenses" | "savings") => void;
   onShowForm: () => void;
 }
 
 export default function ItemCard({
   section,
-  expanded,
-  handleToggle,
   onShowForm,
 }: ItemCardProps) {
   const [editingItem, setEditingItem] = useState<BudgetItem | null>(null);
@@ -135,12 +131,23 @@ export default function ItemCard({
     setDeletingItem(null);
   };
 
-  const sectionColor =
-    section.section === "income"
-      ? "text-green-700"
-      : section.section === "savings"
-        ? "text-blue-600"
-        : "text-red-500";
+  const styles = {
+    income: {
+      text: "text-emerald-500",
+      bubble: "bg-emerald-500/10 text-emerald-500",
+      sign: "+",
+    },
+    expenses: {
+      text: "text-red-500",
+      bubble: "bg-red-500/10 text-red-500",
+      sign: "-",
+    },
+    savings: {
+      text: "text-blue-500",
+      bubble: "bg-blue-500/10 text-blue-500",
+      sign: "+",
+    },
+  }[section.section as BudgetType];
 
   const SectionIcon =
     section.section === "income" ? (
@@ -156,24 +163,20 @@ export default function ItemCard({
   console.log(section);
 
   return (
-    <>
+    <div className="w-full">
       <Card>
         <CardHeader className="items-center">
           <div>
             <CardTitle className="flex items-center justify-between gap-2 text-lg">
               {section.title}
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => handleToggle(section.section)}
-                className="rounded-full cursor-pointer"
-              >
-                <ChevronDown
-                  className={`transition-transform duration-200 ${expanded[section.section] ? "rotate-180" : "rotate-0"
-                    }`}
-                />
-              </Button>
+              <Link to="/dashboard/transactions">
+                <Button
+                  variant="outline"
+                  className="cursor-pointer max-w-34 md:w-auto"
+                >
+                  See all
+                </Button>
+              </Link>
             </CardTitle>
             <CardDescription className="text-xs text-slate-600 font-medium">
               Total: ${section.total.toFixed(2)} · {section.items.length} item
@@ -182,8 +185,8 @@ export default function ItemCard({
           </div>
         </CardHeader>
 
-        {expanded[section.section] && (
-          <CardContent className="h-80 overflow-y-auto">
+        {section.section && (
+          <CardContent className="overflow-hidden">
             {section.items.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-4 py-6">
                 <p className="text-sm text-slate-600">No entries yet.</p>
@@ -197,40 +200,38 @@ export default function ItemCard({
                 </Button>
               </div>
             ) : (
-              <div className="space-y-3">
-                {section.items.map((item) => (
+              <div className="space-y-1">
+                {section.items.slice(0, 5).map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between gap-2 rounded-lg border border-slate-700/30 px-2 py-2"
+                    className="flex items-center gap-3 rounded-lg border border-border/50 px-3 py-1.5"
                   >
-                    <div className="flex items-end gap-3 min-w-0">
-                      <div className="flex flex-col min-w-0">
-                        <p
-                          className={`text-md font-bold flex items-center gap-1 ${sectionColor}`}
-                        >
-                          {SectionIcon} ${item.amount.toFixed(2)}
-                        </p>
-                        <div className="flex items-center gap-3 text-slate-600">
-                          <p className="text-sm  font-bold">{item.category}</p>
-
-                          {item.date && (
-                            <div className="flex items-center gap-1 mt-0.5">
-                              <Calendar1 size={12} />
-                              <p className="text-xs text-slate-600">
-                                {new Date(item.date).toLocaleDateString(
-                                  "ro-RO",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  },
-                                )}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
+                    <div
+                      className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${styles.bubble}`}
+                    >
+                      {SectionIcon}
                     </div>
+
+                    <div className="flex min-w-0 flex-col">
+                      <p className="truncate text-sm font-semibold capitalize">
+                        {item.category}
+                      </p>
+                      {item.date && (
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(item.date).toLocaleDateString("ro-RO", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </p>
+                      )}
+                    </div>
+
+                    <p
+                      className={`ml-auto shrink-0 text-sm font-semibold tabular-nums ${styles.text}`}
+                    >
+                      {styles.sign} ${item.amount.toFixed(2)}
+                    </p>
 
                     <div className="flex shrink-0">
                       {/* View details */}
@@ -270,6 +271,19 @@ export default function ItemCard({
             )}
           </CardContent>
         )}
+
+        {section.items.length > 0 && (
+          <CardFooter>
+            <Button
+              variant="ghost"
+              onClick={() => onShowForm()}
+              className="cursor-pointer max-w-34 md:w-auto"
+            >
+              <Plus size={16} />
+              Add more items
+            </Button>
+          </CardFooter>
+        )}
       </Card>
 
       {/* ── VIEW DETAILS MODAL ── */}
@@ -287,7 +301,7 @@ export default function ItemCard({
                   {section.title} entry
                 </p>
               </div>
-              <span className={`text-2xl font-bold ${sectionColor}`}>
+              <span className={`text-2xl font-bold`}>
                 ${viewingItem.amount.toFixed(2)}
               </span>
             </div>
@@ -438,7 +452,7 @@ export default function ItemCard({
             <div className="space-y-2">
               <Label>Notes</Label>
               <textarea
-                className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-[80px] resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-20 resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                 value={editValues.notes}
                 onChange={(e) =>
                   setEditValues((v) => ({ ...v, notes: e.target.value }))
@@ -510,6 +524,8 @@ export default function ItemCard({
           </div>
         </div>
       )}
-    </>
+
+
+    </div>
   );
 }

@@ -14,12 +14,16 @@ import { useState } from "react";
 
 type SubmenuKey = "blog" | "prices";
 
+import { useAuth } from "@/context/AuthContext";
+
 export default function PublicMainNavigation() {
   const [openMenu, setOpenMenu] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState<Record<SubmenuKey, boolean>>({
     blog: false,
     prices: false,
   });
+
+  const { isAuth } = useAuth()
 
   function handleMenuToggle() {
     setOpenMenu((prev) => !prev);
@@ -58,23 +62,14 @@ export default function PublicMainNavigation() {
           </NavigationMenuItem>
 
           {/* Doar de test */}
-          <NavigationMenuItem>
+          {isAuth && <NavigationMenuItem>
             <NavigationMenuLink
               asChild
               className={navigationMenuTriggerStyle()}
             >
               <Link to="/dashboard">Dashboard</Link>
             </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
-              <Link to="/dashboard">Challenges</Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
+          </NavigationMenuItem>}
 
           <NavigationMenuItem className="relative">
             <NavigationMenuTrigger>Prices</NavigationMenuTrigger>

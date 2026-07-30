@@ -1,12 +1,14 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import { lazy } from "react";
 import Login from "./pages/auth/Login";
+import ProtectedPage from "./pages/auth/ProtectedPage";
 import SignIn from "./pages/auth/Signin";
 import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
-import BudgetPage from "./pages/dashboard/BudgetPage";
-import TransactionsPage from "./pages/dashboard/TransactionsPage";
+const BudgetPage = lazy(() => import("./pages/dashboard/BudgetPage"));
 import DashboardHomePage from "./pages/dashboard/DashboardHomePage";
 import ProfilePage from "./pages/dashboard/ProfilePage";
 import SettingsPage from "./pages/dashboard/SettingsPage";
+import TransactionsPage from "./pages/dashboard/TransactionsPage";
 import UpgradePlansPage from "./pages/dashboard/UpgradePlansPage";
 import PublicAboutPage from "./pages/public/PublicAboutPage";
 import PublicHomePage from "./pages/public/PublicHomePage";
@@ -21,106 +23,62 @@ import DashboardRootLayout from "./routes/layout/DashboardRootLayout";
 import PublicRootLayout from "./routes/layout/PublicRootLayout";
 
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "./context/AuthContext";
+import ErrorBoundary from "./components/dashboard/ErrorBoundary";
+
+const dashboardRoutes = [
+  { index: true, element: <DashboardHomePage /> },
+  { path: "budget", element: <BudgetPage /> },
+  { path: "transactions", element: <TransactionsPage /> },
+  { path: "profile", element: <ProfilePage /> },
+  { path: "analytics", element: <AnalyticsPage /> },
+  { path: "upgrade-plans", element: <UpgradePlansPage /> },
+  { path: "settings", element: <SettingsPage /> },
+];
+
+const publicRoutes = [
+  { index: true, element: <PublicHomePage /> },
+  { path: "about", element: <PublicAboutPage /> },
+  { path: "prices/personal", element: <PublicPricesPersonalPage /> },
+  { path: "blog/success-stories", element: <SuccessStories /> },
+  { path: "blog/write-story", element: <WriteStory /> },
+  { path: "paypage/personal", element: <PersonalPayPage /> },
+  { path: "terms-and-services", element: <TermsAndConditions /> },
+  { path: "privacy-policy", element: <PrivacyPolicy /> },
+  { path: "signin", element: <SignIn /> },
+  { path: "login", element: <Login /> },
+];
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <PublicRootLayout />,
     errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <PublicHomePage />,
-      },
-      {
-        path: "/about",
-        element: <PublicAboutPage />,
-      },
-      {
-        path: "/prices/personal",
-        element: <PublicPricesPersonalPage />,
-      },
-      {
-        path: "/blog",
-        element: <Outlet />,
-        children: [
-          {
-            path: "success-stories",
-            element: <SuccessStories />,
-          },
-          {
-            path: "write-story",
-            element: <WriteStory />,
-          },
-        ],
-      },
-
-      {
-        path: "/paypage/personal",
-        element: <PersonalPayPage />,
-      },
-      {
-        path: "/terms-and-services",
-        element: <TermsAndConditions />,
-      },
-      {
-        path: "/privacy-policy",
-        element: <PrivacyPolicy />,
-      },
-      {
-        path: "/signin",
-        element: <SignIn />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-    ],
+    children: publicRoutes,
   },
-
-  // ACESTE RUTE VOR FII PROTEJATE
   {
     path: "/dashboard",
-    element: <DashboardRootLayout />,
+    element: <ProtectedPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <DashboardHomePage />,
-      },
-      {
-        path: "/dashboard/budget",
-        element: <BudgetPage />,
-      },
-      {
-        path: "/dashboard/transactions",
-        element: <TransactionsPage />,
-      },
-      {
-        path: "/dashboard/profile",
-        element: <ProfilePage />,
-      },
-      {
-        path: "/dashboard/analytics",
-        element: <AnalyticsPage />,
-      },
-      {
-        path: "/dashboard/upgrade-plans",
-        element: <UpgradePlansPage />,
-      },
-      {
-        path: "/dashboard/settings",
-        element: <SettingsPage />,
+        element: (
+          <ErrorBoundary>
+            <DashboardRootLayout />
+          </ErrorBoundary>
+        ),
+        children: dashboardRoutes,
       },
     ],
-  },
+  }
 ]);
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <RouterProvider router={router} />
       <Toaster position="top-right" />
-    </>
+    </AuthProvider>
   );
 }
 

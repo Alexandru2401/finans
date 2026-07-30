@@ -132,51 +132,52 @@ export default function BudgetForm({
       </div>
 
       {/* Amount */}
-      <div className="space-y-2">
-        <Label htmlFor="amount">Amount</Label>
-        <Input
-          id="amount"
-          name="amount"
-          type="number"
-          value={formData.amount}
-          onChange={handleChange}
-          placeholder="0.00"
-          step="0.01"
-          min="0"
-        />
-      </div>
+      <div className="flex justify-between">
+        <div className="space-y-2">
+          <Label htmlFor="amount">Amount</Label>
+          <Input
+            id="amount"
+            name="amount"
+            type="number"
+            value={formData.amount}
+            onChange={handleChange}
+            placeholder="0.00"
+            step="0.01"
+            min="0"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label>Date</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                data-empty={!formDate}
+                className="w-full justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
+              >
+                {formDate ? format(formDate, "PPP") : <span>Pick a date</span>}
+                <ChevronDownIcon />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={formDate}
+                onSelect={(d) => {
+                  setFormDate(d);
+                  setFormData((prev) => ({
+                    ...prev,
+                    date: d ? d.toISOString().split("T")[0] : "",
+                  }));
+                }}
+                defaultMonth={formDate}
+              />
+            </PopoverContent>
+          </Popover>
+        </div></div>
 
       {/* Date */}
-      <div className="space-y-2">
-        <Label>Date</Label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              type="button"
-              variant="outline"
-              data-empty={!formDate}
-              className="w-full justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
-            >
-              {formDate ? format(formDate, "PPP") : <span>Pick a date</span>}
-              <ChevronDownIcon />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={formDate}
-              onSelect={(d) => {
-                setFormDate(d);
-                setFormData((prev) => ({
-                  ...prev,
-                  date: d ? d.toISOString().split("T")[0] : "",
-                }));
-              }}
-              defaultMonth={formDate}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
 
       {/* Notes */}
       <div className="space-y-2">
@@ -187,7 +188,7 @@ export default function BudgetForm({
           value={formData.notes}
           onChange={handleChange}
           placeholder="Optional notes about this entry..."
-          className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-[80px] resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+          className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-20 resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
         />
       </div>
 
