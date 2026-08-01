@@ -28,7 +28,7 @@ export default function DashboardHomePage() {
   }, [period]);
 
   return (
-    <section className="px-4 max-w-7xl mx-auto">
+    <section className="px-4 py-4 max-w-7xl mx-auto">
       <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
           <h1 className="text-2xl font-bold mb-2">Welcome back, User!</h1>
