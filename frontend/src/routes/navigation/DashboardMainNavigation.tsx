@@ -10,7 +10,7 @@ export default function DashboardMainNavigation() {
   const location = useLocation();
 
   const renderNav = (showLabels: boolean, onNavigate?: () => void) => (
-    <nav className="flex h-full flex-col text-sm">
+    <nav className="flex h-full flex-col text-sm bg-accent">
       {/* ===== LOGO ===== */}
       <div
         className={clsx(
@@ -37,7 +37,7 @@ export default function DashboardMainNavigation() {
               type="search"
               placeholder="Search"
               aria-label="Search"
-              className="h-10 w-full rounded-lg border bg-background pl-9 pr-14 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-[#ffd649] focus-visible:ring-2 focus-visible:ring-[#ffd649]/40"
+              className="h-10 w-full rounded-lg border bg-background pl-9 pr-14 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-finance-warning focus-visible:ring-2 focus-visible:ring-finance-warning/40"
             />
             <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-medium text-muted-foreground">
               ⌘ +K
@@ -79,24 +79,16 @@ export default function DashboardMainNavigation() {
                         "group relative flex items-center gap-3 rounded-lg py-2.5 transition-colors",
                         showLabels ? "px-3" : "justify-center px-0",
                         isActive
-                          ? "bg-[#ffd649]/15 font-semibold text-foreground"
-                          : "text-foreground hover:bg-accent hover:text-accent-foreground",
+                          ? "bg-card font-semibold text-finance-warning"
+                          : "text-muted-foreground hover:bg-card hover:text-accent-foreground",
                       )}
                     >
-                      {/* bara galbena pe item-ul activ */}
-                      {isActive && (
-                        <span
-                          aria-hidden="true"
-                          className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-[#ffd649]"
-                        />
-                      )}
-
                       {Icon && (
                         <Icon
                           className={clsx(
                             "h-5 w-5 shrink-0 transition-colors",
                             isActive
-                              ? "text-[#ffd649]"
+                              ? "text-finance-warning"
                               : "text-muted-foreground group-hover:text-accent-foreground",
                           )}
                         />
@@ -106,7 +98,7 @@ export default function DashboardMainNavigation() {
 
                       {/* Badge "New" — necesita camp optional `badge` in date
                       {showLabels && badge && (
-                        <span className="ml-auto rounded-full bg-[#ffd649] px-2 py-0.5 text-[11px] font-semibold text-black">
+                        <span className="ml-auto rounded-full bg-finance-warning px-2 py-0.5 text-[11px] font-semibold text-black">
                           {badge}
                         </span>
                       )}
@@ -146,7 +138,7 @@ export default function DashboardMainNavigation() {
           open ? "w-64" : "w-16",
         )}
       >
-        {/* Toggle button — exact ca in originalul tau */}
+        {/* Toggle button */}
         <button
           onClick={() => setOpen((prev) => !prev)}
           className="absolute cursor-pointer top-4 -right-5 z-10 flex h-8 w-8 items-center justify-center rounded-full border bg-background shadow hover:bg-accent transition-colors"
