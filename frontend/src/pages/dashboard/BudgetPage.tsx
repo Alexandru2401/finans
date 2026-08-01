@@ -26,6 +26,7 @@ import {
   type BudgetItem,
   type NewBudgetItem,
 } from "@/api/budget";
+import PageHeader from "@/components/dashboard/shared/PageHeader";
 
 type BudgetType = "income" | "expenses" | "savings";
 
@@ -236,16 +237,11 @@ export default function BudgetPage() {
 
   return (
     <section className="relative py-4 px-4 max-w-7xl mx-auto">
-      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-6">
-        <div className="flex flex-col">
-          <h1 className="text-2xl font-bold text-foreground">
-            Budget Overview
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Track income, expenses, savings and add new budget items quickly.
-          </p>
-        </div>
-
+      <PageHeader
+        title="Budget Overview"
+        subtitle="Track income, expenses, savings and add new budget items quickly."
+      >
+        {" "}
         <div className="flex flex-col md:items-end">
           <div className="flex items-center gap-2 mt-4">
             <Button
@@ -281,7 +277,7 @@ export default function BudgetPage() {
             </Button>
           </div>
         </div>
-      </div>
+      </PageHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="col-span-2 space-y-3">

@@ -11,6 +11,7 @@ import NetBalance from "@/components/dashboard/overview/NetBalance";
 import OverviewTable from "@/components/dashboard/overview/OverviewTable";
 import SpendingOverview from "@/components/dashboard/overview/SpendingOverview";
 import SpendingTrendingChart from "@/components/dashboard/overview/TrendChart";
+import PageHeader from "@/components/dashboard/shared/PageHeader";
 
 import { useEffect, useState } from "react";
 import { getBudgetSummary, type BudgetSummary } from "@/api/budget";
@@ -29,12 +30,10 @@ export default function DashboardHomePage() {
 
   return (
     <section className="px-4 py-4 max-w-7xl mx-auto">
-      <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold mb-2">Welcome back, User!</h1>
-          <p className="text-sm text-muted-foreground mt-1">Take a look over your financial dashboard.</p>
-        </div>
-
+      <PageHeader
+        title="Welcome back, User!"
+        subtitle=" Take a look over your financial dashboard."
+      >
         <Select value={period} onValueChange={setPeriod}>
           <SelectTrigger className="w-40" aria-label="Select period">
             <SelectValue placeholder="Last month" />
@@ -47,12 +46,12 @@ export default function DashboardHomePage() {
             <SelectItem value="this-year">This year</SelectItem>
           </SelectContent>
         </Select>
-      </div>
+      </PageHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
         <NetBalance summary={summary} loading={loading} />
         <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <BalanceOverview summary={summary} loading={loading}/>
+          <BalanceOverview summary={summary} loading={loading} />
           <SpendingOverview />
         </div>
       </div>
