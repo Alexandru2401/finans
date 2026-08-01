@@ -1,12 +1,7 @@
 import BudgetForm from "@/components/dashboard/budget/BudgetForm";
 import ItemCard from "@/components/dashboard/budget/ItemCard";
 import { Button } from "@/components/ui/button";
-import {
-  ChevronDown,
-  Plus,
-  SlidersHorizontal,
-  Target,
-} from "lucide-react";
+import { ChevronDown, Plus, SlidersHorizontal, Target } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import BudgetFilters from "@/components/dashboard/budget/BudgetFilters";
@@ -34,7 +29,10 @@ import {
 
 type BudgetType = "income" | "expenses" | "savings";
 
-const CATEGORIES_BY_TYPE: Record<BudgetType, { value: string; label: string }[]> = {
+const CATEGORIES_BY_TYPE: Record<
+  BudgetType,
+  { value: string; label: string }[]
+> = {
   income: [
     { value: "salary", label: "Salary" },
     { value: "freelance", label: "Freelance" },
@@ -80,14 +78,20 @@ export default function BudgetPage() {
   const [incomeItems, setIncomeItems] = useState<BudgetItem[]>([]);
   const [expenseItems, setExpenseItems] = useState<BudgetItem[]>([]);
   const [savingsItems, setSavingsItems] = useState<BudgetItem[]>([]);
-  const [activeTab, setActiveTab] = useState<"income" | "expenses" | "savings">("income");
+  const [activeTab, setActiveTab] = useState<"income" | "expenses" | "savings">(
+    "income",
+  );
   const [loading, setLoading] = useState(true);
 
   const [showForm, setShowForm] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
 
   const [openTargets, setOpenTargets] = useState(false);
-  const [budgetTargets, setBudgetTargets] = useState({ income: 8000, expenses: 4000, savings: 1500 });
+  const [budgetTargets, setBudgetTargets] = useState({
+    income: 8000,
+    expenses: 4000,
+    savings: 1500,
+  });
 
   const [formData, setFormData] = useState({
     type: "expenses" as BudgetType,
@@ -173,50 +177,70 @@ export default function BudgetPage() {
 
   async function editIncomeItem(id: string, payload: Partial<NewBudgetItem>) {
     const res = await apiEditIncome(id, payload);
-    if (res.ok) setIncomeItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
+    if (res.ok)
+      setIncomeItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
   }
   async function editExpenseItem(id: string, payload: Partial<NewBudgetItem>) {
     const res = await apiEditExpense(id, payload);
-    if (res.ok) setExpenseItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
+    if (res.ok)
+      setExpenseItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
   }
   async function editSavingsItem(id: string, payload: Partial<NewBudgetItem>) {
     const res = await apiEditSavings(id, payload);
-    if (res.ok) setSavingsItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
+    if (res.ok)
+      setSavingsItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
   }
 
   const sections = [
-    { title: "Income", items: incomeItems, total: totalIncome, section: "income" as const, onDelete: deleteIncomeItem, onEdit: editIncomeItem },
-    { title: "Expenses", items: expenseItems, total: totalExpenses, section: "expenses" as const, onDelete: deleteExpenseItem, onEdit: editExpenseItem },
-    { title: "Savings", items: savingsItems, total: totalSavings, section: "savings" as const, onDelete: deleteSavingsItem, onEdit: editSavingsItem },
+    {
+      title: "Income",
+      items: incomeItems,
+      total: totalIncome,
+      section: "income" as const,
+      onDelete: deleteIncomeItem,
+      onEdit: editIncomeItem,
+    },
+    {
+      title: "Expenses",
+      items: expenseItems,
+      total: totalExpenses,
+      section: "expenses" as const,
+      onDelete: deleteExpenseItem,
+      onEdit: editExpenseItem,
+    },
+    {
+      title: "Savings",
+      items: savingsItems,
+      total: totalSavings,
+      section: "savings" as const,
+      onDelete: deleteSavingsItem,
+      onEdit: editSavingsItem,
+    },
   ];
 
-  const getBarColor = (pct: number, isExpenses = false) => {
-    if (isExpenses) {
-      if (pct >= 100) return "bg-red-500";
-      if (pct >= 80) return "bg-amber-400";
-      return "bg-green-500";
-    }
-    if (pct >= 100) return "bg-emerald-500";
-    if (pct >= 50) return "bg-sky-500";
-    return "bg-slate-300";
-  };
-
   const incomePct = Math.min((totalIncome / budgetTargets.income) * 100, 100);
-  const expensesPct = Math.min((totalExpenses / budgetTargets.expenses) * 100, 100);
-  const savingsPct = Math.min((totalSavings / budgetTargets.savings) * 100, 100);
-  const savingsRate = totalIncome > 0 ? Math.min((netBalance / totalIncome) * 100, 100) : 0;
+  const expensesPct = Math.min(
+    (totalExpenses / budgetTargets.expenses) * 100,
+    100,
+  );
+  const savingsPct = Math.min(
+    (totalSavings / budgetTargets.savings) * 100,
+    100,
+  );
+  const savingsRate =
+    totalIncome > 0 ? Math.min((netBalance / totalIncome) * 100, 100) : 0;
 
   if (loading) {
-    return (
-      <Spinner />
-    );
+    return <Spinner />;
   }
 
   return (
     <section className="relative py-4 px-4 max-w-7xl mx-auto">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-6">
         <div className="flex flex-col">
-          <h1 className="text-2xl font-bold">Budget Overview</h1>
+          <h1 className="text-2xl font-bold text-foreground">
+            Budget Overview
+          </h1>
           <p className="text-sm text-muted-foreground mt-1">
             Track income, expenses, savings and add new budget items quickly.
           </p>
@@ -236,7 +260,12 @@ export default function BudgetPage() {
               <ChevronDown size={14} className="opacity-60" />
             </Button>
 
-            <Button variant="outline" size="sm" onClick={() => setOpenTargets(true)} className="cursor-pointer gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setOpenTargets(true)}
+              className="cursor-pointer gap-2"
+            >
               <Target size={16} />
               Your Target
             </Button>
@@ -260,7 +289,6 @@ export default function BudgetPage() {
             totalIncome={totalIncome}
             incomePct={incomePct}
             budgetTargets={budgetTargets}
-            getBarColor={getBarColor}
             totalExpenses={totalExpenses}
             expensesPct={expensesPct}
             totalSavings={totalSavings}
@@ -270,10 +298,18 @@ export default function BudgetPage() {
           />
 
           <div className="grid items-start gap-6">
-            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="w-full">
+            <Tabs
+              value={activeTab}
+              onValueChange={(v) => setActiveTab(v as typeof activeTab)}
+              className="w-full"
+            >
               <TabsList>
                 {sections.map((section) => (
-                  <TabsTrigger key={section.section} value={section.section} className="cursor-pointer">
+                  <TabsTrigger
+                    key={section.section}
+                    value={section.section}
+                    className="cursor-pointer"
+                  >
                     {section.title}
                   </TabsTrigger>
                 ))}
@@ -281,7 +317,10 @@ export default function BudgetPage() {
 
               {sections.map((section) => (
                 <TabsContent key={section.section} value={section.section}>
-                  <ItemCard section={section} onShowForm={() => setShowForm(true)} />
+                  <ItemCard
+                    section={section}
+                    onShowForm={() => setShowForm(true)}
+                  />
                 </TabsContent>
               ))}
             </Tabs>
@@ -296,7 +335,10 @@ export default function BudgetPage() {
 
       {showForm && (
         <>
-          <div className="fixed inset-0 z-40 bg-black/30" onClick={() => setShowForm(false)} />
+          <div
+            className="fixed inset-0 z-40 bg-black/30"
+            onClick={() => setShowForm(false)}
+          />
           <aside className="fixed inset-y-0 right-0 z-50 max-w-md overflow-y-auto bg-background shadow-2xl border-l border-muted/30 md:max-w-xl lg:max-w-2xl">
             <div className="flex items-center justify-between border-b border-muted/20 px-6 py-4">
               <div>
@@ -305,13 +347,21 @@ export default function BudgetPage() {
                   Choose whether it's income, expense or savings.
                 </p>
               </div>
-              <Button variant="ghost" onClick={() => setShowForm(false)} className="cursor-pointer">
+              <Button
+                variant="ghost"
+                onClick={() => setShowForm(false)}
+                className="cursor-pointer"
+              >
                 Close
               </Button>
             </div>
 
             <div className="p-6">
-              <BudgetForm formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} />
+              <BudgetForm
+                formData={formData}
+                setFormData={setFormData}
+                handleSubmit={handleSubmit}
+              />
             </div>
           </aside>
         </>
@@ -319,7 +369,10 @@ export default function BudgetPage() {
 
       {openFilters && (
         <>
-          <div className="fixed inset-0 z-30" onClick={() => setOpenFilters(false)} />
+          <div
+            className="fixed inset-0 z-30"
+            onClick={() => setOpenFilters(false)}
+          />
           <BudgetFilters />
         </>
       )}

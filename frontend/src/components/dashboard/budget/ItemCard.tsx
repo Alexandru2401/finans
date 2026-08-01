@@ -16,7 +16,7 @@ import {
   Pencil,
   PiggyBank,
   Plus,
-  Trash2
+  Trash2,
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
@@ -83,10 +83,7 @@ interface ItemCardProps {
   onShowForm: () => void;
 }
 
-export default function ItemCard({
-  section,
-  onShowForm,
-}: ItemCardProps) {
+export default function ItemCard({ section, onShowForm }: ItemCardProps) {
   const [editingItem, setEditingItem] = useState<BudgetItem | null>(null);
   const [deletingItem, setDeletingItem] = useState<BudgetItem | null>(null);
   const [viewingItem, setViewingItem] = useState<BudgetItem | null>(null);
@@ -133,18 +130,18 @@ export default function ItemCard({
 
   const styles = {
     income: {
-      text: "text-emerald-500",
-      bubble: "bg-emerald-500/10 text-emerald-500",
+      text: "text-finance-success",
+      bubble: "bg-finance-success/10 text-finance-success",
       sign: "+",
     },
     expenses: {
-      text: "text-red-500",
-      bubble: "bg-red-500/10 text-red-500",
+      text: "text-finance-danger",
+      bubble: "bg-finance-danger/10 text-finance-danger",
       sign: "-",
     },
     savings: {
-      text: "text-blue-500",
-      bubble: "bg-blue-500/10 text-blue-500",
+      text: "text-finance-primary",
+      bubble: "bg-finance-primary/10 text-finance-primary",
       sign: "+",
     },
   }[section.section as BudgetType];
@@ -167,7 +164,7 @@ export default function ItemCard({
       <Card>
         <CardHeader className="items-center">
           <div>
-            <CardTitle className="flex items-center justify-between gap-2 text-lg">
+            <CardTitle className="flex items-center justify-between gap-2 text-lg text-foreground">
               {section.title}
               <Link to="/dashboard/transactions">
                 <Button
@@ -178,7 +175,7 @@ export default function ItemCard({
                 </Button>
               </Link>
             </CardTitle>
-            <CardDescription className="text-xs text-slate-600 font-medium">
+            <CardDescription className="text-xs text-muted-foreground font-medium">
               Total: ${section.total.toFixed(2)} · {section.items.length} item
               {section.items.length === 1 ? "" : "s"}
             </CardDescription>
@@ -189,7 +186,7 @@ export default function ItemCard({
           <CardContent className="overflow-hidden">
             {section.items.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-4 py-6">
-                <p className="text-sm text-slate-600">No entries yet.</p>
+                <p className="text-sm text-muted-foreground">No entries yet.</p>
                 <Button
                   variant="default"
                   onClick={() => onShowForm()}
@@ -213,7 +210,7 @@ export default function ItemCard({
                     </div>
 
                     <div className="flex min-w-0 flex-col">
-                      <p className="truncate text-sm font-semibold capitalize">
+                      <p className="truncate text-sm font-semibold capitalize text-foreground">
                         {item.category}
                       </p>
                       {item.date && (
@@ -242,7 +239,7 @@ export default function ItemCard({
                         onClick={() => setViewingItem(item)}
                         className="cursor-pointer  hover:bg-slate-400/20"
                       >
-                        <FileText size={18} className="text-slate-800" />
+                        <FileText size={18} className="text-finance-warning" />
                       </Button>
                       {/* Edit */}
                       <Button
@@ -252,7 +249,7 @@ export default function ItemCard({
                         onClick={() => startEdit(item)}
                         className="cursor-pointer  hover:bg-slate-400/20"
                       >
-                        <Pencil size={16} className="text-blue-700" />
+                        <Pencil size={16} className="text-finance-primary" />
                       </Button>
                       {/* Delete */}
                       <Button
@@ -262,7 +259,7 @@ export default function ItemCard({
                         onClick={() => startDelete(item)}
                         className="cursor-pointer  hover:bg-slate-400/20"
                       >
-                        <Trash2 size={18} className="text-destructive" />
+                        <Trash2 size={18} className="text-finance-danger" />
                       </Button>
                     </div>
                   </div>
@@ -290,53 +287,65 @@ export default function ItemCard({
       {viewingItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div
-            className="absolute inset-0 bg-black/40"
+            className="absolute inset-0 bg-black/60 backdrop-blur-xs"
             onClick={() => setViewingItem(null)}
           />
-          <div className="relative z-10 bg-background rounded-xl shadow-2xl border border-muted/30 w-full max-w-sm mx-4 p-6 flex flex-col gap-4">
-            <div className="flex items-center justify-between">
+          <div className="relative z-10 flex w-full max-w-sm mx-4 flex-col gap-5 rounded-xl border border-border bg-popover p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
               <div>
-                <h2 className="text-lg font-semibold">Item details</h2>
-                <p className="text-sm text-muted-foreground capitalize">
+                <h2 className="text-lg font-semibold text-foreground">
+                  Item details
+                </h2>
+                <p className="text-sm capitalize text-muted-foreground">
                   {section.title} entry
                 </p>
               </div>
-              <span className={`text-2xl font-bold`}>
+              <span
+                className={`text-2xl font-bold tabular-nums ${
+                  section.section === "expenses"
+                    ? "text-finance-danger"
+                    : "text-finance-success"
+                }`}
+              >
                 ${viewingItem.amount.toFixed(2)}
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-lg bg-muted/40">
-                <p className="text-xs text-muted-foreground mb-0.5">Category</p>
-                <p className="font-medium capitalize">{viewingItem.category}</p>
+              <div className="rounded-lg bg-muted/40 p-3">
+                <p className="mb-0.5 text-xs text-muted-foreground">Category</p>
+                <p className="font-medium capitalize text-foreground">
+                  {viewingItem.category}
+                </p>
               </div>
-              <div className="rounded-lg bg-muted/40">
-                <p className="text-xs text-muted-foreground mb-0.5">Date</p>
-                <p className="font-medium">
+              <div className="rounded-lg bg-muted/40 p-3">
+                <p className="mb-0.5 text-xs text-muted-foreground">Date</p>
+                <p className="font-medium text-foreground">
                   {viewingItem.date
                     ? new Date(viewingItem.date).toLocaleDateString("ro-RO", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })
                     : "—"}
                 </p>
               </div>
             </div>
 
             {viewingItem.description && (
-              <div className="rounded-lg bg-muted/40">
-                <p className="text-xs text-muted-foreground mb-0.5">
+              <div className="rounded-lg bg-muted/40 p-3">
+                <p className="mb-0.5 text-xs text-muted-foreground">
                   Description
                 </p>
-                <p className="text-sm">{viewingItem.description}</p>
+                <p className="text-sm text-foreground">
+                  {viewingItem.description}
+                </p>
               </div>
             )}
 
-            <div className="rounded-lg bg-muted/40 py-3">
-              <p className="text-xs text-muted-foreground mb-1">Notes</p>
-              <p className="text-sm whitespace-pre-wrap">
+            <div className="rounded-lg bg-muted/40 p-3">
+              <p className="mb-1 text-xs text-muted-foreground">Notes</p>
+              <p className="max-h-32 overflow-y-auto overflow-x-hidden whitespace-pre-wrap break-all text-sm text-foreground">
                 {viewingItem.notes?.trim() ? (
                   viewingItem.notes
                 ) : (
@@ -362,7 +371,7 @@ export default function ItemCard({
                   setViewingItem(null);
                   startEdit(viewingItem);
                 }}
-                className="cursor-pointer w-22"
+                className="w-22 cursor-pointer"
               >
                 Edit
               </Button>
@@ -374,14 +383,17 @@ export default function ItemCard({
       {/* ── EDIT MODAL ── */}
       {editingItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/40" onClick={cancelEdit} />
-          <div className="relative z-10 bg-background rounded-xl shadow-2xl border border-muted/30 w-full max-w-md mx-4 p-6 flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={cancelEdit}
+          />
+          <div className="relative z-10 flex max-h-[90vh] w-full max-w-md mx-4 flex-col gap-4 overflow-y-auto rounded-xl border border-border bg-popover p-6 shadow-2xl">
             <div>
-              <h2 className="text-lg font-semibold flex items-center gap-1">
+              <h2 className="flex items-center gap-1 text-lg font-semibold text-foreground">
                 <Pencil size={16} className="mr-1 shrink-0" />
                 Edit item
               </h2>
-              <p className="text-sm text-slate-700 mt-1">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Update the details for this {section.title.toLowerCase()} entry.
               </p>
             </div>
@@ -401,7 +413,7 @@ export default function ItemCard({
               />
             </div>
 
-            {/* Category — Shadcn Select, dinamic per section */}
+            {/* Category */}
             <div className="space-y-2">
               <Label>Category</Label>
               <Select
@@ -431,7 +443,7 @@ export default function ItemCard({
                   <Button
                     variant="outline"
                     data-empty={!date}
-                    className="w-62 justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
+                    className="w-full justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
                   >
                     {date ? format(date, "PPP") : <span>Pick a date</span>}
                     <ChevronDownIcon />
@@ -452,7 +464,7 @@ export default function ItemCard({
             <div className="space-y-2">
               <Label>Notes</Label>
               <textarea
-                className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none min-h-20 resize-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                className="min-h-20 w-full resize-none rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none transition focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                 value={editValues.notes}
                 onChange={(e) =>
                   setEditValues((v) => ({ ...v, notes: e.target.value }))
@@ -481,22 +493,22 @@ export default function ItemCard({
           </div>
         </div>
       )}
-
       {/* ── DELETE CONFIRM MODAL ── */}
       {deletingItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div
-            className="absolute inset-0 bg-black/40"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={cancelDelete}
           />
-          <div className="relative z-10 bg-background rounded-xl shadow-2xl border border-muted/30 w-full max-w-sm mx-4 p-6 flex flex-col gap-4">
+          <div className="relative z-10 flex w-full max-w-sm mx-4 flex-col gap-4 rounded-xl border border-border bg-popover p-4 shadow-2xl">
             <div>
-              <h2 className="text-lg font-semibold flex items-center gap-1">
-                <Trash2 size={16} className="shrink-0" /> Delete item
+              <h2 className="flex items-center gap-1 text-lg font-semibold text-foreground">
+                <Trash2 size={16} className="shrink-0 text-finance-danger" />{" "}
+                Delete item
               </h2>
-              <p className="text-sm text-slate-800 mt-2">
+              <p className="mt-2 text-sm text-muted-foreground">
                 Are you sure you want to delete{" "}
-                <span className="font-medium text-slate-800">
+                <span className="font-medium text-foreground">
                   {deletingItem.category}
                 </span>{" "}
                 (${deletingItem.amount.toFixed(2)})? The action cannot be
@@ -524,8 +536,6 @@ export default function ItemCard({
           </div>
         </div>
       )}
-
-
     </div>
   );
 }
