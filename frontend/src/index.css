@@ -48,6 +48,7 @@
   --color-finance-success: var(--finance-success);
   --color-finance-danger: var(--finance-danger);
   --color-finance-warning: var(--finance-warning);
+  --color-finance-purple: var(--finance-purple);
   --color-finance-success-bg: var(--finance-success-bg);
   --color-finance-danger-bg: var(--finance-danger-bg);
   --color-finance-warning-bg: var(--finance-warning-bg);
@@ -91,6 +92,7 @@
   --finance-success: #0a6640;
   --finance-danger: #b91c1c;
   --finance-warning: #c47a00;
+  --finance-purple: #a78bfa;
   --finance-success-bg: #e8f5ef;
   --finance-danger-bg: #fee2e2;
   --finance-warning-bg: #fef3c7;
@@ -98,8 +100,8 @@
 
 .dark {
   --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --foreground: oklch(93.9% 0.007 260.7);
+  --card: oklch(20.4% 0.024 262.3);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
@@ -108,8 +110,8 @@
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
+  --muted-foreground: oklch(61.7% 0.032 259.6);
+  --accent: oklch(16.2% 0.014 258.4);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
@@ -129,10 +131,11 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-  --finance-primary: #4c6ef5;
-  --finance-success: #4ade9a;
-  --finance-danger: #f87171;
-  --finance-warning: #fcc419;
+  --finance-primary: #4a90e2;
+  --finance-success: #3fbf7f;
+  --finance-danger: #f0533e;
+  --finance-warning: #f5b833;
+  --finance-purple: #a78bfa;
   --finance-success-bg: #0c2b1f;
   --finance-danger-bg: #2d1515;
   --finance-warning-bg: #2a1f0a;

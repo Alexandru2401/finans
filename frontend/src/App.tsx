@@ -24,7 +24,7 @@ import PublicRootLayout from "./routes/layout/PublicRootLayout";
 
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "./context/AuthContext";
-import ErrorBoundary from "./components/dashboard/ErrorBoundary";
+import ErrorBoundary from "./components/dashboard/shared/ErrorBoundary";
 
 const dashboardRoutes = [
   { index: true, element: <DashboardHomePage /> },
