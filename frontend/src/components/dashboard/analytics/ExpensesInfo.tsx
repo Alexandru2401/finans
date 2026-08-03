@@ -34,8 +34,8 @@ const savingsWithForecast = [
 ];
 
 const savingsConfig = {
-    savings: { label: "Economii", color: "var(--chart-3)" },
-    forecast: { label: "Forecast", color: "var(--chart-3)" },
+    savings: { label: "Economii", color: "var(--finance-primary)" },
+    forecast: { label: "Forecast", color: "var(--finance-primary)" },
 } satisfies ChartConfig;
 
 
@@ -116,7 +116,7 @@ export default function ExpensesInfo() {
                             </div>
                             <div className="h-1.5 w-full rounded-full bg-muted">
                                 <div
-                                    className="h-1.5 rounded-full bg-blue-400"
+                                    className="h-1.5 rounded-full bg-finance-primary"
                                     style={{ width: `${pct}%` }}
                                 />
                             </div>
@@ -136,20 +136,20 @@ export default function ExpensesInfo() {
 
         </Card>
 
-        <Card className="flex-1 border-orange-200 bg-orange-50/60 dark:border-orange-900 dark:bg-orange-950/20" >
+        <Card className="flex-1 border-finance-warning/30 bg-finance-warning-bg/60">
             <CardHeader>
                 <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-orange-100 dark:bg-orange-900/40">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-finance-warning-bg">
                         <AlertTriangle
                             size={14}
-                            className="text-orange-500"
+                            className="text-finance-warning"
                             aria-hidden="true"
                         />
                     </span>
                     <CardTitle className="text-sm">
                         Cheltuieli variabile mari
                     </CardTitle>
-                    <span className="ml-auto rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-600 dark:bg-orange-900/40 dark:text-orange-400">
+                    <span className="ml-auto rounded-full bg-finance-warning-bg px-2 py-0.5 text-xs font-medium text-finance-warning">
                         Optimizabile
                     </span>
                 </div>
@@ -165,9 +165,9 @@ export default function ExpensesInfo() {
                                     ${amount.toLocaleString()}
                                 </span>
                             </div>
-                            <div className="h-1.5 w-full rounded-full bg-orange-100 dark:bg-orange-900/30">
+                            <div className="h-1.5 w-full rounded-full bg-finance-warning-bg">
                                 <div
-                                    className="h-1.5 rounded-full bg-orange-400"
+                                    className="h-1.5 rounded-full bg-finance-warning"
                                     style={{ width: `${pct}%` }}
                                 />
                             </div>
@@ -176,10 +176,10 @@ export default function ExpensesInfo() {
                 </ul>
             </CardContent>
 
-            <CardFooter className="border-t border-orange-200 pt-4 dark:border-orange-900">
+            <CardFooter className="border-t border-finance-warning/30 pt-4">
                 <p className="text-xs text-muted-foreground">
                     Total variabil:{" "}
-                    <span className="font-semibold tabular-nums text-orange-600 dark:text-orange-400">
+                    <span className="font-semibold tabular-nums text-finance-warning">
                         $1,560
                     </span>{" "}
                     — potențial de reducere
@@ -238,11 +238,11 @@ export default function ExpensesInfo() {
             <CardFooter className="flex-col items-start gap-1 text-xs text-muted-foreground pt-0">
                 <div className="flex items-center gap-3">
                     <span className="flex items-center gap-1.5">
-                        <span className="inline-block w-4 h-0.5 bg-chart-3 rounded" />{" "}
+                        <span className="inline-block w-4 h-0.5 rounded bg-finance-primary" />{" "}
                         Istoric
                     </span>
                     <span className="flex items-center gap-1.5">
-                        <span className="inline-block w-4 h-0.5 border-t-2 border-dashed border-chart-3" />{" "}
+                        <span className="inline-block w-4 h-0.5 border-t-2 border-dashed border-finance-primary" />{" "}
                         Forecast
                     </span>
                     <span className="flex items-center gap-1.5">
