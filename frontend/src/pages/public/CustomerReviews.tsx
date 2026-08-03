@@ -37,7 +37,7 @@ const reviews = [
 
 export default function CustomerReviews() {
   return (
-    <section className="py-24 bg-muted/40">
+    <section className="py-8">
       <div className="mx-auto max-w-6xl px-6">
         {/* Heading */}
         <div className="mb-12 text-center">
