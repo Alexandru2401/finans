@@ -80,8 +80,8 @@ export default function TransactionsTable() {
           </TableCaption>
           <TableHeader className="sticky top-0 z-10 bg-card">
             <TableRow>
-              <TableHead className="min-w-40">Description</TableHead>
               <TableHead className="min-w-40">Category</TableHead>
+              <TableHead className="min-w-40">Type</TableHead>
               <TableHead className="min-w-40">Date</TableHead>
               <TableHead className="min-w-40 text-right">Amount</TableHead>
             </TableRow>

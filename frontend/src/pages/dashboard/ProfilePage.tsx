@@ -1,3 +1,4 @@
+import ProfileBadge from "@/components/dashboard/budget/ProfileBadge";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,9 +37,11 @@ import {
   Mail,
   PlusCircle,
   RefreshCw,
+  Settings,
   ShieldCheck,
   Star,
   Trash2,
+  UserRoundCog
 } from "lucide-react";
 import { useState } from "react";
 
@@ -120,7 +123,7 @@ function ProfileBtn({ label }: profileBtnProps) {
   return (
     <Button
       size="sm"
-      className="bg-green-500 hover:bg-green-600 text-white font-semibold cursor-pointer"
+      className="bg-finance-success hover:bg-finance-success/90 text-white font-semibold cursor-pointer"
     >
       {label}
     </Button>
@@ -134,26 +137,26 @@ export default function ProfilePage() {
     setOpenSection((prev) => (prev === id ? null : id));
 
   return (
-    <div className="py-8 px-4 md:px-8 max-w-7xl flex items-center justify-center">
-      <div className="p-10 w-2xl border border-slate-200 rounded-2xl bg-white shadow-sm flex flex-col gap-4">
+    <section className="relative py-4 px-4 max-w-7xl mx-auto">
+      <div className="mx-auto p-3 md:p-10 max-w-4xl border border-border rounded-2xl bg-background shadow-sm flex flex-col gap-4">
         {/* ── Header ── */}
         <div className="flex items-center justify-between pt-2">
           <div className="flex items-center gap-4">
             <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-lime-400 to-emerald-500 flex items-center justify-center text-2xl font-bold text-white shadow-sm">
-                {user.username[0].toUpperCase()}
+              <div className="w-16 h-16 rounded-full shadow-sm">
+                <ProfileBadge />
               </div>
-              <span className="absolute bottom-0 -right-1 bg-white border border-slate-200 rounded-full p-0.5 shadow-sm">
-                <ShieldCheck className="w-3.5 h-3.5 text-lime-500" />
+              <span className="absolute bottom-2 right-3 bg-card border border-border rounded-full p-0.5 shadow-sm">
+                <ShieldCheck className="w-3.5 h-3.5 text-finance-success" />
               </span>
             </div>
             <div>
-              <p className="text-lg font-semibold text-zinc-900">
+              <p className="text-lg font-semibold text-foreground">
                 @{user.username}
               </p>
               <Badge
                 variant="outline"
-                className="border-lime-500/40 text-lime-600 bg-lime-50 text-xs mt-1"
+                className="border-finance-warning/40 text-finance-warning bg-finance-warning-bg text-xs mt-1"
               >
                 ⭐ {user.plan} Plan
               </Badge>
@@ -162,17 +165,17 @@ export default function ProfilePage() {
           <Button
             variant="ghost"
             size="icon"
-            className="text-zinc-400 cursor-pointer hover:text-red-500 hover:bg-red-50"
+            className="text-muted-foreground cursor-pointer hover:text-finance-danger hover:bg-finance-danger-bg"
           >
             <LogOut className="w-4 h-4" />
           </Button>
         </div>
 
         {/* ── Account Info ── */}
-        <Card className="bg-slate-50 border-slate-200 shadow-none">
+        <Card className="bg-card border-border shadow-none">
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-semibold uppercase tracking-widest text-zinc-400">
-              Account Info
+            <CardTitle className="text-xs font-semibold uppercase text-muted-foreground flex gap-1 items-center">
+              <UserRoundCog size={14} className="shrink" /> Account Info
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -184,17 +187,17 @@ export default function ProfilePage() {
             ].map(({ label, value, highlight }, i, arr) => (
               <div key={label}>
                 <div className="flex items-center justify-between py-1">
-                  <span className="text-sm text-zinc-500">{label}</span>
+                  <span className="text-sm">{label}</span>
                   <span
                     className={cn(
                       "text-sm font-medium",
-                      highlight ? "text-lime-600" : "text-zinc-900",
+                      highlight ? "text-finance-warning" : "text-foreground",
                     )}
                   >
                     {value}
                   </span>
                 </div>
-                {i < arr.length - 1 && <Separator className="bg-slate-200" />}
+                {i < arr.length - 1 && <Separator className="bg-border" />}
               </div>
             ))}
           </CardContent>
@@ -202,8 +205,8 @@ export default function ProfilePage() {
 
         {/* ── Settings ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-3">
-            Settings
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-3 flex gap-1 items-center">
+            <Settings size={14} className="shrink" />  Settings
           </p>
           <div className="space-y-2">
             {actions.map(({ id, label, description, icon: Icon, danger }) => (
@@ -215,20 +218,20 @@ export default function ProfilePage() {
                 <CollapsibleTrigger asChild className="cursor-pointer">
                   <button
                     className={cn(
-                      "w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left",
-                      "bg-white border-slate-200",
+                      "w-full flex items-center justify-between px-2 py-3 rounded-xl border text-left",
+                      "bg-card border-border",
                       danger
-                        ? "hover:border-red-300 hover:bg-red-50"
-                        : "hover:border-lime-400 hover:bg-lime-50/50",
+                        ? "hover:border-finance-danger/50 hover:bg-finance-danger-bg"
+                        : "hover:border-finance-warning/60 hover:bg-finance-warning-bg/50",
                     )}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
                       <div
                         className={cn(
                           "p-2 rounded-lg",
                           danger
-                            ? "bg-red-100 text-red-500"
-                            : "bg-slate-100 text-zinc-600",
+                            ? "bg-finance-danger-bg text-finance-danger"
+                            : "bg-background text-muted-foreground",
                         )}
                       >
                         <Icon className="w-4 h-4" />
@@ -237,17 +240,17 @@ export default function ProfilePage() {
                         <p
                           className={cn(
                             "text-sm font-medium",
-                            danger ? "text-red-500" : "text-zinc-900",
+                            danger ? "text-finance-danger" : "text-foreground",
                           )}
                         >
                           {label}
                         </p>
-                        <p className="text-xs text-zinc-400">{description}</p>
+                        <p className="text-xs text-muted-foreground">{description}</p>
                       </div>
                     </div>
                     <ChevronRight
                       className={cn(
-                        "w-4 h-4 text-zinc-300 transition-transform duration-200",
+                        "w-4 h-4 text-muted-foreground transition-transform duration-200",
                         openSection === id && "rotate-90",
                       )}
                     />
@@ -255,7 +258,7 @@ export default function ProfilePage() {
                 </CollapsibleTrigger>
 
                 <CollapsibleContent>
-                  <div className="mt-1 ml-4 border-l-2 border-slate-200 pl-4 py-3 pr-2">
+                  <div className="mt-1 ml-4 border-l-2 border-border pl-4 py-3 pr-2">
                     <ActionPanel id={id as ActionId} />
                   </div>
                 </CollapsibleContent>
@@ -264,11 +267,11 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <p className="text-center text-xs text-zinc-300 pb-2">
+        <p className="text-center text-xs text-muted-foreground pb-2">
           Budget Tracker · v2.1.0
         </p>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -276,12 +279,12 @@ function ActionPanel({ id }: { id: ActionId }) {
   if (id === "currency")
     return (
       <div className="space-y-3">
-        <Label className="text-zinc-500 text-xs">Select Currency</Label>
+        <Label className="text-muted-foreground text-xs">Select Currency</Label>
         <Select defaultValue="usd">
-          <SelectTrigger className="bg-white border-slate-200 text-zinc-900 cursor-pointer">
+          <SelectTrigger className="cursor-pointer">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-white border-slate-200 text-zinc-900">
+          <SelectContent>
             {[
               ["usd", "USD – US Dollar ($)"],
               ["eur", "EUR – Euro (€)"],
@@ -305,10 +308,10 @@ function ActionPanel({ id }: { id: ActionId }) {
           <button
             key={p}
             className={cn(
-              "py-2 px-3 rounded-lg border text-sm font-medium transition-all",
+              "py-2 px-3 rounded-lg border text-sm font-medium",
               p === "Pro"
-                ? "border-lime-500 bg-lime-50 text-lime-600"
-                : "border-slate-200 bg-white text-zinc-700 hover:border-slate-300 hover:bg-slate-50",
+                ? "border-finance-warning bg-finance-warning-bg text-finance-warning"
+                : "border-border bg-card text-foreground hover:border-muted-foreground/30 hover:bg-muted/50",
             )}
           >
             {p}
@@ -321,12 +324,8 @@ function ActionPanel({ id }: { id: ActionId }) {
     return (
       <div className="space-y-3">
         <div className="space-y-1">
-          <Label className="text-zinc-500 text-xs">New Email Address</Label>
-          <Input
-            type="email"
-            placeholder="you@example.com"
-            className="bg-white border-slate-200 text-zinc-900 placeholder:text-zinc-300"
-          />
+          <Label className="text-muted-foreground text-xs">New Email Address</Label>
+          <Input type="email" placeholder="you@example.com" />
         </div>
         <ProfileBtn label="Update mail" />
       </div>
@@ -336,28 +335,16 @@ function ActionPanel({ id }: { id: ActionId }) {
     return (
       <div className="space-y-3">
         <div className="space-y-1">
-          <Label className="text-zinc-500 text-xs">Current Password</Label>
-          <Input
-            type="password"
-            placeholder="••••••••"
-            className="bg-white border-slate-200 text-zinc-900 placeholder:text-zinc-300"
-          />
+          <Label className="text-muted-foreground text-xs">Current Password</Label>
+          <Input type="password" placeholder="••••••••" />
         </div>
         <div className="space-y-1">
-          <Label className="text-zinc-500 text-xs">New Password</Label>
-          <Input
-            type="password"
-            placeholder="••••••••"
-            className="bg-white border-slate-200 text-zinc-900 placeholder:text-zinc-300"
-          />
+          <Label className="text-muted-foreground text-xs">New Password</Label>
+          <Input type="password" placeholder="••••••••" />
         </div>
         <div className="space-y-1">
-          <Label className="text-zinc-500 text-xs">Confirm New Password</Label>
-          <Input
-            type="password"
-            placeholder="••••••••"
-            className="bg-white border-slate-200 text-zinc-900 placeholder:text-zinc-300"
-          />
+          <Label className="text-muted-foreground text-xs">Confirm New Password</Label>
+          <Input type="password" placeholder="••••••••" />
         </div>
         <ProfileBtn label="Change Password" />
       </div>
@@ -367,21 +354,14 @@ function ActionPanel({ id }: { id: ActionId }) {
     return (
       <div className="space-y-3">
         <div className="space-y-1">
-          <Label className="text-zinc-500 text-xs">Account Name</Label>
-          <Input
-            placeholder="e.g. Savings, Revolut, ING"
-            className="bg-white border-slate-200 text-zinc-900 placeholder:text-zinc-300"
-          />
+          <Label className="text-muted-foreground text-xs">Account Name</Label>
+          <Input placeholder="e.g. Savings, Revolut, ING" />
         </div>
         <div className="space-y-1">
-          <Label className="text-zinc-500 text-xs">
+          <Label className="text-muted-foreground text-xs">
             Initial Balance (optional)
           </Label>
-          <Input
-            type="number"
-            placeholder="0.00"
-            className="bg-white border-slate-200 text-zinc-900 placeholder:text-zinc-300"
-          />
+          <Input type="number" placeholder="0.00" />
         </div>
         <ProfileBtn label="Add Account" />
       </div>
@@ -390,9 +370,9 @@ function ActionPanel({ id }: { id: ActionId }) {
   if (id === "reset")
     return (
       <div className="space-y-3">
-        <p className="text-xs text-zinc-400">
+        <p className="text-xs text-muted-foreground">
           This will permanently delete{" "}
-          <span className="text-zinc-700 font-medium">
+          <span className="text-foreground font-medium">
             all your transactions, budgets, and categories
           </span>
           . Your account will remain active.
@@ -402,26 +382,22 @@ function ActionPanel({ id }: { id: ActionId }) {
             <Button
               size="sm"
               variant="outline"
-              className="border-red-300 text-red-500 hover:bg-red-50 hover:text-red-600 hover:border-red-400"
+              className="border-finance-danger/40 text-finance-danger hover:bg-finance-danger-bg hover:text-finance-danger hover:border-finance-danger/60"
             >
               Reset All Data
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className="bg-white border-slate-200">
+          <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle className="text-zinc-900">
-                Reset all data?
-              </AlertDialogTitle>
-              <AlertDialogDescription className="text-zinc-500">
+              <AlertDialogTitle>Reset all data?</AlertDialogTitle>
+              <AlertDialogDescription>
                 This action cannot be undone. All your transactions, budgets and
                 categories will be permanently deleted.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="border-slate-200 text-zinc-700 hover:bg-slate-50">
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction className="bg-red-500 hover:bg-red-600 text-white border-0">
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction variant="destructive" className="bg-finance-danger hover:bg-finance-danger/90 text-white border-0">
                 Yes, Reset Everything
               </AlertDialogAction>
             </AlertDialogFooter>
@@ -433,9 +409,9 @@ function ActionPanel({ id }: { id: ActionId }) {
   if (id === "delete")
     return (
       <div className="space-y-3">
-        <p className="text-xs text-zinc-400">
+        <p className="text-xs text-muted-foreground">
           Your account and{" "}
-          <span className="text-zinc-700 font-medium">all associated data</span>{" "}
+          <span className="text-foreground font-medium">all associated data</span>{" "}
           will be permanently removed. This cannot be undone.
         </p>
         <AlertDialog>
@@ -443,26 +419,22 @@ function ActionPanel({ id }: { id: ActionId }) {
             <Button
               size="sm"
               variant="outline"
-              className="border-red-300 text-red-500 hover:bg-red-50 hover:text-red-600 hover:border-red-400"
+              className="border-finance-danger/40 text-finance-danger hover:bg-finance-danger-bg hover:text-finance-danger hover:border-finance-danger/60"
             >
               Delete My Account
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className="bg-white border-slate-200">
+          <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle className="text-zinc-900">
-                Delete your account?
-              </AlertDialogTitle>
-              <AlertDialogDescription className="text-zinc-500">
+              <AlertDialogTitle>Delete your account?</AlertDialogTitle>
+              <AlertDialogDescription>
                 This is permanent. Your profile, data and subscription will be
                 immediately and irreversibly deleted.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="border-slate-200 text-zinc-700 hover:bg-slate-50">
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction className="bg-red-500 hover:bg-red-600 text-white border-0">
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction variant="destructive" className="bg-finance-danger hover:bg-finance-danger/90 text-white border-0">
                 Yes, Delete Account
               </AlertDialogAction>
             </AlertDialogFooter>

@@ -48,7 +48,7 @@ function Gauge({ value }: { value: number }) {
 
 export default function BudgetHealth() {
     return (
-        <Card className="mb-4">
+        <Card className="flex-1">
             <CardContent className="p-5">
                 <div className="mb-2 flex items-center justify-between">
                     <h3 className="text-sm font-medium text-muted-foreground">
