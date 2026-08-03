@@ -243,7 +243,7 @@ export default function BudgetPage() {
       >
         {" "}
         <div className="flex flex-col md:items-end">
-          <div className="flex items-center gap-2 mt-4">
+          <div className="flex flex-wrap md:flex-row md:items-center gap-2 mt-4">
             <Button
               variant="outline"
               size="sm"

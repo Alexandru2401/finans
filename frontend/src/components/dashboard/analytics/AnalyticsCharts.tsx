@@ -64,8 +64,8 @@ const metricConfig = {
 
 export default function AnalyticsChart() {
     const [metric, setMetric] = useState<Metric>("expenses");
-    return <div className="mb-6 grid items-start gap-6 lg:grid-cols-2">
-        <Card>
+    return <div className="flex gap-10 flex-col-reverse lg:flex-row">
+        <Card className="flex-1">
             <CardHeader>
                 <CardTitle className="text-base">Income vs Expenses</CardTitle>
                 <CardDescription>January – June 2024</CardDescription>
@@ -109,7 +109,7 @@ export default function AnalyticsChart() {
             </CardFooter>
         </Card>
 
-        <Card>
+        <Card className="flex-1">
             <CardHeader>
                 <div className="flex items-center justify-between gap-2">
                     <div>

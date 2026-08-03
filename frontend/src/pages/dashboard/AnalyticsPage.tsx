@@ -32,7 +32,7 @@ export default function AnalyticsPage() {
           size="sm"
           className="cursor-pointer gap-2"
           data-active="true"
-          // onClick={() => setOpenFilters((prev) => !prev)}
+        // onClick={() => setOpenFilters((prev) => !prev)}
         >
           <SlidersHorizontal size={16} />
           Filters
@@ -41,17 +41,19 @@ export default function AnalyticsPage() {
       </PageHeader>
 
       {/* ===== RAND 1: insight ===== */}
-      <div className="mb-6 grid items-start gap-6 lg:grid-cols-2">
-        <AnalyticsInsight />
+      <div className="flex flex-col gap-5">
+        <div className="flex gap-10 flex-col-reverse lg:flex-row lg:items-stretch">
+          <AnalyticsInsight />
 
-        <BudgetHealth />
+          <BudgetHealth />
+        </div>
+
+        {/* ===== RAND 2: grafice ===== */}
+        <AnalyticsChart />
+
+        {/* ===== RAND 3: breakdown ===== */}
+        <ExpensesInfo />
       </div>
-
-      {/* ===== RAND 2: grafice ===== */}
-      <AnalyticsChart />
-
-      {/* ===== RAND 3: breakdown ===== */}
-      <ExpensesInfo />
     </section>
   );
 }
