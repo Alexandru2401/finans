@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 export default function OurMission() {
   return (
     <section
-      id="about"
       className="bg-background py-8 px-6 scroll-mt-24"
     >
       <div className="mx-auto max-w-6xl">
@@ -23,6 +22,13 @@ export default function OurMission() {
         {/* Two columns: intro + image */}
         <div className="mb-16 grid items-center gap-10 lg:grid-cols-2">
           {/* Left — intro */}
+
+
+          {/* Right — image */}
+          <div className="rounded-2xl border border-border p-2 shadow-xl">
+            <img src="/cta2.png" alt="Dashboard preview" className="w-full rounded-xl object-cover" />
+          </div>
+
           <div className="space-y-4 text-muted-foreground">
             <p className="text-2xl font-semibold text-foreground">
               But… why choose us?
@@ -35,11 +41,6 @@ export default function OurMission() {
               We help individuals and businesses simplify financial management —
               without stress, confusion or wasted time.
             </p>
-          </div>
-
-          {/* Right — image */}
-          <div className="rounded-2xl border border-border p-2 shadow-xl">
-            <img src="/cta2.png" alt="Dashboard preview" className="w-full rounded-xl object-cover" />
           </div>
         </div>
 

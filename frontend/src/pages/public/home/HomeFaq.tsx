@@ -53,7 +53,7 @@ const faqs = [
 ];
 
 export default function HomeFaq() {
-    return <div className="mx-auto max-w-3xl">
+    return <section className="mx-auto max-w-6xl">
         <div className="mb-12 text-center">
             <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-finance-warning">
                 FAQ
@@ -78,5 +78,5 @@ export default function HomeFaq() {
                 </AccordionItem>
             ))}
         </Accordion>
-    </div>
+    </section>
 }
