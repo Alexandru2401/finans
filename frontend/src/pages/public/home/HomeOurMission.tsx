@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 export default function OurMission() {
   return (
     <section
-      className="bg-background py-8 px-6 scroll-mt-24"
+      className="bg-background px-3 sm:px-6 scroll-mt-24"
     >
       <div className="mx-auto max-w-6xl">
         {/* Heading */}
-        <div className="mb-16 max-w-2xl">
+        <div className="mb-6 max-w-2xl">
           <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
             Our mission
           </h2>
@@ -20,7 +20,7 @@ export default function OurMission() {
         </div>
 
         {/* Two columns: intro + image */}
-        <div className="mb-16 grid items-center gap-10 lg:grid-cols-2">
+        <div className="mb-6 grid items-center gap-5 lg:gap-10 lg:grid-cols-2">
           {/* Left — intro */}
 
 
