@@ -37,11 +37,13 @@ export default function PublicMainNavigation() {
   }
 
   return (
-    <nav className="flex w-full justify-between md:justify-around p-8 md:py-8 text-xl relative">
-      <div>logo</div>
+    <nav className="flex w-full justify-between md:justify-around p-4 text-xl relative">
+      <div className="h-20 w-36">
+        <img src="/logo.png" />
+      </div>
 
       {/* Desktop Navigation */}
-      <NavigationMenu className="hidden md:flex sticky">
+      <NavigationMenu className="hidden md:flex sticky z-50">
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuLink
@@ -49,15 +51,6 @@ export default function PublicMainNavigation() {
               className={navigationMenuTriggerStyle()}
             >
               <Link to="/">Home</Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
-              <Link to="/#about">About</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
 
@@ -126,7 +119,7 @@ export default function PublicMainNavigation() {
       </NavigationMenu>
 
       {/* Desktop Auth Buttons */}
-      <ul className="hidden sm:flex gap-4">
+      <ul className="hidden sm:flex gap-4 items-center">
         <Link to="/signin">
           <Button variant="ghost" className="cursor-pointer">
             Create Account

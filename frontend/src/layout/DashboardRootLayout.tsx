@@ -2,7 +2,7 @@ import ProfileBadge from "@/components/dashboard/budget/ProfileBadge";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BudgetStoreProvider } from "@/store/dashboardStore/BudgetStoreContext";
 import { Outlet } from "react-router";
-import DashboardMainNavigation from "../navigation/DashboardMainNavigation";
+import DashboardMainNavigation from "../routes/navigation/DashboardMainNavigation";
 import { Suspense } from "react";
 import { Spinner } from "@/components/ui/spinner";
 

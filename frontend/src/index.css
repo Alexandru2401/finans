@@ -52,6 +52,7 @@
   --color-finance-success-bg: var(--finance-success-bg);
   --color-finance-danger-bg: var(--finance-danger-bg);
   --color-finance-warning-bg: var(--finance-warning-bg);
+  --animate-marquee: marquee 20s linear infinite;
 }
 
 :root {
@@ -147,5 +148,14 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
