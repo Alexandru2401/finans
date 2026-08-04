@@ -10,10 +10,10 @@ const features = [
 ]
 
 export default function HomeCardCta() {
-    return <section className="w-full bg-background px-6 py-20">
+    return <section className="w-full bg-background px-3 sm:px-6 py-8 sm:py-16">
         <div className="mx-auto max-w-6xl">
-            <div className="mb-12 max-w-2xl">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-amber-400">
+            <div className="mb-6 max-w-2xl">
+                <p className="mb-2 text-xs font-semibold uppercase text-amber-400">
                     Powerful features
                 </p>
                 <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
