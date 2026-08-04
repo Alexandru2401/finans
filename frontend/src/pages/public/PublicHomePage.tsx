@@ -1,9 +1,6 @@
 import CustomerReviews from "./CustomerReviews";
 import PublicAboutPage from "./home/HomeOurMission";
 import HomeCta2 from "./home/HomeCta2";
-
-
-
 import HomeBrands from "./home/HomeBrands";
 import HomeCardCta from "./home/HomeCardCta";
 import HomeFaq from "./home/HomeFaq";
