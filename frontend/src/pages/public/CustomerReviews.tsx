@@ -59,14 +59,17 @@ export default function CustomerReviews() {
         >
           <CarouselContent>
             {reviews.map((review, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <CarouselItem
+                key={index}
+                className="basis-4/5 sm:basis-1/2 lg:basis-1/3"
+              >
                 <Card className="h-full">
-                  <CardContent className="flex h-full flex-col justify-between p-6">
+                  <CardContent className="flex h-full flex-col gap-6 p-6 md:justify-between">
                     <p className="mb-6 text-muted-foreground">
                       “{review.text}”
                     </p>
 
-                    <div>
+                    <div className="mx-auto max-w-6xl px-4 sm:px-6">
                       <p className="font-semibold">{review.name}</p>
                       <p className="text-sm text-muted-foreground">
                         {review.role}
@@ -78,8 +81,8 @@ export default function CustomerReviews() {
             ))}
           </CarouselContent>
 
-          <CarouselPrevious className="cursor-pointer" />
-          <CarouselNext className="cursor-pointer" />
+          <CarouselPrevious className="hidden cursor-pointer sm:flex" />
+          <CarouselNext className="hidden cursor-pointer sm:flex" />
         </Carousel>
       </div>
     </section>
