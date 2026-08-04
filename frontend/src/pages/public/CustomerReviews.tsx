@@ -37,10 +37,10 @@ const reviews = [
 
 export default function CustomerReviews() {
   return (
-    <section className="py-8">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="px-3 sm:px-6 py-8">
+      <div className="mx-auto max-w-6xl">
         {/* Heading */}
-        <div className="mb-12 text-center">
+        <div className="mb-6 text-center">
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
             Loved by our customers
           </h2>
@@ -61,7 +61,7 @@ export default function CustomerReviews() {
             {reviews.map((review, index) => (
               <CarouselItem
                 key={index}
-                className="basis-4/5 sm:basis-1/2 lg:basis-1/3"
+                className="basis-5/5 sm:basis-1/2 lg:basis-1/3"
               >
                 <Card className="h-full">
                   <CardContent className="flex h-full flex-col gap-6 p-6 md:justify-between">

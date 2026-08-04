@@ -11,7 +11,7 @@ const points = [
 
 export default function HomeFeatures() {
   return (
-    <section className="w-full px-6 py-8">
+    <section className="w-full px-3 sm:px-6 py-8">
       <div className="mx-auto grid max-w-6xl items-center gap-6 lg:grid-cols-2">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">

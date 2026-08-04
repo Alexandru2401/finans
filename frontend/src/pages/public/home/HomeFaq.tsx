@@ -34,8 +34,8 @@ const faqs = [
 
 export default function HomeFaq() {
   return (
-    <section className="p-3 mx-auto max-w-7xl">
-      <div className="mb-12 text-center">
+    <section className="mx-auto w-full md:max-w-2xl p-3 ">
+      <div className="mb-6 text-center">
         <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
           Frequently asked questions
         </h2>
