@@ -14,7 +14,7 @@ import { useState } from "react";
 
 type SubmenuKey = "blog" | "prices";
 
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function PublicMainNavigation() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -23,7 +23,7 @@ export default function PublicMainNavigation() {
     prices: false,
   });
 
-  const { isAuth } = useAuth()
+  const { isAuth } = useAuth();
 
   function handleMenuToggle() {
     setOpenMenu((prev) => !prev);
@@ -55,14 +55,16 @@ export default function PublicMainNavigation() {
           </NavigationMenuItem>
 
           {/* Doar de test */}
-          {isAuth && <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
-              <Link to="/dashboard">Dashboard</Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>}
+          {isAuth && (
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={navigationMenuTriggerStyle()}
+              >
+                <Link to="/dashboard">Dashboard</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          )}
 
           <NavigationMenuItem className="relative">
             <NavigationMenuTrigger>Prices</NavigationMenuTrigger>
@@ -119,16 +121,26 @@ export default function PublicMainNavigation() {
       </NavigationMenu>
 
       {/* Desktop Auth Buttons */}
-      <ul className="hidden sm:flex gap-4 items-center">
-        <Link to="/signin">
-          <Button variant="ghost" className="cursor-pointer">
-            Create Account
-          </Button>
-        </Link>
-        <Link to="/login">
-          <Button className="cursor-pointer">Login</Button>
-        </Link>
-      </ul>
+      {isAuth ? (
+        <ul className="hidden sm:flex gap-4 items-center">
+          <Link to="/dashboard">
+            <Button variant="ghost" className="cursor-pointer">
+              Dashboard
+            </Button>
+          </Link>
+        </ul>
+      ) : (
+        <ul className="hidden sm:flex gap-4 items-center">
+          <Link to="/signin">
+            <Button variant="ghost" className="cursor-pointer">
+              Create Account
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button className="cursor-pointer">Login</Button>
+          </Link>
+        </ul>
+      )}
 
       {/* Mobile Menu Toggle */}
       <button
