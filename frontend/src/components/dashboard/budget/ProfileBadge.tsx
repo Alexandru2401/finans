@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -19,10 +19,16 @@ import {
 } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 
+import { logoutUser } from "@/api/user";
+import { useAuth } from "@/hooks/useAuth";
+
 export default function ProfileBadge() {
   const [openProfile, setOpenProfile] = useState(false);
   const [notifications, setNotifications] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const { dark, toggleTheme } = useTheme();
 
@@ -47,9 +53,15 @@ export default function ProfileBadge() {
 
   async function handleLogout() {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const res = await logoutUser();
 
-      window.location.href = "/login";
+      console.log("logout response:", res);
+      if (!res.ok) {
+        console.error("Logout failed:", res.data.message);
+        return;
+      }
+      setUser(null); // curata userul din context, altfel ramai "logat" in frontend
+      navigate("/login", { replace: true });
     } catch (err) {
       console.log(err);
     }

@@ -23,11 +23,13 @@ import DashboardRootLayout from "./layout/DashboardRootLayout";
 import PublicRootLayout from "./layout/PublicRootLayout";
 
 import { Toaster } from "@/components/ui/sonner";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "@/context/AuthProvider";
 import ErrorBoundary from "./components/dashboard/shared/ErrorBoundary";
+import UserInfoForm from "./components/public/auth/userInfoForm";
 
 const dashboardRoutes = [
   { index: true, element: <DashboardHomePage /> },
+  { path: "user-info", element: <UserInfoForm /> },
   { path: "budget", element: <BudgetPage /> },
   { path: "transactions", element: <TransactionsPage /> },
   { path: "profile", element: <ProfilePage /> },
@@ -61,6 +63,7 @@ const router = createBrowserRouter([
     element: <ProtectedPage />,
     errorElement: <ErrorPage />,
     children: [
+      { path: "user-info", element: <UserInfoForm /> },
       {
         element: (
           <ErrorBoundary>
@@ -70,7 +73,7 @@ const router = createBrowserRouter([
         children: dashboardRoutes,
       },
     ],
-  }
+  },
 ]);
 
 function App() {

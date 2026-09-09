@@ -1,9 +1,11 @@
-import { post, get } from "./client";
+import type { User } from "@/context/AuthContext";
+import { post, get, patch } from "./client";
 
 interface AuthResponse {
   message: string;
   success: boolean;
   token?: string;
+  user?: User;
 }
 
 async function loginUser(email: string, password: string) {
@@ -17,9 +19,8 @@ async function loginUser(email: string, password: string) {
   return response;
 }
 
-async function createUser(username: string, email: string, password: string) {
+async function createUser(email: string, password: string) {
   const response = await post<AuthResponse>("/auth/register", {
-    username,
     email,
     password,
   });
@@ -34,4 +35,23 @@ async function checkUserAuthentication() {
   return response;
 }
 
-export { loginUser, createUser, checkUserAuthentication };
+async function logoutUser() {
+  const response = await post<AuthResponse>("/auth/logout", {});
+  return response;
+}
+
+async function addUserInfo(username: string, currency: string) {
+  const response = await patch<AuthResponse>("/auth/user-info", {
+    username,
+    currency,
+  });
+  return response;
+}
+
+export {
+  loginUser,
+  createUser,
+  checkUserAuthentication,
+  logoutUser,
+  addUserInfo,
+};
