@@ -1,15 +1,20 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext } from "react";
 
-type AuthValue = { isAuth: boolean; loading: boolean };
-const AuthContext = createContext<AuthValue | null>(null);
+export type User = {
+  user_id: string;
+  username: string | null;
+  email: string;
+  plan_type: string;
+  currency: string | null;
+  is_active: boolean;
+  created_at: string;
+};
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-    const value = { isAuth: true, loading: false };
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-}
+export type AuthValue = {
+  user: User | null;
+  setUser: (user: User | null) => void;
+  isAuth: boolean;
+  loading: boolean;
+};
 
-export function useAuth() {
-    const ctx = useContext(AuthContext);
-    if (!ctx) throw new Error("useAuth must be used within AuthProvider");
-    return ctx;
-}
+export const AuthContext = createContext<AuthValue | null>(null);

@@ -18,14 +18,16 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 import { createUser } from "@/api/user";
+import { useAuth } from "@/hooks/useAuth";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+
+  const { setUser } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
@@ -43,30 +45,24 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
   async function handleSubmitForm(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     if (loading) return;
 
     try {
       setLoading(true);
 
-      const response = await createUser(
-        formData.username,
-        formData.email,
-        formData.password,
-      );
-      console.log("User created:", response);
+      const response = await createUser(formData.email, formData.password);
 
       if (!response.ok) {
         toast.error(response.data.message || "Failed to create account.");
         return;
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setUser(response.data.user ?? null); // userul are username: null → onboarding
 
-      navigate("/dashboard");
+      navigate("/dashboard/user-info");
     } catch (err) {
       console.log(err);
-      toast.error("Failed to create account.");
+      toast.error("Failed to create account."); // aici doar erori de retea
     } finally {
       setLoading(false);
     }
@@ -83,16 +79,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       <CardContent>
         <form onSubmit={handleSubmitForm}>
           <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="name">Full Name</FieldLabel>
-              <Input
-                id="name"
-                type="text"
-                placeholder="John Doe"
-                value={formData.username}
-                onChange={(e) => handleChange("username", e)}
-              />
-            </Field>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input

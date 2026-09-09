@@ -20,6 +20,7 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 import { loginUser } from "@/api/user";
+import { useAuth } from "@/hooks/useAuth";
 
 export function LoginForm({
   className,
@@ -30,7 +31,8 @@ export function LoginForm({
     password: "",
   });
 
-  const redirect = useNavigate();
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState<{
     email?: string;
@@ -90,8 +92,9 @@ export function LoginForm({
         return;
       }
 
+      setUser(response.data.user ?? null);
       toast.success(response.data.message || "Login successful!");
-      redirect("/dashboard");
+      navigate("/dashboard", { replace: true });
     } catch (err) {
       console.log(err);
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
