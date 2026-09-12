@@ -30,6 +30,11 @@ async function createUser(email: string, password: string) {
   return response;
 }
 
+async function getUserInfo() {
+  const response = await get<AuthResponse>("/auth/user-info");
+  return response;
+}
+
 async function checkUserAuthentication() {
   const response = await get<AuthResponse>("/auth/check-me");
   return response;
@@ -54,4 +59,5 @@ export {
   checkUserAuthentication,
   logoutUser,
   addUserInfo,
+  getUserInfo,
 };

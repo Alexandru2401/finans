@@ -43,15 +43,12 @@ import {
   Trash2,
   UserRoundCog
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const user = {
-  username: "alex.doe",
-  email: "alex.doe@email.com",
-  plan: "Pro",
-  memberSince: "March 2023",
-  currency: "USD",
-};
+import { logoutUser, getUserInfo } from "@/api/user";
+import { useAuth } from "@/hooks/useAuth";
+import type { User } from "@/context/AuthContext";
 
 type ActionId =
   | "currency"
@@ -130,11 +127,68 @@ function ProfileBtn({ label }: profileBtnProps) {
   );
 }
 
+function formatMemberSince(createdAt?: string) {
+  if (!createdAt) return "—";
+  return new Date(createdAt).toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export default function ProfilePage() {
   const [openSection, setOpenSection] = useState<ActionId>(null);
+  const { user, setUser, loading } = useAuth();
+  const navigate = useNavigate();
 
   const toggle = (id: ActionId) =>
     setOpenSection((prev) => (prev === id ? null : id));
+
+  useEffect(() => {
+    let active = true;
+
+    (async () => {
+      try {
+        const res = await getUserInfo();
+        if (active && res.ok) {
+          setUser(res.data.user ?? null);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [setUser]);
+
+  async function handleLogout() {
+    try {
+      const res = await logoutUser();
+      if (!res.ok) {
+        console.error("Logout failed:", res.data?.message);
+        return;
+      }
+      setUser(null);
+      navigate("/login", { replace: true });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  if (loading) {
+    return (
+      <section className="relative py-4 px-4 max-w-7xl mx-auto">
+        <div className="mx-auto p-10 max-w-4xl text-center text-sm text-muted-foreground">
+          Loading profile...
+        </div>
+      </section>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <section className="relative py-4 px-4 max-w-7xl mx-auto">
@@ -152,13 +206,13 @@ export default function ProfilePage() {
             </div>
             <div>
               <p className="text-lg font-semibold text-foreground">
-                @{user.username}
+                {user.username || user.email.split("@")[0]}
               </p>
               <Badge
                 variant="outline"
                 className="border-finance-warning/40 text-finance-warning bg-finance-warning-bg text-xs mt-1"
               >
-                ⭐ {user.plan} Plan
+                ⭐ {user.plan_type ? user.plan_type : "Basic"} Plan
               </Badge>
             </div>
           </div>
@@ -166,6 +220,7 @@ export default function ProfilePage() {
             variant="ghost"
             size="icon"
             className="text-muted-foreground cursor-pointer hover:text-finance-danger hover:bg-finance-danger-bg"
+            onClick={handleLogout}
           >
             <LogOut className="w-4 h-4" />
           </Button>
@@ -181,9 +236,9 @@ export default function ProfilePage() {
           <CardContent className="space-y-3">
             {[
               { label: "Email", value: user.email },
-              { label: "Current Plan", value: user.plan, highlight: true },
-              { label: "Member Since", value: user.memberSince },
-              { label: "Currency", value: user.currency },
+              { label: "Current Plan", value: user.plan_type ? user.plan_type : "Basic", highlight: true },
+              { label: "Member Since", value: formatMemberSince(user.created_at) },
+              { label: "Currency", value: user.currency || "—" },
             ].map(({ label, value, highlight }, i, arr) => (
               <div key={label}>
                 <div className="flex items-center justify-between py-1">
@@ -259,7 +314,7 @@ export default function ProfilePage() {
 
                 <CollapsibleContent>
                   <div className="mt-1 ml-4 border-l-2 border-border pl-4 py-3 pr-2">
-                    <ActionPanel id={id as ActionId} />
+                    <ActionPanel id={id as ActionId} user={user} />
                   </div>
                 </CollapsibleContent>
               </Collapsible>
@@ -275,12 +330,12 @@ export default function ProfilePage() {
   );
 }
 
-function ActionPanel({ id }: { id: ActionId }) {
+function ActionPanel({ id, user }: { id: ActionId; user: User }) {
   if (id === "currency")
     return (
       <div className="space-y-3">
         <Label className="text-muted-foreground text-xs">Select Currency</Label>
-        <Select defaultValue="usd">
+        <Select defaultValue={(user.currency || "usd").toLowerCase()}>
           <SelectTrigger className="cursor-pointer">
             <SelectValue />
           </SelectTrigger>
@@ -309,7 +364,7 @@ function ActionPanel({ id }: { id: ActionId }) {
             key={p}
             className={cn(
               "py-2 px-3 rounded-lg border text-sm font-medium",
-              p === "Pro"
+              p.toLowerCase() === user.plan_type?.toLowerCase()
                 ? "border-finance-warning bg-finance-warning-bg text-finance-warning"
                 : "border-border bg-card text-foreground hover:border-muted-foreground/30 hover:bg-muted/50",
             )}
@@ -325,7 +380,7 @@ function ActionPanel({ id }: { id: ActionId }) {
       <div className="space-y-3">
         <div className="space-y-1">
           <Label className="text-muted-foreground text-xs">New Email Address</Label>
-          <Input type="email" placeholder="you@example.com" />
+          <Input type="email" placeholder={user.email} />
         </div>
         <ProfileBtn label="Update mail" />
       </div>
