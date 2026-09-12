@@ -25,15 +25,16 @@ async function api<T = unknown>(
     ...options,
   });
 
-  if (response.status === 401) {
-    return { ok: false, status: 401, data: null as T };
-  }
-
   if (response.status === 204) {
     return { ok: true, status: 204, data: null as T };
   }
 
-  const data: T = await response.json();
+  let data: T;
+  try {
+    data = await response.json();
+  } catch {
+    data = null as T;
+  }
 
   return { ok: response.ok, status: response.status, data };
 }
