@@ -16,18 +16,63 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChevronDown, Download, Search, X } from "lucide-react";
+import type { TransactionFilters } from "./filters";
 
-const CATEGORIES = [
-  "Sales",
-  "Rent",
-  "SaaS",
-  "Utilities",
-  "Food & Dining",
-  "Shopping",
-  "Other",
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
-export default function TransactionsFilters() {
+const TYPE_LABELS: Record<string, string> = {
+  income: "Income",
+  expense: "Expense",
+  savings: "Savings",
+};
+
+interface Props {
+  filters: TransactionFilters;
+  onChange: (patch: Partial<TransactionFilters>) => void;
+  onClear: () => void;
+  years: string[];
+  categories: string[];
+}
+
+export default function TransactionsFilters({
+  filters,
+  onChange,
+  onClear,
+  years,
+  categories,
+}: Props) {
+  const toggleCategory = (cat: string) => {
+    const active = filters.categories.includes(cat);
+    onChange({
+      categories: active
+        ? filters.categories.filter((c) => c !== cat)
+        : [...filters.categories, cat],
+    });
+  };
+
+  const hasActiveFilters =
+    filters.search !== "" ||
+    filters.year !== "all" ||
+    filters.month !== "all" ||
+    filters.day !== "all" ||
+    filters.type !== "all" ||
+    filters.categories.length > 0 ||
+    filters.minAmount !== "" ||
+    filters.maxAmount !== "";
+
   return (
     <>
       {/* SEARCH + EXPORT */}
@@ -42,6 +87,8 @@ export default function TransactionsFilters() {
             id="search-transactions"
             placeholder="Search description..."
             className="pl-9"
+            value={filters.search}
+            onChange={(e) => onChange({ search: e.target.value })}
           />
         </div>
         <Button variant="outline" size="sm" className="cursor-pointer gap-2">
@@ -59,7 +106,10 @@ export default function TransactionsFilters() {
           >
             Year
           </Label>
-          <Select>
+          <Select
+            value={filters.year}
+            onValueChange={(v) => onChange({ year: v })}
+          >
             <SelectTrigger id="filter-year" className="w-27.5">
               <SelectValue placeholder="Year" />
             </SelectTrigger>
@@ -67,9 +117,11 @@ export default function TransactionsFilters() {
               <SelectItem value="all" className="cursor-pointer">
                 All years
               </SelectItem>
-              <SelectItem value="2026">2026</SelectItem>
-              <SelectItem value="2025">2025</SelectItem>
-              <SelectItem value="2024">2024</SelectItem>
+              {years.map((y) => (
+                <SelectItem key={y} value={y}>
+                  {y}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -81,26 +133,16 @@ export default function TransactionsFilters() {
           >
             Month
           </Label>
-          <Select>
+          <Select
+            value={filters.month}
+            onValueChange={(v) => onChange({ month: v })}
+          >
             <SelectTrigger id="filter-month" className="w-32.5">
               <SelectValue placeholder="Month" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All months</SelectItem>
-              {[
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December",
-              ].map((m, i) => (
+              {MONTHS.map((m, i) => (
                 <SelectItem key={m} value={String(i + 1)}>
                   {m}
                 </SelectItem>
@@ -113,7 +155,10 @@ export default function TransactionsFilters() {
           <Label htmlFor="filter-day" className="text-xs text-muted-foreground">
             Day
           </Label>
-          <Select>
+          <Select
+            value={filters.day}
+            onValueChange={(v) => onChange({ day: v })}
+          >
             <SelectTrigger id="filter-day" className="w-25">
               <SelectValue placeholder="Day" />
             </SelectTrigger>
@@ -135,7 +180,10 @@ export default function TransactionsFilters() {
           >
             Type
           </Label>
-          <Select>
+          <Select
+            value={filters.type}
+            onValueChange={(v) => onChange({ type: v })}
+          >
             <SelectTrigger id="filter-type" className="w-35">
               <SelectValue placeholder="All types" />
             </SelectTrigger>
@@ -143,6 +191,7 @@ export default function TransactionsFilters() {
               <SelectItem value="all">All types</SelectItem>
               <SelectItem value="income">Income</SelectItem>
               <SelectItem value="expense">Expense</SelectItem>
+              <SelectItem value="savings">Savings</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -156,22 +205,34 @@ export default function TransactionsFilters() {
                 className="w-45 justify-between font-normal"
               >
                 <span className="truncate text-muted-foreground">
-                  All categories
+                  {filters.categories.length === 0
+                    ? "All categories"
+                    : `${filters.categories.length} selected`}
                 </span>
                 <ChevronDown size={16} className="opacity-50" />
               </Button>
             </PopoverTrigger>
             <PopoverContent align="start" className="w-55 p-1">
               <div className="max-h-64 overflow-y-auto">
-                {CATEGORIES.map((cat) => (
-                  <Label
-                    key={cat}
-                    className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm font-normal hover:bg-accent"
-                  >
-                    <Checkbox id={`cat-${cat}`} />
-                    {cat}
-                  </Label>
-                ))}
+                {categories.length === 0 ? (
+                  <p className="px-2 py-1.5 text-sm text-muted-foreground">
+                    No categories yet
+                  </p>
+                ) : (
+                  categories.map((cat) => (
+                    <Label
+                      key={cat}
+                      className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm font-normal hover:bg-accent"
+                    >
+                      <Checkbox
+                        id={`cat-${cat}`}
+                        checked={filters.categories.includes(cat)}
+                        onCheckedChange={() => toggleCategory(cat)}
+                      />
+                      {cat}
+                    </Label>
+                  ))
+                )}
               </div>
             </PopoverContent>
           </Popover>
@@ -187,6 +248,8 @@ export default function TransactionsFilters() {
               type="number"
               placeholder="Min"
               className="w-22.5"
+              value={filters.minAmount}
+              onChange={(e) => onChange({ minAmount: e.target.value })}
             />
             <span className="text-muted-foreground">–</span>
             <Input
@@ -194,11 +257,19 @@ export default function TransactionsFilters() {
               placeholder="Max"
               className="w-22.5"
               aria-label="Maximum amount"
+              value={filters.maxAmount}
+              onChange={(e) => onChange({ maxAmount: e.target.value })}
             />
           </div>
         </div>
 
-        <Button variant="ghost" size="sm" className="text-muted-foreground">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-muted-foreground"
+          onClick={onClear}
+          disabled={!hasActiveFilters}
+        >
           <X className="h-4 w-4" aria-hidden="true" />
           Clear
         </Button>
@@ -210,7 +281,10 @@ export default function TransactionsFilters() {
           >
             Sort
           </Label>
-          <Select>
+          <Select
+            value={filters.sort}
+            onValueChange={(v) => onChange({ sort: v })}
+          >
             <SelectTrigger id="filter-sort" className="w-45">
               <SelectValue placeholder="Newest first" />
             </SelectTrigger>
@@ -225,29 +299,113 @@ export default function TransactionsFilters() {
       </div>
 
       {/* ACTIVE FILTERS */}
-      <div className="flex flex-wrap items-center gap-2 mb-6">
-        <span className="text-xs text-muted-foreground">Active:</span>
-        <Badge variant="secondary" className="gap-1 pr-1 font-normal">
-          Type: Income
-          <button
-            type="button"
-            aria-label="Remove type filter"
-            className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
-          >
-            <X size={12} />
-          </button>
-        </Badge>
-        <Badge variant="secondary" className="gap-1 pr-1 font-normal">
-          Category: Sales
-          <button
-            type="button"
-            aria-label="Remove category filter"
-            className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
-          >
-            <X size={12} />
-          </button>
-        </Badge>
-      </div>
+      {hasActiveFilters && (
+        <div className="flex flex-wrap items-center gap-2 mb-6">
+          <span className="text-xs text-muted-foreground">Active:</span>
+
+          {filters.search !== "" && (
+            <Badge variant="secondary" className="gap-1 pr-1 font-normal">
+              Search: {filters.search}
+              <button
+                type="button"
+                aria-label="Remove search filter"
+                className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
+                onClick={() => onChange({ search: "" })}
+              >
+                <X size={12} />
+              </button>
+            </Badge>
+          )}
+
+          {filters.year !== "all" && (
+            <Badge variant="secondary" className="gap-1 pr-1 font-normal">
+              Year: {filters.year}
+              <button
+                type="button"
+                aria-label="Remove year filter"
+                className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
+                onClick={() => onChange({ year: "all" })}
+              >
+                <X size={12} />
+              </button>
+            </Badge>
+          )}
+
+          {filters.month !== "all" && (
+            <Badge variant="secondary" className="gap-1 pr-1 font-normal">
+              Month: {MONTHS[Number(filters.month) - 1]}
+              <button
+                type="button"
+                aria-label="Remove month filter"
+                className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
+                onClick={() => onChange({ month: "all" })}
+              >
+                <X size={12} />
+              </button>
+            </Badge>
+          )}
+
+          {filters.day !== "all" && (
+            <Badge variant="secondary" className="gap-1 pr-1 font-normal">
+              Day: {filters.day}
+              <button
+                type="button"
+                aria-label="Remove day filter"
+                className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
+                onClick={() => onChange({ day: "all" })}
+              >
+                <X size={12} />
+              </button>
+            </Badge>
+          )}
+
+          {filters.type !== "all" && (
+            <Badge variant="secondary" className="gap-1 pr-1 font-normal">
+              Type: {TYPE_LABELS[filters.type]}
+              <button
+                type="button"
+                aria-label="Remove type filter"
+                className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
+                onClick={() => onChange({ type: "all" })}
+              >
+                <X size={12} />
+              </button>
+            </Badge>
+          )}
+
+          {filters.categories.map((cat) => (
+            <Badge
+              key={cat}
+              variant="secondary"
+              className="gap-1 pr-1 font-normal"
+            >
+              Category: {cat}
+              <button
+                type="button"
+                aria-label={`Remove ${cat} category filter`}
+                className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
+                onClick={() => toggleCategory(cat)}
+              >
+                <X size={12} />
+              </button>
+            </Badge>
+          ))}
+
+          {(filters.minAmount !== "" || filters.maxAmount !== "") && (
+            <Badge variant="secondary" className="gap-1 pr-1 font-normal">
+              Amount: {filters.minAmount || "0"}–{filters.maxAmount || "∞"}
+              <button
+                type="button"
+                aria-label="Remove amount filter"
+                className="cursor-pointer rounded-full p-0.5 hover:bg-background/70"
+                onClick={() => onChange({ minAmount: "", maxAmount: "" })}
+              >
+                <X size={12} />
+              </button>
+            </Badge>
+          )}
+        </div>
+      )}
     </>
   );
 }

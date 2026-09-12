@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -15,25 +16,29 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Link } from "react-router";
+import type { Transaction } from "@/api/transactions";
 
-const CATEGORY_STYLES: Record<string, string> = {
-  Sales: "bg-finance-success-bg text-finance-success",
-  Rent: "bg-finance-warning-bg text-finance-warning",
-  SaaS: "bg-finance-danger-bg text-finance-danger",
+const TYPE_STYLES: Record<Transaction["type"], string> = {
+  income: "bg-finance-success-bg text-finance-success",
+  expense: "bg-finance-danger-bg text-finance-danger",
+  savings: "bg-finance-primary-bg text-finance-primary",
 };
 
-const transactions = [
-  { desc: "Stripe Payment", category: "Sales", date: "Jan 24", amount: 1250 },
-  { desc: "Office Rent", category: "Rent", date: "Jan 23", amount: -2000 },
-  { desc: "Software Tools", category: "SaaS", date: "Jan 22", amount: -320 },
-  { desc: "Client Invoice", category: "Sales", date: "Jan 21", amount: 4500 },
-  { desc: "Stripe Payment", category: "Sales", date: "Jan 24", amount: 1250 },
-];
+const fmt = (n: number, type: Transaction["type"]) =>
+  `${type === "income" ? "+" : "-"}$${Math.abs(n).toLocaleString()}`;
 
-const fmt = (n: number) =>
-  `${n >= 0 ? "+" : "-"}$${Math.abs(n).toLocaleString()}`;
+const fmtDate = (date: string) =>
+  new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
 
-export default function OverviewTable() {
+interface Props {
+  transactions: Transaction[] | null;
+  loading: boolean;
+}
+
+export default function OverviewTable({ transactions, loading }: Props) {
   return (
     <Card className="flex flex-col">
       <CardHeader>
@@ -51,47 +56,61 @@ export default function OverviewTable() {
       </CardHeader>
 
       <CardContent className="flex-1">
-        <div className="w-full overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="min-w-35">Description</TableHead>
-                <TableHead className="min-w-25">Category</TableHead>
-                <TableHead className="min-w-22.5">Date</TableHead>
-                <TableHead className="min-w-25 text-right">Amount</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {transactions.map((t, i) => (
-                <TableRow key={i}>
-                  <TableCell className="font-medium">{t.desc}</TableCell>
-                  <TableCell>
-                    <span
-                      className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-                        CATEGORY_STYLES[t.category] ??
-                        "bg-muted text-muted-foreground"
+        {loading || !transactions ? (
+          <div className="space-y-3">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <div key={i} className="flex items-center justify-between">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-5 w-16 rounded-full" />
+                <Skeleton className="h-4 w-14" />
+                <Skeleton className="h-4 w-14" />
+              </div>
+            ))}
+          </div>
+        ) : transactions.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            No transactions recorded yet.
+          </p>
+        ) : (
+          <div className="w-full overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="min-w-35">Description</TableHead>
+                  <TableHead className="min-w-25">Category</TableHead>
+                  <TableHead className="min-w-22.5">Date</TableHead>
+                  <TableHead className="min-w-25 text-right">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transactions.map((t) => (
+                  <TableRow key={t.item_id}>
+                    <TableCell className="font-medium">{t.title}</TableCell>
+                    <TableCell>
+                      <span
+                        className={`rounded-full px-2.5 py-1 text-xs font-medium ${TYPE_STYLES[t.type]}`}
+                      >
+                        {t.category_name}
+                      </span>
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap text-muted-foreground">
+                      {fmtDate(t.date)}
+                    </TableCell>
+                    <TableCell
+                      className={`whitespace-nowrap text-right font-medium tabular-nums ${
+                        t.type === "income"
+                          ? "text-finance-success"
+                          : "text-finance-danger"
                       }`}
                     >
-                      {t.category}
-                    </span>
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap text-muted-foreground">
-                    {t.date}
-                  </TableCell>
-                  <TableCell
-                    className={`whitespace-nowrap text-right font-medium tabular-nums ${
-                      t.amount >= 0
-                        ? "text-finance-success"
-                        : "text-finance-danger"
-                    }`}
-                  >
-                    {fmt(t.amount)}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+                      {fmt(t.amount, t.type)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

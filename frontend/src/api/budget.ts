@@ -1,3 +1,5 @@
+import { get } from "./client";
+
 export interface BudgetItem {
   id: string;
   category: string;
@@ -9,90 +11,9 @@ export interface BudgetItem {
 
 export type NewBudgetItem = Omit<BudgetItem, "id">;
 
-interface BudgetDataResponse {
-  income: BudgetItem[];
-  expenses: BudgetItem[];
-  savings: BudgetItem[];
-}
-
 type Ok<T> = { ok: true; data: T };
 
 const delay = (ms = 600) => new Promise((r) => setTimeout(r, ms));
-
-// ── DUMMY DATA ──
-const income: BudgetItem[] = [
-  {
-    id: crypto.randomUUID(),
-    category: "Salariu",
-    amount: 5000,
-    date: new Date().toISOString(),
-  },
-  {
-    id: crypto.randomUUID(),
-    category: "Investitii",
-    amount: 2500,
-    date: "2026-06-15T10:30:00.000Z",
-  },
-  {
-    id: crypto.randomUUID(),
-    category: "Salariu",
-    amount: 5000,
-    date: "2026-05-20T10:30:00.000Z",
-  },
-  {
-    id: crypto.randomUUID(),
-    category: "Investitii",
-    amount: 2500,
-    date: "2026-04-10T10:30:00.000Z",
-  },
-  {
-    id: crypto.randomUUID(),
-    category: "Salariu",
-    amount: 5000,
-    date: "2026-03-25T10:30:00.000Z",
-  },
-];
-
-const expenses: BudgetItem[] = [
-  {
-    id: crypto.randomUUID(),
-    category: "Facturi",
-    amount: 530,
-    date: new Date().toISOString(),
-  },
-  {
-    id: crypto.randomUUID(),
-    category: "Chirie",
-    amount: 2500,
-    date: new Date().toISOString(),
-  },
-  {
-    id: crypto.randomUUID(),
-    category: "Transport",
-    amount: 320,
-    date: "2026-05-18T10:30:00.000Z",
-  },
-];
-
-const savings: BudgetItem[] = [
-  {
-    id: crypto.randomUUID(),
-    category: "Fond urgenta",
-    amount: 1000,
-    date: new Date().toISOString(),
-  },
-  {
-    id: crypto.randomUUID(),
-    category: "Vacanta",
-    amount: 750,
-    date: "2026-04-10T10:30:00.000Z",
-  },
-];
-
-async function getBudgetData(): Promise<Ok<BudgetDataResponse>> {
-  await delay();
-  return { ok: true, data: { income, expenses, savings } };
-}
 
 // ── INCOME ──
 async function addIncomeItem(payload: NewBudgetItem): Promise<Ok<BudgetItem>> {
@@ -156,7 +77,6 @@ async function deleteSavingsItem(
 }
 
 export {
-  getBudgetData,
   addIncomeItem,
   editIncomeItem,
   deleteIncomeItem,
@@ -169,40 +89,82 @@ export {
 };
 
 export interface BudgetSummary {
-  totalIncome: number;
-  totalExpenses: number;
-  totalSavings: number;
-  netBalance: number;
-  savingsRate: number;
-  incomeChangePct: number;
-  expensesChangePct: number;
-  savingsChangePct: number;
+  income: number;
+  expense: number;
+  savings: number;
+  net: number;
 }
 
-async function getBudgetSummary(
-  _period = "last-month",
-): Promise<Ok<BudgetSummary>> {
-  await delay();
+interface BudgetSummaryResponse {
+  success: boolean;
+  summary: BudgetSummary;
+}
 
-  const totalIncome = 15200;
-  const totalExpenses = 3350;
-  const totalSavings = 1750;
-  const netBalance = totalIncome - totalExpenses;
+async function getBudgetSummary(period = "last-month") {
+  const response = await get<BudgetSummaryResponse>(
+    `/budget/summary?period=${period}`,
+  );
 
   return {
-    ok: true,
-    data: {
-      totalIncome,
-      totalExpenses,
-      totalSavings,
-      netBalance,
-      savingsRate:
-        totalIncome > 0 ? Math.round((netBalance / totalIncome) * 100) : 0,
-      incomeChangePct: 3.5,
-      expensesChangePct: 3.5,
-      savingsChangePct: -3.5,
-    },
+    ok: response.ok,
+    data: response.ok ? response.data.summary : null,
   };
 }
 
 export { getBudgetSummary };
+
+export interface TopExpense {
+  item_id: string;
+  category_id: string;
+  category: string;
+  title: string;
+  amount: number;
+  date: string;
+  notes: string | null;
+  created_at: string;
+}
+
+interface TopExpensesResponse {
+  success: boolean;
+  topExpenses: (Omit<TopExpense, "amount"> & { amount: string })[];
+}
+
+async function getTopExpenses(period = "last-month") {
+  const response = await get<TopExpensesResponse>(
+    `/budget/spending/top?period=${period}`,
+  );
+
+  return {
+    ok: response.ok,
+    data: response.ok
+      ? response.data.topExpenses.map((item) => ({
+          ...item,
+          amount: parseFloat(item.amount),
+        }))
+      : null,
+  };
+}
+
+export { getTopExpenses };
+
+export interface BudgetTrendPoint {
+  month: string;
+  income: number;
+  expense: number;
+}
+
+interface BudgetTrendResponse {
+  success: boolean;
+  trend: BudgetTrendPoint[];
+}
+
+async function getBudgetTrend() {
+  const response = await get<BudgetTrendResponse>("/budget/budget-trend");
+
+  return {
+    ok: response.ok,
+    data: response.ok ? response.data.trend : null,
+  };
+}
+
+export { getBudgetTrend };

@@ -6,7 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "react-router";
+import type { BudgetTrendPoint } from "@/api/budget";
 
 export const description = "A simple pie chart";
 
@@ -21,16 +23,43 @@ import {
   YAxis,
 } from "recharts";
 
-const spendingTrend = [
-  { month: "Jan", income: 5200, expenses: 2800, savings: 1200 },
-  { month: "Feb", income: 4800, expenses: 3100, savings: 900 },
-  { month: "Mar", income: 5500, expenses: 2600, savings: 1500 },
-  { month: "Apr", income: 6000, expenses: 3400, savings: 1800 },
-  { month: "May", income: 5100, expenses: 2900, savings: 1100 },
-  { month: "Jun", income: 5800, expenses: 3200, savings: 1400 },
-];
+interface Props {
+  trend: BudgetTrendPoint[] | null;
+  loading: boolean;
+}
 
-export default function SpendingTrendingChart() {
+function formatMonth(month: string) {
+  return new Date(`${month}-01`).toLocaleDateString("en-US", {
+    month: "short",
+  });
+}
+
+export default function SpendingTrendingChart({ trend, loading }: Props) {
+  if (loading || !trend) {
+    return (
+      <Card className="flex flex-col">
+        <CardHeader>
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="mt-2 h-3 w-44" />
+            </div>
+            <Skeleton className="h-8 w-24" />
+          </div>
+        </CardHeader>
+        <CardContent className="flex-1">
+          <Skeleton className="h-65 w-full" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const spendingTrend = trend.map((point) => ({
+    month: formatMonth(point.month),
+    income: point.income,
+    expenses: point.expense,
+  }));
+
   return (
     <Card className="flex flex-col">
       <CardHeader>
@@ -79,18 +108,6 @@ export default function SpendingTrendingChart() {
                   <stop
                     offset="95%"
                     stopColor="var(--finance-danger)"
-                    stopOpacity={0}
-                  />
-                </linearGradient>
-                <linearGradient id="savings" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="5%"
-                    stopColor="var(--finance-primary)"
-                    stopOpacity={0.15}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor="var(--finance-primary)"
                     stopOpacity={0}
                   />
                 </linearGradient>
@@ -143,13 +160,6 @@ export default function SpendingTrendingChart() {
                 stroke="var(--finance-danger)"
                 strokeWidth={2}
                 fill="url(#expenses)"
-              />
-              <Area
-                type="monotone"
-                dataKey="savings"
-                stroke="var(--finance-primary)"
-                strokeWidth={2}
-                fill="url(#savings)"
               />
             </AreaChart>
           </ResponsiveContainer>

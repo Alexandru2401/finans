@@ -8,12 +8,12 @@ import BudgetFilters from "@/components/dashboard/budget/BudgetFilters";
 import ExtraInfo from "@/components/dashboard/budget/ExtraInfo";
 import Insights from "@/components/dashboard/budget/Insights";
 import SummaryCards from "@/components/dashboard/budget/SummaryCards";
-import { Spinner } from "@/components/ui/spinner";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TargetsPanel from "@/components/dashboard/budget/TargetsPanel";
 import {
-  getBudgetData,
   addIncomeItem as apiAddIncome,
   addExpenseItem as apiAddExpense,
   addSavingsItem as apiAddSavings,
@@ -26,7 +26,73 @@ import {
   type BudgetItem,
   type NewBudgetItem,
 } from "@/api/budget";
+import { getTransactions, type Transaction } from "@/api/transactions";
 import PageHeader from "@/components/dashboard/shared/PageHeader";
+
+function toBudgetItem(t: Transaction): BudgetItem {
+  return {
+    id: t.item_id,
+    category: t.category_name,
+    amount: t.amount,
+    date: t.date,
+    description: t.title,
+  };
+}
+
+const artificialDelay = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
+
+function SummaryCardsSkeleton() {
+  return (
+    <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:pb-0">
+      {[0, 1, 2, 3].map((i) => (
+        <Card
+          key={i}
+          className="border min-w-[80%] snap-center shrink-0 md:min-w-0 md:shrink"
+        >
+          <CardHeader>
+            <Skeleton className="h-5 w-24" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-6 w-20" />
+            <div className="mt-3 space-y-1">
+              <div className="flex justify-between">
+                <Skeleton className="h-3 w-20" />
+                <Skeleton className="h-3 w-14" />
+              </div>
+              <Skeleton className="h-1.5 w-full rounded-full" />
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+function ItemListSkeleton() {
+  return (
+    <Card>
+      <CardHeader>
+        <Skeleton className="h-5 w-28" />
+        <Skeleton className="mt-1 h-3 w-40" />
+      </CardHeader>
+      <CardContent className="space-y-1">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div
+            key={i}
+            className="flex items-center gap-3 rounded-lg border border-border/50 px-3 py-1.5"
+          >
+            <Skeleton className="size-9 shrink-0 rounded-lg" />
+            <div className="flex min-w-0 flex-col gap-1">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-3 w-16" />
+            </div>
+            <Skeleton className="ml-auto h-4 w-14 shrink-0" />
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
 
 type BudgetType = "income" | "expenses" | "savings";
 
@@ -103,12 +169,19 @@ export default function BudgetPage() {
   });
 
   useEffect(() => {
-    getBudgetData()
-      .then((res) => {
-        if (res.ok) {
-          setIncomeItems(res.data.income);
-          setExpenseItems(res.data.expenses);
-          setSavingsItems(res.data.savings);
+    setLoading(true);
+    Promise.all([getTransactions(), artificialDelay()])
+      .then(([res]) => {
+        if (res.ok && res.data) {
+          setIncomeItems(
+            res.data.filter((t) => t.type === "income").map(toBudgetItem),
+          );
+          setExpenseItems(
+            res.data.filter((t) => t.type === "expense").map(toBudgetItem),
+          );
+          setSavingsItems(
+            res.data.filter((t) => t.type === "savings").map(toBudgetItem),
+          );
         }
       })
       .finally(() => setLoading(false));
@@ -231,10 +304,6 @@ export default function BudgetPage() {
   const savingsRate =
     totalIncome > 0 ? Math.min((netBalance / totalIncome) * 100, 100) : 0;
 
-  if (loading) {
-    return <Spinner />;
-  }
-
   return (
     <section className="relative py-4 px-4 max-w-7xl mx-auto">
       <PageHeader
@@ -281,45 +350,53 @@ export default function BudgetPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="col-span-2 space-y-3">
-          <SummaryCards
-            totalIncome={totalIncome}
-            incomePct={incomePct}
-            budgetTargets={budgetTargets}
-            totalExpenses={totalExpenses}
-            expensesPct={expensesPct}
-            totalSavings={totalSavings}
-            savingsPct={savingsPct}
-            netBalance={netBalance}
-            savingsRate={savingsRate}
-          />
+          {loading ? (
+            <SummaryCardsSkeleton />
+          ) : (
+            <SummaryCards
+              totalIncome={totalIncome}
+              incomePct={incomePct}
+              budgetTargets={budgetTargets}
+              totalExpenses={totalExpenses}
+              expensesPct={expensesPct}
+              totalSavings={totalSavings}
+              savingsPct={savingsPct}
+              netBalance={netBalance}
+              savingsRate={savingsRate}
+            />
+          )}
 
           <div className="grid items-start gap-6">
-            <Tabs
-              value={activeTab}
-              onValueChange={(v) => setActiveTab(v as typeof activeTab)}
-              className="w-full"
-            >
-              <TabsList>
-                {sections.map((section) => (
-                  <TabsTrigger
-                    key={section.section}
-                    value={section.section}
-                    className="cursor-pointer"
-                  >
-                    {section.title}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+            {loading ? (
+              <ItemListSkeleton />
+            ) : (
+              <Tabs
+                value={activeTab}
+                onValueChange={(v) => setActiveTab(v as typeof activeTab)}
+                className="w-full"
+              >
+                <TabsList>
+                  {sections.map((section) => (
+                    <TabsTrigger
+                      key={section.section}
+                      value={section.section}
+                      className="cursor-pointer"
+                    >
+                      {section.title}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
 
-              {sections.map((section) => (
-                <TabsContent key={section.section} value={section.section}>
-                  <ItemCard
-                    section={section}
-                    onShowForm={() => setShowForm(true)}
-                  />
-                </TabsContent>
-              ))}
-            </Tabs>
+                {sections.map((section) => (
+                  <TabsContent key={section.section} value={section.section}>
+                    <ItemCard
+                      section={section}
+                      onShowForm={() => setShowForm(true)}
+                    />
+                  </TabsContent>
+                ))}
+              </Tabs>
+            )}
           </div>
         </div>
 
