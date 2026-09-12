@@ -28,7 +28,7 @@ export default function ProfileBadge() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
 
   const { dark, toggleTheme } = useTheme();
 
@@ -89,9 +89,11 @@ export default function ProfileBadge() {
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div className="flex-1">
-                <h3 className="font-semibold text-base">John Doe</h3>
+                <h3 className="font-semibold text-base">
+                  {user?.username || "John Doe"}
+                </h3>
                 <p className="text-sm text-muted-foreground">
-                  john.doe@example.com
+                  {user?.email || "john.doe@example.com"}
                 </p>
               </div>
             </div>

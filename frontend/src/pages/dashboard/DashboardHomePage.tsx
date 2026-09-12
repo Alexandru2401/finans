@@ -15,11 +15,15 @@ import PageHeader from "@/components/dashboard/shared/PageHeader";
 
 import { useEffect, useState } from "react";
 import { getBudgetSummary, type BudgetSummary } from "@/api/budget";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function DashboardHomePage() {
   const [period, setPeriod] = useState("last-month");
   const [summary, setSummary] = useState<BudgetSummary | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const user = useAuth().user;
+  console.log("User:", user);
 
   useEffect(() => {
     setLoading(true);
@@ -31,7 +35,7 @@ export default function DashboardHomePage() {
   return (
     <section className="px-4 py-4 max-w-7xl mx-auto">
       <PageHeader
-        title="Welcome back, User!"
+        title={`Welcome back, ${user?.username || "User"}!`}
         subtitle=" Take a look over your financial dashboard."
       >
         <Select value={period} onValueChange={setPeriod}>
