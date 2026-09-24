@@ -11,6 +11,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 type SubmenuKey = "blog" | "prices";
 
@@ -24,6 +26,7 @@ export default function PublicMainNavigation() {
   });
 
   const { isAuth } = useAuth();
+  const { t } = useTranslation();
 
   function handleMenuToggle() {
     setOpenMenu((prev) => !prev);
@@ -50,7 +53,7 @@ export default function PublicMainNavigation() {
               asChild
               className={navigationMenuTriggerStyle()}
             >
-              <Link to="/">Home</Link>
+              <Link to="/">{t("nav.home")}</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
 
@@ -61,58 +64,57 @@ export default function PublicMainNavigation() {
                 asChild
                 className={navigationMenuTriggerStyle()}
               >
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/dashboard">{t("nav.dashboard")}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           )}
 
           <NavigationMenuItem className="relative">
-            <NavigationMenuTrigger>Prices</NavigationMenuTrigger>
+            <NavigationMenuTrigger>{t("nav.prices")}</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-96 p-4">
-                <ListItem href="/prices/personal" title="Personal use">
-                  Unlock the full potential and control for your finances.
+                <ListItem href="/prices/personal" title={t("nav.personalUse")}>
+                  {t("nav.personalUseDescription")}
                 </ListItem>
-                <ListItem href="/prices/enterprise" title="Enterprise level">
-                  Manage your business finances with ease and confidence.
+                <ListItem href="/prices/enterprise" title={t("nav.enterprise")}>
+                  {t("nav.enterpriseDescription")}
                 </ListItem>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
 
           <NavigationMenuItem className="relative">
-            <NavigationMenuTrigger>Blog</NavigationMenuTrigger>
+            <NavigationMenuTrigger>{t("nav.blog")}</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-96 p-4">
                 <ListItem
                   href="/blog/write-story"
-                  title="Become part of our community"
+                  title={t("nav.joinCommunity")}
                 >
-                  Tell us about your experience with our product and share your
-                  story.
+                  {t("nav.joinCommunityDescription")}
                 </ListItem>
-                <ListItem href="/blog/success-stories" title="Success stories">
-                  People changing their financial lives with our product.
+                <ListItem href="/blog/success-stories" title={t("nav.successStories")}>
+                  {t("nav.successStoriesDescription")}
                 </ListItem>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
 
           <NavigationMenuItem className="relative">
-            <NavigationMenuTrigger>Info </NavigationMenuTrigger>
+            <NavigationMenuTrigger>{t("nav.info")}</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-96 p-4">
                 <ListItem
                   href="/info/terms-and-services"
-                  title="Read our terms and services"
+                  title={t("nav.readTerms")}
                 >
-                  Terms and services
+                  {t("nav.terms")}
                 </ListItem>
                 <ListItem
                   href="/info/privacy-policy"
-                  title="Read our privacy policy"
+                  title={t("nav.readPrivacy")}
                 >
-                  Privacy Policy
+                  {t("nav.privacy")}
                 </ListItem>
               </ul>
             </NavigationMenuContent>
@@ -123,21 +125,23 @@ export default function PublicMainNavigation() {
       {/* Desktop Auth Buttons */}
       {isAuth ? (
         <ul className="hidden sm:flex gap-4 items-center">
+          <LanguageSwitcher />
           <Link to="/dashboard">
             <Button variant="ghost" className="cursor-pointer">
-              Dashboard
+              {t("nav.dashboard")}
             </Button>
           </Link>
         </ul>
       ) : (
         <ul className="hidden sm:flex gap-4 items-center">
+          <LanguageSwitcher />
           <Link to="/signin">
             <Button variant="ghost" className="cursor-pointer">
-              Create Account
+              {t("nav.createAccount")}
             </Button>
           </Link>
           <Link to="/login">
-            <Button className="cursor-pointer">Login</Button>
+            <Button className="cursor-pointer">{t("nav.login")}</Button>
           </Link>
         </ul>
       )}
@@ -146,7 +150,7 @@ export default function PublicMainNavigation() {
       <button
         className="md:hidden cursor-pointer"
         onClick={handleMenuToggle}
-        aria-label="Toggle menu"
+        aria-label={t("nav.toggleMenu")}
       >
         {openMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </button>
@@ -160,21 +164,21 @@ export default function PublicMainNavigation() {
               className="text-sm font-medium hover:text-primary transition-colors py-2 border-b"
               onClick={() => setOpenMenu(false)}
             >
-              Home
+              {t("nav.home")}
             </Link>
             <Link
               to="/dashboard"
               className="text-sm font-medium hover:text-primary transition-colors py-2 border-b"
               onClick={() => setOpenMenu(false)}
             >
-              Dashboard
+              {t("nav.dashboard")}
             </Link>
             <Link
               to="/about"
               className="text-sm font-medium hover:text-primary transition-colors py-2 border-b"
               onClick={() => setOpenMenu(false)}
             >
-              About
+              {t("nav.about")}
             </Link>
             {/* Prices Section */}
             <div className="border-b pb-4">
@@ -182,7 +186,7 @@ export default function PublicMainNavigation() {
                 className="text-sm font-semibold mb-2 text-muted-foreground cursor-pointer"
                 onClick={() => handleSubMenuToggle("prices")}
               >
-                Prices
+                {t("nav.prices")}
               </p>
               {openSubMenu.prices && (
                 <div className="flex flex-col gap-2 pl-4">
@@ -191,14 +195,14 @@ export default function PublicMainNavigation() {
                     className="text-sm hover:text-primary transition-colors"
                     onClick={() => setOpenMenu(false)}
                   >
-                    Personal use
+                    {t("nav.personalUse")}
                   </Link>
                   <Link
                     to="/prices/enterprise"
                     className="text-sm hover:text-primary transition-colors"
                     onClick={() => setOpenMenu(false)}
                   >
-                    Enterprise level
+                    {t("nav.enterprise")}
                   </Link>
                 </div>
               )}
@@ -209,7 +213,7 @@ export default function PublicMainNavigation() {
                 className="text-sm font-semibold mb-2 text-muted-foreground cursor-pointer"
                 onClick={() => handleSubMenuToggle("blog")}
               >
-                Blog
+                {t("nav.blog")}
               </p>
               {openSubMenu.blog && (
                 <div className="flex flex-col gap-2 pl-4">
@@ -218,28 +222,29 @@ export default function PublicMainNavigation() {
                     className="text-sm hover:text-primary transition-colors"
                     onClick={() => setOpenMenu(false)}
                   >
-                    Write your story
+                    {t("nav.writeStory")}
                   </Link>
                   <Link
                     to="/blog/success-stories"
                     className="text-sm hover:text-primary transition-colors"
                     onClick={() => setOpenMenu(false)}
                   >
-                    Success stories
+                    {t("nav.successStories")}
                   </Link>
                 </div>
               )}
             </div>
+            <LanguageSwitcher />
             {/* Auth Buttons */}
             <div className="flex flex-col gap-3 mt-4 pt-4 border-t sm:hidden">
               <Button asChild variant="outline" className="w-full">
                 <Link to="/signin" onClick={() => setOpenMenu(false)}>
-                  Create Account
+                  {t("nav.createAccount")}
                 </Link>
               </Button>
               <Button asChild className="w-full">
                 <Link to="/login" onClick={() => setOpenMenu(false)}>
-                  Login
+                  {t("nav.login")}
                 </Link>
               </Button>
             </div>

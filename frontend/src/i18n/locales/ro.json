@@ -1,0 +1,31 @@
+{
+  "nav": {
+    "home": "Acasă",
+    "dashboard": "Panou de control",
+    "about": "Despre noi",
+    "prices": "Prețuri",
+    "blog": "Blog",
+    "info": "Info",
+    "personalUse": "Uz personal",
+    "personalUseDescription": "Deblochează întregul potențial și controlul asupra finanțelor tale.",
+    "enterprise": "Nivel enterprise",
+    "enterpriseDescription": "Gestionează finanțele afacerii tale cu ușurință și încredere.",
+    "joinCommunity": "Alătură-te comunității noastre",
+    "joinCommunityDescription": "Spune-ne despre experiența ta cu produsul nostru și împărtășește-ți povestea.",
+    "writeStory": "Scrie-ți povestea",
+    "successStories": "Povești de succes",
+    "successStoriesDescription": "Oameni care își schimbă viața financiară cu produsul nostru.",
+    "readTerms": "Citește termenii și condițiile",
+    "terms": "Termeni și condiții",
+    "readPrivacy": "Citește politica de confidențialitate",
+    "privacy": "Politica de confidențialitate",
+    "createAccount": "Creează cont",
+    "login": "Autentificare",
+    "toggleMenu": "Deschide/închide meniul"
+  },
+  "language": {
+    "label": "Limbă",
+    "ro": "Română",
+    "en": "English"
+  }
+}

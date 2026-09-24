@@ -1,0 +1,31 @@
+{
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "about": "About",
+    "prices": "Prices",
+    "blog": "Blog",
+    "info": "Info",
+    "personalUse": "Personal use",
+    "personalUseDescription": "Unlock the full potential and control for your finances.",
+    "enterprise": "Enterprise level",
+    "enterpriseDescription": "Manage your business finances with ease and confidence.",
+    "joinCommunity": "Become part of our community",
+    "joinCommunityDescription": "Tell us about your experience with our product and share your story.",
+    "writeStory": "Write your story",
+    "successStories": "Success stories",
+    "successStoriesDescription": "People changing their financial lives with our product.",
+    "readTerms": "Read our terms and services",
+    "terms": "Terms and services",
+    "readPrivacy": "Read our privacy policy",
+    "privacy": "Privacy Policy",
+    "createAccount": "Create Account",
+    "login": "Login",
+    "toggleMenu": "Toggle menu"
+  },
+  "language": {
+    "label": "Language",
+    "ro": "Română",
+    "en": "English"
+  }
+}
