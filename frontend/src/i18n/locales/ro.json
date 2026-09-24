@@ -167,5 +167,20 @@
       "subtitle": "Alătură-te miilor de oameni care își construiesc un viitor financiar mai bun.",
       "button": "Începe gratuit"
     }
+  },
+  "footer": {
+    "tagline": "Bugetare inteligentă și gestionare financiară pentru persoane fizice și afaceri în creștere.",
+    "product": "Produs",
+    "home": "Acasă",
+    "about": "Despre noi",
+    "startFree": "Începe gratuit",
+    "login": "Autentificare",
+    "social": "Social",
+    "contact": "Contact",
+    "email": "Email: {{email}}",
+    "phone": "Telefon: {{phone}}",
+    "copyright": "© {{year}} FinanceApp. Toate drepturile rezervate.",
+    "privacy": "Politica de confidențialitate",
+    "terms": "Termeni și condiții"
   }
 }

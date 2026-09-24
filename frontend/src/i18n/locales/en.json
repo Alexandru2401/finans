@@ -167,5 +167,20 @@
       "subtitle": "Join thousands of people building better financial futures.",
       "button": "Get started for free"
     }
+  },
+  "footer": {
+    "tagline": "Smart budgeting and financial management for individuals and growing businesses.",
+    "product": "Product",
+    "home": "Home",
+    "about": "About",
+    "startFree": "Start for free",
+    "login": "Log in",
+    "social": "Social",
+    "contact": "Contact",
+    "email": "Email: {{email}}",
+    "phone": "Phone: {{phone}}",
+    "copyright": "© {{year}} FinanceApp. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
   }
 }
