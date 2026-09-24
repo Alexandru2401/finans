@@ -225,5 +225,82 @@
   "theme": {
     "switchToDark": "Activează tema întunecată",
     "switchToLight": "Activează tema luminoasă"
+  },
+  "prices": {
+    "title": "Preia controlul asupra finanțelor tale",
+    "subtitle": "Alege planul potrivit pentru a-ți gestiona banii, a-ți urmări cheltuielile și a-ți atinge obiectivele financiare",
+    "mostPopular": "Cel mai popular",
+    "perMonth": "/lună",
+    "getStartedFree": "Începe gratuit",
+    "startTrial": "Începe perioada de probă",
+    "everythingIn": "Tot ce include {{plan}}, plus:",
+    "plans": {
+      "free": {
+        "name": "Gratuit",
+        "description": "Perfect pentru a începe să-ți urmărești bugetul"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Ideal pentru cei care își gestionează serios bugetul și economiile"
+      },
+      "premium": {
+        "name": "Premium",
+        "description": "Control și planificare financiară completă"
+      }
+    },
+    "features": {
+      "basicBudget": "Urmărirea de bază a bugetului",
+      "categorization": "Categorisirea cheltuielilor",
+      "monthlyReports": "Rapoarte financiare lunare",
+      "threeBankAccounts": "Până la 3 conturi bancare",
+      "mobileApp": "Acces din aplicația mobilă",
+      "emailSupport": "Suport prin email",
+      "advancedAnalytics": "Analize și statistici avansate",
+      "unlimitedBankAccounts": "Conturi bancare nelimitate",
+      "goalTracking": "Urmărirea obiectivelor și planuri de economisire",
+      "billReminders": "Mementouri și alerte pentru facturi",
+      "customCategories": "Categorii și etichete personalizate",
+      "exportData": "Export date în CSV/Excel",
+      "priorityEmailSupport": "Suport prioritar prin email",
+      "adFree": "Fără reclame",
+      "investmentTracking": "Urmărirea investițiilor",
+      "taxPlanning": "Instrumente de planificare fiscală",
+      "multiCurrency": "Suport pentru mai multe monede",
+      "coaching": "Consiliere financiară personalizată",
+      "forecasting": "Prognoze și predicții avansate",
+      "debtCalculator": "Calculator pentru achitarea datoriilor",
+      "netWorth": "Urmărirea averii nete",
+      "familySharing": "Partajare în familie (până la 5 membri)",
+      "support247": "Suport prioritar 24/7"
+    },
+    "faq": {
+      "title": "Întrebări frecvente",
+      "items": {
+        "switch": {
+          "q": "Pot schimba planul mai târziu?",
+          "a": "Da! Poți trece oricând la un plan superior sau inferior. Modificările se aplică imediat."
+        },
+        "trial": {
+          "q": "Există o perioadă de probă gratuită?",
+          "a": "Toate planurile plătite includ o perioadă de probă gratuită de 14 zile. Nu ai nevoie de card pentru a începe."
+        },
+        "payment": {
+          "q": "Ce metode de plată acceptați?",
+          "a": "Acceptăm toate cardurile de credit importante, PayPal și transferul bancar direct."
+        },
+        "cancel": {
+          "q": "Pot anula oricând?",
+          "a": "Desigur! Îți poți anula abonamentul oricând, fără taxe de anulare."
+        },
+        "security": {
+          "q": "Datele mele financiare sunt în siguranță?",
+          "a": "Da, folosim criptare pe 256 de biți, de nivel bancar, pentru a-ți proteja datele. Nu îți vindem niciodată informațiile către terți."
+        },
+        "refund": {
+          "q": "Oferiți rambursări?",
+          "a": "Oferim garanția returnării banilor în 30 de zile. Dacă nu ești mulțumit, contactează-ne pentru o rambursare completă."
+        }
+      }
+    }
   }
 }

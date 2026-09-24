@@ -225,5 +225,82 @@
   "theme": {
     "switchToDark": "Switch to dark theme",
     "switchToLight": "Switch to light theme"
+  },
+  "prices": {
+    "title": "Get Control Over Your Finances",
+    "subtitle": "Choose the perfect plan to manage your money, track expenses, and achieve your financial goals",
+    "mostPopular": "Most Popular",
+    "perMonth": "/month",
+    "getStartedFree": "Get Started Free",
+    "startTrial": "Start Free Trial",
+    "everythingIn": "Everything in {{plan}}, plus:",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "description": "Perfect for getting started with budget tracking"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Ideal for serious budgeters and savers"
+      },
+      "premium": {
+        "name": "Premium",
+        "description": "Complete financial control and planning"
+      }
+    },
+    "features": {
+      "basicBudget": "Basic budget tracking",
+      "categorization": "Expense categorization",
+      "monthlyReports": "Monthly financial reports",
+      "threeBankAccounts": "Up to 3 bank accounts",
+      "mobileApp": "Mobile app access",
+      "emailSupport": "Email support",
+      "advancedAnalytics": "Advanced analytics & insights",
+      "unlimitedBankAccounts": "Unlimited bank accounts",
+      "goalTracking": "Goal tracking & savings plans",
+      "billReminders": "Bill reminders & alerts",
+      "customCategories": "Custom categories & tags",
+      "exportData": "Export data to CSV/Excel",
+      "priorityEmailSupport": "Priority email support",
+      "adFree": "Ad-free experience",
+      "investmentTracking": "Investment tracking",
+      "taxPlanning": "Tax planning tools",
+      "multiCurrency": "Multi-currency support",
+      "coaching": "Personalized financial coaching",
+      "forecasting": "Advanced forecasting & predictions",
+      "debtCalculator": "Debt payoff calculator",
+      "netWorth": "Net worth tracking",
+      "familySharing": "Family sharing (up to 5 members)",
+      "support247": "24/7 priority support"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "switch": {
+          "q": "Can I switch plans later?",
+          "a": "Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately."
+        },
+        "trial": {
+          "q": "Is there a free trial?",
+          "a": "All paid plans include a 14-day free trial. No credit card required to start."
+        },
+        "payment": {
+          "q": "What payment methods do you accept?",
+          "a": "We accept all major credit cards, PayPal, and direct bank transfers."
+        },
+        "cancel": {
+          "q": "Can I cancel anytime?",
+          "a": "Absolutely! Cancel your subscription at any time with no cancellation fees."
+        },
+        "security": {
+          "q": "Is my financial data secure?",
+          "a": "Yes, we use bank-level 256-bit encryption to protect your data. We never sell your information to third parties."
+        },
+        "refund": {
+          "q": "Do you offer refunds?",
+          "a": "We offer a 30-day money-back guarantee. If you're not satisfied, contact us for a full refund."
+        }
+      }
+    }
   }
 }
