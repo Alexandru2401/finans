@@ -182,5 +182,42 @@
     "copyright": "© {{year}} FinanceApp. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
+  },
+  "auth": {
+    "email": "Email",
+    "emailPlaceholder": "m@example.com",
+    "password": "Password",
+    "errors": {
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Please enter a valid email.",
+      "passwordRequired": "Password is required.",
+      "unknown": "Unknown error",
+      "generic": "An error has occurred: {{message}}"
+    },
+    "login": {
+      "title": "Login to your account",
+      "description": "Enter your email below to login to your account",
+      "forgotPassword": "Forgot your password?",
+      "submit": "Login",
+      "submitting": "Loading...",
+      "noAccount": "Don't have an account?",
+      "startFree": "Start for Free",
+      "success": "Login successful!",
+      "failed": "Login failed."
+    },
+    "signup": {
+      "title": "Create an account",
+      "description": "Enter your information below to create your account",
+      "emailHint": "We'll use this to contact you. We will not share your email with anyone else.",
+      "passwordHint": "Must be at least 8 characters long.",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordHint": "Please confirm your password.",
+      "submit": "Create Account",
+      "submitting": "Creating Account...",
+      "google": "Sign up with Google",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "failed": "Failed to create account."
+    }
   }
 }

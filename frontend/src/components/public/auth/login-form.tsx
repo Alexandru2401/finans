@@ -15,9 +15,10 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import LoginSchema from "@/schemas/login.schema";
+import LoginSchema, { type LoginErrorKey } from "@/schemas/login.schema";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 import { loginUser } from "@/api/user";
 import { useAuth } from "@/hooks/useAuth";
@@ -32,11 +33,12 @@ export function LoginForm({
   });
 
   const { setUser } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState<{
-    email?: string;
-    password?: string;
+    email?: LoginErrorKey;
+    password?: LoginErrorKey;
   }>({});
 
   const [isSubmiting, setIsSubmiting] = useState(false);
@@ -66,8 +68,8 @@ export function LoginForm({
     if (!result.success) {
       const fieldErrors = result.error.flatten().fieldErrors;
       setErrors({
-        email: fieldErrors.email?.[0],
-        password: fieldErrors.password?.[0],
+        email: fieldErrors.email?.[0] as LoginErrorKey | undefined,
+        password: fieldErrors.password?.[0] as LoginErrorKey | undefined,
       });
       return;
     }
@@ -88,17 +90,18 @@ export function LoginForm({
       console.log("Raspuns request din form:", response);
 
       if (!response.ok) {
-        toast.error(response.data.message || "test");
+        toast.error(response.data.message || t("auth.login.failed"));
         return;
       }
 
       setUser(response.data.user ?? null);
-      toast.success(response.data.message || "Login successful!");
+      toast.success(response.data.message || t("auth.login.success"));
       navigate("/dashboard", { replace: true });
     } catch (err) {
       console.log(err);
-      const errorMessage = err instanceof Error ? err.message : "Unknown error";
-      toast.error(`An error has occured: ${errorMessage}`);
+      const errorMessage =
+        err instanceof Error ? err.message : t("auth.errors.unknown");
+      toast.error(t("auth.errors.generic", { message: errorMessage }));
     } finally {
       setIsSubmiting(false);
     }
@@ -108,9 +111,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>{t("auth.login.title")}</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            {t("auth.login.description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -118,30 +121,32 @@ export function LoginForm({
             <FieldGroup>
               {/* Email Field */}
               <Field className="max-h-16">
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email">{t("auth.email")}</FieldLabel>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder={t("auth.emailPlaceholder")}
                   value={formData.email}
                   onChange={(e) => handleChange("email", e)}
                   className={errors.email ? "border-red-500" : ""}
                 />
                 {errors.email && (
-                  <p className="text-sm text-red-500 min-h-5">{errors.email}</p>
+                  <p className="text-sm text-red-500 min-h-5">
+                    {t(`auth.errors.${errors.email}`)}
+                  </p>
                 )}
               </Field>
 
               {/* Password Field */}
               <Field className="mt-2 max-h-16">
                 <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldLabel htmlFor="password">{t("auth.password")}</FieldLabel>
 
                   <a
                     href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
+                    {t("auth.login.forgotPassword")}
                   </a>
                 </div>
                 <Input
@@ -153,19 +158,19 @@ export function LoginForm({
                 />
                 {errors.password && (
                   <p className="text-sm text-red-500 min-h-5">
-                    {errors.password}
+                    {t(`auth.errors.${errors.password}`)}
                   </p>
                 )}
               </Field>
 
               <Field className="mt-3">
                 <Button type="submit" className="cursor-pointer w-full">
-                  {isSubmiting ? "Loading..." : "Login"}
+                  {isSubmiting ? t("auth.login.submitting") : t("auth.login.submit")}
                 </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account?{" "}
+                  {t("auth.login.noAccount")}{" "}
                   <a href="/signin" className="underline">
-                    Start for Free
+                    {t("auth.login.startFree")}
                   </a>
                 </FieldDescription>
               </Field>

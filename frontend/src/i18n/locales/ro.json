@@ -182,5 +182,42 @@
     "copyright": "© {{year}} FinanceApp. Toate drepturile rezervate.",
     "privacy": "Politica de confidențialitate",
     "terms": "Termeni și condiții"
+  },
+  "auth": {
+    "email": "Email",
+    "emailPlaceholder": "nume@exemplu.ro",
+    "password": "Parolă",
+    "errors": {
+      "emailRequired": "Emailul este obligatoriu.",
+      "emailInvalid": "Introdu o adresă de email validă.",
+      "passwordRequired": "Parola este obligatorie.",
+      "unknown": "Eroare necunoscută",
+      "generic": "A apărut o eroare: {{message}}"
+    },
+    "login": {
+      "title": "Autentifică-te în contul tău",
+      "description": "Introdu emailul mai jos pentru a te autentifica",
+      "forgotPassword": "Ai uitat parola?",
+      "submit": "Autentificare",
+      "submitting": "Se încarcă...",
+      "noAccount": "Nu ai cont?",
+      "startFree": "Începe gratuit",
+      "success": "Autentificare reușită!",
+      "failed": "Autentificarea a eșuat."
+    },
+    "signup": {
+      "title": "Creează un cont",
+      "description": "Completează datele de mai jos pentru a-ți crea contul",
+      "emailHint": "Îl vom folosi pentru a te contacta. Nu îl vom împărtăși cu nimeni.",
+      "passwordHint": "Trebuie să aibă cel puțin 8 caractere.",
+      "confirmPassword": "Confirmă parola",
+      "confirmPasswordHint": "Te rugăm să confirmi parola.",
+      "submit": "Creează cont",
+      "submitting": "Se creează contul...",
+      "google": "Înregistrează-te cu Google",
+      "hasAccount": "Ai deja un cont?",
+      "signIn": "Autentifică-te",
+      "failed": "Crearea contului a eșuat."
+    }
   }
 }
