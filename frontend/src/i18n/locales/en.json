@@ -27,5 +27,145 @@
     "label": "Language",
     "ro": "Română",
     "en": "English"
+  },
+  "home": {
+    "hero": {
+      "title": "Take control of your <highlight>financial future</highlight>",
+      "subtitle": "Track expenses, set budgets, and build better money habits. All in one simple, beautiful app.",
+      "getStarted": "Get started for free",
+      "howItWorks": "See how it works",
+      "perks": {
+        "free": "Free to start",
+        "secure": "Secure & private",
+        "sync": "Sync everywhere"
+      },
+      "imageAlt": "Finance app preview"
+    },
+    "featureCards": {
+      "eyebrow": "Powerful features",
+      "title": "Everything you need to manage your money",
+      "subtitle": "Built to help you save more, spend smarter, and reach your financial goals.",
+      "items": {
+        "budgeting": {
+          "title": "Smart Budgeting",
+          "desc": "Create budgets in minutes and get alerts when you're close to your limits."
+        },
+        "expenses": {
+          "title": "Expense Tracking",
+          "desc": "Automatically track your spending and see where your money goes."
+        },
+        "goals": {
+          "title": "Financial Goals",
+          "desc": "Set goals, track progress, and stay motivated to build your future."
+        },
+        "analytics": {
+          "title": "Analytics & Insights",
+          "desc": "Beautiful charts and insights to help you make better financial decisions."
+        },
+        "security": {
+          "title": "Secure & Private",
+          "desc": "Your data is encrypted and always private. We never sell your information."
+        },
+        "sync": {
+          "title": "Sync Everywhere",
+          "desc": "Access your accounts on any device, anytime. Always up to date."
+        }
+      }
+    },
+    "brands": {
+      "title": "Trusted by thousands"
+    },
+    "features": {
+      "title": "See your money clearly. <highlight>Live better.</highlight>",
+      "subtitle": "Join thousands of people who've already transformed their financial lives.",
+      "points": {
+        "whereMoneyGoes": "Know where your money goes",
+        "smarterSpending": "Make smarter spending decisions",
+        "betterHabits": "Build better financial habits",
+        "achieveGoals": "Achieve your financial goals"
+      },
+      "seePricing": "See pricing",
+      "startFree": "Start for free",
+      "imageAlt": "Dashboard preview"
+    },
+    "mission": {
+      "title": "Our mission",
+      "subtitle": "Budgeting shouldn't be complicated. It should be clear, organized and actually help you make better decisions.",
+      "imageAlt": "Dashboard preview",
+      "whyUs": "But… why choose us?",
+      "whyUsP1": "Tired of juggling spreadsheets, apps and bank statements just to understand where your money goes?",
+      "whyUsP2": "We help individuals and businesses simplify financial management — without stress, confusion or wasted time.",
+      "personal": {
+        "title": "Your money, your control",
+        "desc": "A flexible and user-friendly interface that adapts to your lifestyle, helping you track expenses, set budgets and stay in control effortlessly.",
+        "cta": "Join over 100,000 users in control"
+      },
+      "business": {
+        "title": "Your business, your growth",
+        "desc": "Manage multiple teams, track company spending and gain financial insights — all from one centralized platform.",
+        "cta": "Trusted by growing businesses"
+      }
+    },
+    "reviews": {
+      "title": "Loved by our customers",
+      "subtitle": "See what people are saying about our platform",
+      "items": {
+        "alex": {
+          "role": "Freelancer",
+          "text": "This app completely changed how I manage my finances. Clean, simple and powerful."
+        },
+        "maria": {
+          "role": "Small Business Owner",
+          "text": "Tracking expenses for my team has never been easier. Highly recommended!"
+        },
+        "john": {
+          "role": "Entrepreneur",
+          "text": "Finally an app that makes budgeting feel effortless and intuitive."
+        },
+        "elena": {
+          "role": "Product Manager",
+          "text": "The insights are amazing. I finally know where my money goes every month."
+        },
+        "daniel": {
+          "role": "Startup Founder",
+          "text": "Perfect balance between simplicity and advanced features."
+        }
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "subtitle": "Everything you need to know before getting started.",
+      "items": {
+        "free": {
+          "q": "Is it free to get started?",
+          "a": "Yes. You can create an account and track your finances for free, with no credit card required. Upgrade anytime if you need advanced features."
+        },
+        "security": {
+          "q": "Is my financial data secure?",
+          "a": "Your data is encrypted in transit and at rest. We never sell your information to third parties, and you stay in control of what you share."
+        },
+        "bank": {
+          "q": "Do I need to connect my bank account?",
+          "a": "No. You can add transactions manually if you prefer. Bank connections are optional and only there to save you time."
+        },
+        "business": {
+          "q": "Can I use it for my business?",
+          "a": "Yes. Alongside personal budgeting, you can track company spending, manage teams and get financial insights from one place."
+        },
+        "mobile": {
+          "q": "Does it work on mobile?",
+          "a": "Yes. Your account syncs across every device, so your budget is always up to date whether you're on desktop or on the go."
+        },
+        "cancel": {
+          "q": "Can I cancel anytime?",
+          "a": "Absolutely. There are no long-term contracts. You can downgrade or cancel your plan whenever you want, no questions asked."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to take control?",
+      "subtitle": "Join thousands of people building better financial futures.",
+      "button": "Get started for free"
+    }
   }
 }

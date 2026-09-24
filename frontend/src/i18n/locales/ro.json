@@ -27,5 +27,145 @@
     "label": "Limbă",
     "ro": "Română",
     "en": "English"
+  },
+  "home": {
+    "hero": {
+      "title": "Preia controlul asupra <highlight>viitorului tău financiar</highlight>",
+      "subtitle": "Urmărește cheltuielile, stabilește bugete și construiește obiceiuri financiare mai bune. Totul într-o singură aplicație simplă și elegantă.",
+      "getStarted": "Începe gratuit",
+      "howItWorks": "Vezi cum funcționează",
+      "perks": {
+        "free": "Gratuit la început",
+        "secure": "Sigur și confidențial",
+        "sync": "Sincronizare pe orice dispozitiv"
+      },
+      "imageAlt": "Previzualizare aplicație de finanțe"
+    },
+    "featureCards": {
+      "eyebrow": "Funcționalități puternice",
+      "title": "Tot ce ai nevoie pentru a-ți gestiona banii",
+      "subtitle": "Creată pentru a te ajuta să economisești mai mult, să cheltuiești mai inteligent și să-ți atingi obiectivele financiare.",
+      "items": {
+        "budgeting": {
+          "title": "Bugetare inteligentă",
+          "desc": "Creează bugete în câteva minute și primește alerte când te apropii de limite."
+        },
+        "expenses": {
+          "title": "Urmărirea cheltuielilor",
+          "desc": "Urmărește automat cheltuielile și vezi unde se duc banii tăi."
+        },
+        "goals": {
+          "title": "Obiective financiare",
+          "desc": "Stabilește obiective, urmărește progresul și rămâi motivat să-ți construiești viitorul."
+        },
+        "analytics": {
+          "title": "Analize și statistici",
+          "desc": "Grafice clare și analize care te ajută să iei decizii financiare mai bune."
+        },
+        "security": {
+          "title": "Sigur și confidențial",
+          "desc": "Datele tale sunt criptate și mereu private. Nu îți vindem niciodată informațiile."
+        },
+        "sync": {
+          "title": "Sincronizare peste tot",
+          "desc": "Accesează-ți conturile de pe orice dispozitiv, oricând. Mereu actualizate."
+        }
+      }
+    },
+    "brands": {
+      "title": "Folosită de mii de oameni"
+    },
+    "features": {
+      "title": "Vezi-ți banii clar. <highlight>Trăiește mai bine.</highlight>",
+      "subtitle": "Alătură-te miilor de oameni care și-au transformat deja viața financiară.",
+      "points": {
+        "whereMoneyGoes": "Află unde se duc banii tăi",
+        "smarterSpending": "Ia decizii de cheltuieli mai inteligente",
+        "betterHabits": "Construiește obiceiuri financiare mai bune",
+        "achieveGoals": "Atinge-ți obiectivele financiare"
+      },
+      "seePricing": "Vezi prețurile",
+      "startFree": "Începe gratuit",
+      "imageAlt": "Previzualizare panou de control"
+    },
+    "mission": {
+      "title": "Misiunea noastră",
+      "subtitle": "Bugetarea nu ar trebui să fie complicată. Ar trebui să fie clară, organizată și să te ajute cu adevărat să iei decizii mai bune.",
+      "imageAlt": "Previzualizare panou de control",
+      "whyUs": "Dar… de ce să ne alegi pe noi?",
+      "whyUsP1": "Te-ai săturat să jonglezi cu foi de calcul, aplicații și extrase bancare doar ca să înțelegi unde se duc banii?",
+      "whyUsP2": "Ajutăm persoanele fizice și companiile să-și simplifice gestionarea financiară — fără stres, confuzie sau timp pierdut.",
+      "personal": {
+        "title": "Banii tăi, controlul tău",
+        "desc": "O interfață flexibilă și ușor de folosit, care se adaptează stilului tău de viață și te ajută să urmărești cheltuielile, să stabilești bugete și să rămâi în control fără efort.",
+        "cta": "Alătură-te celor peste 100.000 de utilizatori"
+      },
+      "business": {
+        "title": "Afacerea ta, creșterea ta",
+        "desc": "Gestionează mai multe echipe, urmărește cheltuielile companiei și obține analize financiare — totul dintr-o singură platformă centralizată.",
+        "cta": "Aleasă de afaceri în creștere"
+      }
+    },
+    "reviews": {
+      "title": "Iubită de clienții noștri",
+      "subtitle": "Vezi ce spun oamenii despre platforma noastră",
+      "items": {
+        "alex": {
+          "role": "Freelancer",
+          "text": "Aplicația asta a schimbat complet felul în care îmi gestionez finanțele. Curată, simplă și puternică."
+        },
+        "maria": {
+          "role": "Proprietar de afacere mică",
+          "text": "Urmărirea cheltuielilor echipei mele nu a fost niciodată mai ușoară. Recomand cu căldură!"
+        },
+        "john": {
+          "role": "Antreprenor",
+          "text": "În sfârșit o aplicație care face bugetarea ușoară și intuitivă."
+        },
+        "elena": {
+          "role": "Product Manager",
+          "text": "Analizele sunt excelente. În sfârșit știu unde se duc banii în fiecare lună."
+        },
+        "daniel": {
+          "role": "Fondator de startup",
+          "text": "Echilibrul perfect între simplitate și funcționalități avansate."
+        }
+      }
+    },
+    "faq": {
+      "title": "Întrebări frecvente",
+      "subtitle": "Tot ce trebuie să știi înainte să începi.",
+      "items": {
+        "free": {
+          "q": "Pot începe gratuit?",
+          "a": "Da. Îți poți crea un cont și îți poți urmări finanțele gratuit, fără card bancar. Poți trece oricând la un plan superior dacă ai nevoie de funcționalități avansate."
+        },
+        "security": {
+          "q": "Datele mele financiare sunt în siguranță?",
+          "a": "Datele tale sunt criptate atât în tranzit, cât și la stocare. Nu îți vindem niciodată informațiile către terți, iar tu decizi ce distribui."
+        },
+        "bank": {
+          "q": "Trebuie să-mi conectez contul bancar?",
+          "a": "Nu. Poți adăuga tranzacțiile manual, dacă preferi. Conectarea băncii este opțională și are rolul de a-ți economisi timp."
+        },
+        "business": {
+          "q": "O pot folosi pentru afacerea mea?",
+          "a": "Da. Pe lângă bugetul personal, poți urmări cheltuielile companiei, gestiona echipe și obține analize financiare dintr-un singur loc."
+        },
+        "mobile": {
+          "q": "Funcționează pe telefon?",
+          "a": "Da. Contul tău se sincronizează pe toate dispozitivele, așa că bugetul e mereu actualizat, fie că ești pe desktop sau pe drum."
+        },
+        "cancel": {
+          "q": "Pot anula oricând?",
+          "a": "Desigur. Nu există contracte pe termen lung. Poți trece la un plan inferior sau îți poți anula abonamentul oricând, fără întrebări."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ești gata să preiei controlul?",
+      "subtitle": "Alătură-te miilor de oameni care își construiesc un viitor financiar mai bun.",
+      "button": "Începe gratuit"
+    }
   }
 }
