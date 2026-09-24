@@ -10,16 +10,29 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import SitePreferences from "@/components/SitePreferences";
 
 type SubmenuKey = "blog" | "prices";
 
 import { useAuth } from "@/hooks/useAuth";
+import { cn } from "@/lib/utils";
 
 export default function PublicMainNavigation() {
   const [openMenu, setOpenMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Fundal + umbră doar după ce pagina a fost derulată
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const [openSubMenu, setOpenSubMenu] = useState<Record<SubmenuKey, boolean>>({
     blog: false,
     prices: false,
@@ -40,7 +53,14 @@ export default function PublicMainNavigation() {
   }
 
   return (
-    <nav className="flex w-full justify-between md:justify-around p-4 text-xl relative">
+    <nav
+      className={cn(
+        "sticky top-0 z-50 flex w-full justify-between md:justify-around p-4 text-xl border-b transition-[background-color,border-color,box-shadow] duration-300",
+        scrolled || openMenu
+          ? "border-border/60 bg-background/80 shadow-sm backdrop-blur-lg supports-backdrop-filter:bg-background/65"
+          : "border-transparent bg-background",
+      )}
+    >
       <div className="h-20 w-36">
         <img src="/logo.png" />
       </div>
@@ -93,7 +113,10 @@ export default function PublicMainNavigation() {
                 >
                   {t("nav.joinCommunityDescription")}
                 </ListItem>
-                <ListItem href="/blog/success-stories" title={t("nav.successStories")}>
+                <ListItem
+                  href="/blog/success-stories"
+                  title={t("nav.successStories")}
+                >
                   {t("nav.successStoriesDescription")}
                 </ListItem>
               </ul>
@@ -122,38 +145,40 @@ export default function PublicMainNavigation() {
         </NavigationMenuList>
       </NavigationMenu>
 
-      {/* Desktop Auth Buttons */}
-      {isAuth ? (
-        <ul className="hidden sm:flex gap-4 items-center">
-          <LanguageSwitcher />
-          <Link to="/dashboard">
-            <Button variant="ghost" className="cursor-pointer">
-              {t("nav.dashboard")}
-            </Button>
-          </Link>
-        </ul>
-      ) : (
-        <ul className="hidden sm:flex gap-4 items-center">
-          <LanguageSwitcher />
-          <Link to="/signin">
-            <Button variant="ghost" className="cursor-pointer">
-              {t("nav.createAccount")}
-            </Button>
-          </Link>
-          <Link to="/login">
-            <Button className="cursor-pointer">{t("nav.login")}</Button>
-          </Link>
-        </ul>
-      )}
+      <div className="flex items-center gap-3">
+        <SitePreferences />
 
-      {/* Mobile Menu Toggle */}
-      <button
-        className="md:hidden cursor-pointer"
-        onClick={handleMenuToggle}
-        aria-label={t("nav.toggleMenu")}
-      >
-        {openMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-      </button>
+        {/* Desktop Auth Buttons */}
+        {isAuth ? (
+          <ul className="hidden sm:flex gap-4 items-center">
+            <Link to="/dashboard">
+              <Button variant="ghost" className="cursor-pointer">
+                {t("nav.dashboard")}
+              </Button>
+            </Link>
+          </ul>
+        ) : (
+          <ul className="hidden sm:flex gap-4 items-center">
+            <Link to="/signin">
+              <Button variant="ghost" className="cursor-pointer">
+                {t("nav.createAccount")}
+              </Button>
+            </Link>
+            <Link to="/login">
+              <Button className="cursor-pointer">{t("nav.login")}</Button>
+            </Link>
+          </ul>
+        )}
+
+        {/* Mobile Menu Toggle */}
+        <button
+          className="md:hidden cursor-pointer"
+          onClick={handleMenuToggle}
+          aria-label={t("nav.toggleMenu")}
+        >
+          {openMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
+      </div>
 
       {/* Mobile Menu Dropdown */}
       {openMenu && (
@@ -234,7 +259,6 @@ export default function PublicMainNavigation() {
                 </div>
               )}
             </div>
-            <LanguageSwitcher />
             {/* Auth Buttons */}
             <div className="flex flex-col gap-3 mt-4 pt-4 border-t sm:hidden">
               <Button asChild variant="outline" className="w-full">

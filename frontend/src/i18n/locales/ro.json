@@ -26,7 +26,9 @@
   "language": {
     "label": "Limbă",
     "ro": "Română",
-    "en": "English"
+    "roHint": "Limba română",
+    "en": "English",
+    "enHint": "Limba engleză"
   },
   "home": {
     "hero": {
@@ -219,5 +221,9 @@
       "signIn": "Autentifică-te",
       "failed": "Crearea contului a eșuat."
     }
+  },
+  "theme": {
+    "switchToDark": "Activează tema întunecată",
+    "switchToLight": "Activează tema luminoasă"
   }
 }

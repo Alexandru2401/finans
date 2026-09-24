@@ -26,7 +26,9 @@
   "language": {
     "label": "Language",
     "ro": "Română",
-    "en": "English"
+    "roHint": "Romanian",
+    "en": "English",
+    "enHint": "English"
   },
   "home": {
     "hero": {
@@ -219,5 +221,9 @@
       "signIn": "Sign in",
       "failed": "Failed to create account."
     }
+  },
+  "theme": {
+    "switchToDark": "Switch to dark theme",
+    "switchToLight": "Switch to light theme"
   }
 }
