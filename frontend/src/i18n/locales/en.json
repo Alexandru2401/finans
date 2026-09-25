@@ -16,7 +16,7 @@
     "successStories": "Success stories",
     "successStoriesDescription": "People changing their financial lives with our product.",
     "readTerms": "Read our terms and services",
-    "terms": "Terms and services",
+    "terms": "Terms and Conditions",
     "readPrivacy": "Read our privacy policy",
     "privacy": "Privacy Policy",
     "createAccount": "Create Account",
@@ -183,7 +183,7 @@
     "phone": "Phone: {{phone}}",
     "copyright": "© {{year}} FinanceApp. All rights reserved.",
     "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "terms": "Terms and Conditions"
   },
   "auth": {
     "email": "Email",
@@ -299,6 +299,196 @@
         "refund": {
           "q": "Do you offer refunds?",
           "a": "We offer a 30-day money-back guarantee. If you're not satisfied, contact us for a full refund."
+        }
+      }
+    }
+  },
+  "legal": {
+    "lastUpdated": "Last updated: {{date}}",
+    "contents": "Contents",
+    "questions": "Questions about this document?",
+    "questionsText": "Our team is happy to help. Write to us at {{email}}.",
+    "terms": {
+      "title": "Terms and Conditions",
+      "intro": "These Terms and Conditions govern your access to and use of FinanceApp, the personal and business budgeting platform operated by FinanceApp SRL. Please read them carefully before creating an account.",
+      "sections": {
+        "acceptance": {
+          "title": "1. Acceptance of the terms",
+          "paragraphs": [
+            "By creating an account, accessing or using FinanceApp (the \"Service\"), you agree to be bound by these Terms and by our Privacy Policy. If you do not agree, please do not use the Service.",
+            "If you use FinanceApp on behalf of a company, you confirm that you are authorized to accept these Terms on its behalf."
+          ]
+        },
+        "service": {
+          "title": "2. Description of the service",
+          "paragraphs": [
+            "FinanceApp helps you track income and expenses, create budgets, set savings targets, view analytics and receive insights about your spending habits.",
+            "FinanceApp is a financial organization tool. It does not provide investment, tax, legal or accounting advice, and the insights shown in the app should not be treated as professional financial advice."
+          ]
+        },
+        "account": {
+          "title": "3. Accounts and eligibility",
+          "paragraphs": [
+            "You must be at least 18 years old to create an account. You agree to provide accurate information during registration and to keep it up to date.",
+            "You are responsible for keeping your password confidential and for all activity that takes place under your account. Notify us immediately at security@financeapp.com if you suspect unauthorized access."
+          ]
+        },
+        "plans": {
+          "title": "4. Plans, payments and trial",
+          "paragraphs": [
+            "FinanceApp is offered through a Free plan and paid Pro and Premium subscriptions. Current prices are shown on the Prices page, in RON for Romania and in USD for other regions, and include VAT where applicable.",
+            "All paid plans include a 14-day free trial, with no credit card required to start. Subscriptions renew automatically at the end of each billing period unless cancelled before the renewal date.",
+            "You can upgrade, downgrade or cancel at any time from your account settings, with no cancellation fees. We offer a 30-day money-back guarantee for your first paid subscription."
+          ]
+        },
+        "userData": {
+          "title": "5. Your content",
+          "paragraphs": [
+            "You keep full ownership of the transactions, budgets, categories and other data you add to FinanceApp (\"Your Content\"). You grant us a limited license to store and process Your Content only to provide the Service to you.",
+            "You are responsible for the accuracy of the data you enter. Analytics and reports are generated automatically from that data."
+          ]
+        },
+        "acceptableUse": {
+          "title": "6. Acceptable use",
+          "paragraphs": [
+            "You agree not to use the Service for any unlawful purpose, including money laundering or fraud; not to attempt to access other users' accounts or data; not to reverse engineer, overload or disrupt the platform; and not to resell the Service without our written consent."
+          ]
+        },
+        "thirdParty": {
+          "title": "7. Bank connections and third-party services",
+          "paragraphs": [
+            "Some features let you connect bank accounts through licensed third-party providers. Those connections are read-only: FinanceApp can never initiate payments or move money on your behalf.",
+            "Third-party services are governed by their own terms, and we are not responsible for their availability or for the accuracy of the data they provide."
+          ]
+        },
+        "intellectualProperty": {
+          "title": "8. Intellectual property",
+          "paragraphs": [
+            "The FinanceApp name, logo, design, software and content (excluding Your Content) are the property of FinanceApp SRL and are protected by intellectual property laws. You may not copy or use them without our prior written permission."
+          ]
+        },
+        "liability": {
+          "title": "9. Limitation of liability",
+          "paragraphs": [
+            "The Service is provided \"as is\" and \"as available\". We work hard to keep FinanceApp secure and available, but we do not guarantee that it will be uninterrupted or error-free.",
+            "To the maximum extent permitted by law, FinanceApp SRL is not liable for indirect or consequential damages, or for financial decisions you make based on information shown in the app. Our total liability is limited to the amount you paid us in the 12 months before the claim."
+          ]
+        },
+        "termination": {
+          "title": "10. Suspension and termination",
+          "paragraphs": [
+            "You may delete your account at any time from Settings. We may suspend or close accounts that seriously or repeatedly breach these Terms, after notifying you where reasonably possible.",
+            "After an account is closed, your data is deleted in accordance with our Privacy Policy."
+          ]
+        },
+        "changes": {
+          "title": "11. Changes to these terms",
+          "paragraphs": [
+            "We may update these Terms from time to time. For material changes, we will notify you by email or in the app at least 30 days before they take effect. Continuing to use the Service after that date means you accept the updated Terms."
+          ]
+        },
+        "law": {
+          "title": "12. Governing law and disputes",
+          "paragraphs": [
+            "These Terms are governed by Romanian law. Any dispute will be settled amicably where possible; otherwise, it will be submitted to the competent courts in Bucharest, Romania.",
+            "Consumers may also contact the National Authority for Consumer Protection (ANPC) or use the European Online Dispute Resolution platform."
+          ]
+        },
+        "contact": {
+          "title": "13. Contact",
+          "paragraphs": [
+            "FinanceApp SRL, 10 Exemplu Street, District 1, Bucharest, Romania. Trade Register no. J40/1234/2024, VAT no. RO12345678.",
+            "Email: legal@financeapp.com · Phone: +40 21 123 4567"
+          ]
+        }
+      }
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "Your financial data is personal. This Privacy Policy explains what information FinanceApp collects, why we collect it, how we protect it and what rights you have under the General Data Protection Regulation (GDPR).",
+      "sections": {
+        "controller": {
+          "title": "1. Who we are",
+          "paragraphs": [
+            "The data controller is FinanceApp SRL, 10 Exemplu Street, District 1, Bucharest, Romania, Trade Register no. J40/1234/2024, VAT no. RO12345678.",
+            "You can reach our Data Protection Officer at dpo@financeapp.com."
+          ]
+        },
+        "dataCollected": {
+          "title": "2. Data we collect",
+          "paragraphs": [
+            "Account data: name, email address, encrypted password, preferred language and theme.",
+            "Profile data you choose to provide: occupation, monthly income, household size and financial goals.",
+            "Financial data: transactions, categories, budgets, savings targets and, if you connect a bank, account balances and transaction history.",
+            "Payment data: subscription plan and billing history. Card details are handled directly by our payment processor and never stored on our servers.",
+            "Technical data: IP address, browser and device type, and usage logs used for security and troubleshooting."
+          ]
+        },
+        "purposes": {
+          "title": "3. How we use your data",
+          "paragraphs": [
+            "To provide the Service — dashboards, budgets, analytics and insights (legal basis: performance of the contract).",
+            "To process payments and issue invoices (legal basis: contract and legal obligation).",
+            "To keep your account secure and prevent fraud (legal basis: legitimate interest).",
+            "To send product updates and newsletters, only if you opt in (legal basis: consent, which you can withdraw at any time)."
+          ]
+        },
+        "sharing": {
+          "title": "4. Sharing your data",
+          "paragraphs": [
+            "We never sell your personal or financial data. We share it only with trusted processors that help us run the Service — cloud hosting, payment processing, email delivery and bank connection providers — under data processing agreements.",
+            "We may disclose data to public authorities only when required by law."
+          ]
+        },
+        "transfers": {
+          "title": "5. International transfers",
+          "paragraphs": [
+            "Your data is stored on servers located in the European Union. If a processor transfers data outside the EEA, we rely on Standard Contractual Clauses approved by the European Commission or other appropriate safeguards."
+          ]
+        },
+        "retention": {
+          "title": "6. Data retention",
+          "paragraphs": [
+            "We keep your data for as long as your account is active. After you delete your account, your data is permanently erased within 30 days, except for invoices, which we must keep for the period required by Romanian tax law."
+          ]
+        },
+        "security": {
+          "title": "7. Security",
+          "paragraphs": [
+            "We use bank-level 256-bit encryption for data in transit and at rest, hashed passwords, strict access controls and regular security reviews. No system is 100% secure, but we continuously work to protect your information."
+          ]
+        },
+        "rights": {
+          "title": "8. Your rights",
+          "paragraphs": [
+            "Under the GDPR you have the right to access, rectify and erase your data, to restrict or object to processing, to data portability, and to withdraw consent at any time.",
+            "You can export or delete your data directly from Settings, or by writing to privacy@financeapp.com. We respond within 30 days.",
+            "You also have the right to lodge a complaint with the Romanian National Supervisory Authority for Personal Data Processing (ANSPDCP), www.dataprotection.ro."
+          ]
+        },
+        "cookies": {
+          "title": "9. Cookies and local storage",
+          "paragraphs": [
+            "We use strictly necessary cookies and local storage to keep you signed in and to remember your language and theme preferences. Optional analytics cookies are used only with your consent."
+          ]
+        },
+        "children": {
+          "title": "10. Children",
+          "paragraphs": [
+            "FinanceApp is not intended for people under 18, and we do not knowingly collect data from minors."
+          ]
+        },
+        "changes": {
+          "title": "11. Changes to this policy",
+          "paragraphs": [
+            "We may update this Privacy Policy to reflect changes in the Service or in the law. We will notify you of material changes by email or in the app before they take effect."
+          ]
+        },
+        "contact": {
+          "title": "12. Contact",
+          "paragraphs": [
+            "For any privacy question, write to privacy@financeapp.com or to our Data Protection Officer at dpo@financeapp.com."
+          ]
         }
       }
     }

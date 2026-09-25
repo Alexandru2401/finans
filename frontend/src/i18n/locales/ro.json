@@ -302,5 +302,195 @@
         }
       }
     }
+  },
+  "legal": {
+    "lastUpdated": "Ultima actualizare: {{date}}",
+    "contents": "Cuprins",
+    "questions": "Ai întrebări despre acest document?",
+    "questionsText": "Echipa noastră te ajută cu drag. Scrie-ne la {{email}}.",
+    "terms": {
+      "title": "Termeni și condiții",
+      "intro": "Acești Termeni și condiții reglementează accesul și utilizarea FinanceApp, platforma de bugetare personală și pentru afaceri operată de FinanceApp SRL. Te rugăm să îi citești cu atenție înainte de a-ți crea un cont.",
+      "sections": {
+        "acceptance": {
+          "title": "1. Acceptarea termenilor",
+          "paragraphs": [
+            "Prin crearea unui cont, accesarea sau utilizarea FinanceApp („Serviciul”), ești de acord să respecți acești Termeni și Politica noastră de confidențialitate. Dacă nu ești de acord, te rugăm să nu folosești Serviciul.",
+            "Dacă folosești FinanceApp în numele unei companii, confirmi că ai dreptul să accepți acești Termeni în numele acesteia."
+          ]
+        },
+        "service": {
+          "title": "2. Descrierea serviciului",
+          "paragraphs": [
+            "FinanceApp te ajută să îți urmărești veniturile și cheltuielile, să creezi bugete, să setezi obiective de economisire, să vezi analize și să primești recomandări despre obiceiurile tale de cheltuire.",
+            "FinanceApp este un instrument de organizare financiară. Nu oferă consultanță de investiții, fiscală, juridică sau contabilă, iar recomandările din aplicație nu trebuie considerate sfaturi financiare profesionale."
+          ]
+        },
+        "account": {
+          "title": "3. Conturi și eligibilitate",
+          "paragraphs": [
+            "Trebuie să ai cel puțin 18 ani pentru a crea un cont. Te angajezi să furnizezi informații corecte la înregistrare și să le menții actualizate.",
+            "Ești responsabil pentru păstrarea confidențialității parolei și pentru toate activitățile desfășurate din contul tău. Anunță-ne imediat la security@financeapp.com dacă suspectezi un acces neautorizat."
+          ]
+        },
+        "plans": {
+          "title": "4. Planuri, plăți și perioada de probă",
+          "paragraphs": [
+            "FinanceApp este disponibil printr-un plan Gratuit și abonamentele plătite Pro și Premium. Prețurile actuale sunt afișate pe pagina Prețuri, în RON pentru România și în USD pentru alte regiuni, și includ TVA acolo unde este cazul.",
+            "Toate planurile plătite includ o perioadă de probă gratuită de 14 zile, fără card necesar. Abonamentele se reînnoiesc automat la sfârșitul fiecărei perioade de facturare, dacă nu sunt anulate înainte de data reînnoirii.",
+            "Poți trece la un plan superior sau inferior ori poți anula oricând din setările contului, fără taxe de anulare. Oferim garanția banilor înapoi timp de 30 de zile pentru primul abonament plătit."
+          ]
+        },
+        "userData": {
+          "title": "5. Conținutul tău",
+          "paragraphs": [
+            "Păstrezi dreptul deplin de proprietate asupra tranzacțiilor, bugetelor, categoriilor și celorlalte date pe care le adaugi în FinanceApp („Conținutul tău”). Ne acorzi o licență limitată de a stoca și procesa Conținutul tău exclusiv pentru a-ți furniza Serviciul.",
+            "Ești responsabil pentru corectitudinea datelor introduse. Analizele și rapoartele sunt generate automat pe baza acestor date."
+          ]
+        },
+        "acceptableUse": {
+          "title": "6. Utilizare acceptabilă",
+          "paragraphs": [
+            "Te angajezi să nu folosești Serviciul în scopuri ilegale, inclusiv spălare de bani sau fraudă; să nu încerci să accesezi conturile sau datele altor utilizatori; să nu decompilezi, suprasolicități sau perturbi platforma; și să nu revinzi Serviciul fără acordul nostru scris."
+          ]
+        },
+        "thirdParty": {
+          "title": "7. Conectarea băncilor și servicii terțe",
+          "paragraphs": [
+            "Unele funcții îți permit să conectezi conturi bancare prin furnizori terți autorizați. Aceste conexiuni sunt doar de citire: FinanceApp nu poate iniția plăți și nu poate muta bani în numele tău.",
+            "Serviciile terților sunt guvernate de propriii termeni, iar noi nu răspundem pentru disponibilitatea lor sau pentru corectitudinea datelor pe care le furnizează."
+          ]
+        },
+        "intellectualProperty": {
+          "title": "8. Proprietate intelectuală",
+          "paragraphs": [
+            "Numele FinanceApp, logo-ul, designul, software-ul și conținutul (cu excepția Conținutului tău) aparțin FinanceApp SRL și sunt protejate de legislația privind proprietatea intelectuală. Nu le poți copia sau folosi fără acordul nostru prealabil scris."
+          ]
+        },
+        "liability": {
+          "title": "9. Limitarea răspunderii",
+          "paragraphs": [
+            "Serviciul este furnizat „ca atare” și „în măsura disponibilității”. Depunem toate eforturile ca FinanceApp să fie sigur și disponibil, dar nu garantăm că va funcționa neîntrerupt sau fără erori.",
+            "În limita maximă permisă de lege, FinanceApp SRL nu răspunde pentru daune indirecte sau pentru deciziile financiare luate pe baza informațiilor din aplicație. Răspunderea noastră totală este limitată la suma plătită de tine în ultimele 12 luni înainte de reclamație."
+          ]
+        },
+        "termination": {
+          "title": "10. Suspendare și încetare",
+          "paragraphs": [
+            "Îți poți șterge contul oricând din Setări. Putem suspenda sau închide conturile care încalcă grav sau repetat acești Termeni, după ce te notificăm, acolo unde este posibil.",
+            "După închiderea contului, datele tale sunt șterse conform Politicii de confidențialitate."
+          ]
+        },
+        "changes": {
+          "title": "11. Modificarea termenilor",
+          "paragraphs": [
+            "Putem actualiza periodic acești Termeni. Pentru modificările importante te vom anunța prin email sau în aplicație cu cel puțin 30 de zile înainte de intrarea lor în vigoare. Continuarea utilizării Serviciului după această dată înseamnă acceptarea noilor Termeni."
+          ]
+        },
+        "law": {
+          "title": "12. Legea aplicabilă și litigii",
+          "paragraphs": [
+            "Acești Termeni sunt guvernați de legea română. Orice litigiu va fi soluționat pe cale amiabilă, iar în caz contrar va fi supus instanțelor competente din București, România.",
+            "Consumatorii se pot adresa și Autorității Naționale pentru Protecția Consumatorilor (ANPC) sau pot folosi platforma europeană de Soluționare Online a Litigiilor (SOL)."
+          ]
+        },
+        "contact": {
+          "title": "13. Contact",
+          "paragraphs": [
+            "FinanceApp SRL, Str. Exemplu nr. 10, Sector 1, București, România. Nr. Registrul Comerțului J40/1234/2024, CUI RO12345678.",
+            "Email: legal@financeapp.com · Telefon: +40 21 123 4567"
+          ]
+        }
+      }
+    },
+    "privacy": {
+      "title": "Politica de confidențialitate",
+      "intro": "Datele tale financiare sunt personale. Această Politică de confidențialitate explică ce informații colectează FinanceApp, de ce le colectăm, cum le protejăm și ce drepturi ai conform Regulamentului General privind Protecția Datelor (GDPR).",
+      "sections": {
+        "controller": {
+          "title": "1. Cine suntem",
+          "paragraphs": [
+            "Operatorul de date este FinanceApp SRL, Str. Exemplu nr. 10, Sector 1, București, România, Nr. Registrul Comerțului J40/1234/2024, CUI RO12345678.",
+            "Îl poți contacta pe Responsabilul nostru cu protecția datelor la dpo@financeapp.com."
+          ]
+        },
+        "dataCollected": {
+          "title": "2. Ce date colectăm",
+          "paragraphs": [
+            "Date de cont: nume, adresă de email, parolă criptată, limba și tema preferate.",
+            "Date de profil pe care alegi să le furnizezi: ocupație, venit lunar, numărul membrilor gospodăriei și obiective financiare.",
+            "Date financiare: tranzacții, categorii, bugete, obiective de economisire și, dacă conectezi o bancă, soldurile și istoricul tranzacțiilor.",
+            "Date de plată: planul de abonament și istoricul facturilor. Datele cardului sunt gestionate direct de procesatorul de plăți și nu sunt stocate niciodată pe serverele noastre.",
+            "Date tehnice: adresă IP, tipul browserului și al dispozitivului și jurnale de utilizare folosite pentru securitate și depanare."
+          ]
+        },
+        "purposes": {
+          "title": "3. Cum folosim datele",
+          "paragraphs": [
+            "Pentru a furniza Serviciul — panouri, bugete, analize și recomandări (temei legal: executarea contractului).",
+            "Pentru procesarea plăților și emiterea facturilor (temei legal: contract și obligație legală).",
+            "Pentru securitatea contului și prevenirea fraudei (temei legal: interes legitim).",
+            "Pentru trimiterea de noutăți și newslettere, doar dacă te abonezi (temei legal: consimțământ, pe care îl poți retrage oricând)."
+          ]
+        },
+        "sharing": {
+          "title": "4. Divulgarea datelor",
+          "paragraphs": [
+            "Nu vindem niciodată datele tale personale sau financiare. Le partajăm doar cu persoane împuternicite de încredere care ne ajută să operăm Serviciul — găzduire cloud, procesare plăți, trimitere email și conectare bancară — pe baza unor acorduri de prelucrare a datelor.",
+            "Putem divulga date autorităților publice doar atunci când legea ne obligă."
+          ]
+        },
+        "transfers": {
+          "title": "5. Transferuri internaționale",
+          "paragraphs": [
+            "Datele tale sunt stocate pe servere din Uniunea Europeană. Dacă o persoană împuternicită transferă date în afara SEE, ne bazăm pe Clauzele Contractuale Standard aprobate de Comisia Europeană sau pe alte garanții adecvate."
+          ]
+        },
+        "retention": {
+          "title": "6. Perioada de păstrare",
+          "paragraphs": [
+            "Păstrăm datele tale cât timp contul este activ. După ștergerea contului, datele sunt eliminate definitiv în 30 de zile, cu excepția facturilor, pe care trebuie să le păstrăm pe perioada impusă de legislația fiscală din România."
+          ]
+        },
+        "security": {
+          "title": "7. Securitate",
+          "paragraphs": [
+            "Folosim criptare pe 256 de biți, de nivel bancar, pentru datele în tranzit și stocate, parole hash-uite, controale stricte de acces și verificări periodice de securitate. Niciun sistem nu este 100% sigur, dar lucrăm continuu pentru a-ți proteja informațiile."
+          ]
+        },
+        "rights": {
+          "title": "8. Drepturile tale",
+          "paragraphs": [
+            "Conform GDPR ai dreptul de acces, rectificare și ștergere a datelor, dreptul de a restricționa prelucrarea sau de a te opune acesteia, dreptul la portabilitatea datelor și dreptul de a-ți retrage consimțământul oricând.",
+            "Îți poți exporta sau șterge datele direct din Setări ori scriindu-ne la privacy@financeapp.com. Răspundem în cel mult 30 de zile.",
+            "Ai și dreptul de a depune o plângere la Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal (ANSPDCP), www.dataprotection.ro."
+          ]
+        },
+        "cookies": {
+          "title": "9. Cookie-uri și stocare locală",
+          "paragraphs": [
+            "Folosim cookie-uri strict necesare și stocare locală pentru a te menține autentificat și pentru a reține limba și tema preferate. Cookie-urile opționale de analiză sunt folosite doar cu acordul tău."
+          ]
+        },
+        "children": {
+          "title": "10. Minori",
+          "paragraphs": [
+            "FinanceApp nu este destinat persoanelor sub 18 ani și nu colectăm în mod intenționat date de la minori."
+          ]
+        },
+        "changes": {
+          "title": "11. Modificarea politicii",
+          "paragraphs": [
+            "Putem actualiza această Politică de confidențialitate pentru a reflecta schimbări ale Serviciului sau ale legislației. Te vom anunța despre modificările importante prin email sau în aplicație înainte de intrarea lor în vigoare."
+          ]
+        },
+        "contact": {
+          "title": "12. Contact",
+          "paragraphs": [
+            "Pentru orice întrebare legată de confidențialitate, scrie-ne la privacy@financeapp.com sau Responsabilului cu protecția datelor la dpo@financeapp.com."
+          ]
+        }
+      }
+    }
   }
 }

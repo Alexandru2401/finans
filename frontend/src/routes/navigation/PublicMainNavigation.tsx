@@ -130,13 +130,13 @@ export default function PublicMainNavigation() {
             <NavigationMenuContent>
               <ul className="w-96 p-4">
                 <ListItem
-                  href="/info/terms-and-services"
+                  href="/terms-and-services"
                   title={t("nav.readTerms")}
                 >
                   {t("nav.terms")}
                 </ListItem>
                 <ListItem
-                  href="/info/privacy-policy"
+                  href="/privacy-policy"
                   title={t("nav.readPrivacy")}
                 >
                   {t("nav.privacy")}
