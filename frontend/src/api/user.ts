@@ -24,7 +24,7 @@ async function createUser(email: string, password: string) {
     email,
     password,
   });
-
+  console.log("test")
   console.log("Response:", response);
   console.log("Data:", response.data);
   return response;

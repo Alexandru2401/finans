@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BarChart3 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export default function HomeCta2() {
+  const { t } = useTranslation();
+
   return (
     <section className="w-full bg-background px-3 sm:px-6 py-16">
       <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl bg-amber-500 p-4 md:px-12 md:py-6">
@@ -13,10 +16,10 @@ export default function HomeCta2() {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-black md:text-3xl">
-                Ready to take control?
+                {t("home.cta.title")}
               </h2>
               <p className="mt-1 text-sm text-black/70">
-                Join thousands of people building better financial futures.
+                {t("home.cta.subtitle")}
               </p>
             </div>
           </div>
@@ -26,7 +29,7 @@ export default function HomeCta2() {
             className="gap-2 bg-black text-white hover:bg-black/80"
           >
             <Link to="/signin">
-              Get started for free
+              {t("home.cta.button")}
               <ArrowRight size={18} />
             </Link>
           </Button>

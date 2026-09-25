@@ -1,0 +1,802 @@
+{
+  "nav": {
+    "home": "Acasă",
+    "dashboard": "Panou de control",
+    "about": "Despre noi",
+    "prices": "Prețuri",
+    "blog": "Blog",
+    "info": "Info",
+    "personalUse": "Uz personal",
+    "personalUseDescription": "Deblochează întregul potențial și controlul asupra finanțelor tale.",
+    "enterprise": "Nivel enterprise",
+    "enterpriseDescription": "Gestionează finanțele afacerii tale cu ușurință și încredere.",
+    "readTerms": "Citește termenii și condițiile",
+    "terms": "Termeni și condiții",
+    "readPrivacy": "Citește politica de confidențialitate",
+    "privacy": "Politica de confidențialitate",
+    "createAccount": "Creează cont",
+    "login": "Autentificare",
+    "toggleMenu": "Deschide/închide meniul"
+  },
+  "language": {
+    "label": "Limbă",
+    "ro": "Română",
+    "roHint": "Limba română",
+    "en": "English",
+    "enHint": "Limba engleză"
+  },
+  "home": {
+    "hero": {
+      "title": "Preia controlul asupra <highlight>viitorului tău financiar</highlight>",
+      "subtitle": "Urmărește cheltuielile, stabilește bugete și construiește obiceiuri financiare mai bune. Totul într-o singură aplicație simplă și elegantă.",
+      "getStarted": "Începe gratuit",
+      "howItWorks": "Vezi cum funcționează",
+      "perks": {
+        "free": "Gratuit la început",
+        "secure": "Sigur și confidențial",
+        "sync": "Sincronizare pe orice dispozitiv"
+      },
+      "imageAlt": "Previzualizare aplicație de finanțe"
+    },
+    "featureCards": {
+      "eyebrow": "Funcționalități puternice",
+      "title": "Tot ce ai nevoie pentru a-ți gestiona banii",
+      "subtitle": "Creată pentru a te ajuta să economisești mai mult, să cheltuiești mai inteligent și să-ți atingi obiectivele financiare.",
+      "items": {
+        "budgeting": {
+          "title": "Bugetare inteligentă",
+          "desc": "Creează bugete în câteva minute și primește alerte când te apropii de limite."
+        },
+        "expenses": {
+          "title": "Urmărirea cheltuielilor",
+          "desc": "Urmărește automat cheltuielile și vezi unde se duc banii tăi."
+        },
+        "goals": {
+          "title": "Obiective financiare",
+          "desc": "Stabilește obiective, urmărește progresul și rămâi motivat să-ți construiești viitorul."
+        },
+        "analytics": {
+          "title": "Analize și statistici",
+          "desc": "Grafice clare și analize care te ajută să iei decizii financiare mai bune."
+        },
+        "security": {
+          "title": "Sigur și confidențial",
+          "desc": "Datele tale sunt criptate și mereu private. Nu îți vindem niciodată informațiile."
+        },
+        "sync": {
+          "title": "Sincronizare peste tot",
+          "desc": "Accesează-ți conturile de pe orice dispozitiv, oricând. Mereu actualizate."
+        }
+      }
+    },
+    "brands": {
+      "title": "Folosită de mii de oameni"
+    },
+    "features": {
+      "title": "Vezi-ți banii clar. <highlight>Trăiește mai bine.</highlight>",
+      "subtitle": "Alătură-te miilor de oameni care și-au transformat deja viața financiară.",
+      "points": {
+        "whereMoneyGoes": "Află unde se duc banii tăi",
+        "smarterSpending": "Ia decizii de cheltuieli mai inteligente",
+        "betterHabits": "Construiește obiceiuri financiare mai bune",
+        "achieveGoals": "Atinge-ți obiectivele financiare"
+      },
+      "seePricing": "Vezi prețurile",
+      "startFree": "Începe gratuit",
+      "imageAlt": "Previzualizare panou de control"
+    },
+    "mission": {
+      "title": "Misiunea noastră",
+      "subtitle": "Bugetarea nu ar trebui să fie complicată. Ar trebui să fie clară, organizată și să te ajute cu adevărat să iei decizii mai bune.",
+      "imageAlt": "Previzualizare panou de control",
+      "whyUs": "Dar… de ce să ne alegi pe noi?",
+      "whyUsP1": "Te-ai săturat să jonglezi cu foi de calcul, aplicații și extrase bancare doar ca să înțelegi unde se duc banii?",
+      "whyUsP2": "Ajutăm persoanele fizice și companiile să-și simplifice gestionarea financiară — fără stres, confuzie sau timp pierdut.",
+      "personal": {
+        "title": "Banii tăi, controlul tău",
+        "desc": "O interfață flexibilă și ușor de folosit, care se adaptează stilului tău de viață și te ajută să urmărești cheltuielile, să stabilești bugete și să rămâi în control fără efort.",
+        "cta": "Alătură-te celor peste 100.000 de utilizatori"
+      },
+      "business": {
+        "title": "Afacerea ta, creșterea ta",
+        "desc": "Gestionează mai multe echipe, urmărește cheltuielile companiei și obține analize financiare — totul dintr-o singură platformă centralizată.",
+        "cta": "Aleasă de afaceri în creștere"
+      }
+    },
+    "reviews": {
+      "title": "Iubită de clienții noștri",
+      "subtitle": "Vezi ce spun oamenii despre platforma noastră",
+      "items": {
+        "alex": {
+          "role": "Freelancer",
+          "text": "Aplicația asta a schimbat complet felul în care îmi gestionez finanțele. Curată, simplă și puternică."
+        },
+        "maria": {
+          "role": "Proprietar de afacere mică",
+          "text": "Urmărirea cheltuielilor echipei mele nu a fost niciodată mai ușoară. Recomand cu căldură!"
+        },
+        "john": {
+          "role": "Antreprenor",
+          "text": "În sfârșit o aplicație care face bugetarea ușoară și intuitivă."
+        },
+        "elena": {
+          "role": "Product Manager",
+          "text": "Analizele sunt excelente. În sfârșit știu unde se duc banii în fiecare lună."
+        },
+        "daniel": {
+          "role": "Fondator de startup",
+          "text": "Echilibrul perfect între simplitate și funcționalități avansate."
+        }
+      }
+    },
+    "faq": {
+      "title": "Întrebări frecvente",
+      "subtitle": "Tot ce trebuie să știi înainte să începi.",
+      "items": {
+        "free": {
+          "q": "Pot începe gratuit?",
+          "a": "Da. Îți poți crea un cont și îți poți urmări finanțele gratuit, fără card bancar. Poți trece oricând la un plan superior dacă ai nevoie de funcționalități avansate."
+        },
+        "security": {
+          "q": "Datele mele financiare sunt în siguranță?",
+          "a": "Datele tale sunt criptate atât în tranzit, cât și la stocare. Nu îți vindem niciodată informațiile către terți, iar tu decizi ce distribui."
+        },
+        "bank": {
+          "q": "Trebuie să-mi conectez contul bancar?",
+          "a": "Nu. Poți adăuga tranzacțiile manual, dacă preferi. Conectarea băncii este opțională și are rolul de a-ți economisi timp."
+        },
+        "business": {
+          "q": "O pot folosi pentru afacerea mea?",
+          "a": "Da. Pe lângă bugetul personal, poți urmări cheltuielile companiei, gestiona echipe și obține analize financiare dintr-un singur loc."
+        },
+        "mobile": {
+          "q": "Funcționează pe telefon?",
+          "a": "Da. Contul tău se sincronizează pe toate dispozitivele, așa că bugetul e mereu actualizat, fie că ești pe desktop sau pe drum."
+        },
+        "cancel": {
+          "q": "Pot anula oricând?",
+          "a": "Desigur. Nu există contracte pe termen lung. Poți trece la un plan inferior sau îți poți anula abonamentul oricând, fără întrebări."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ești gata să preiei controlul?",
+      "subtitle": "Alătură-te miilor de oameni care își construiesc un viitor financiar mai bun.",
+      "button": "Începe gratuit"
+    }
+  },
+  "footer": {
+    "tagline": "Bugetare inteligentă și gestionare financiară pentru persoane fizice și afaceri în creștere.",
+    "product": "Produs",
+    "home": "Acasă",
+    "about": "Despre noi",
+    "startFree": "Începe gratuit",
+    "login": "Autentificare",
+    "social": "Social",
+    "contact": "Contact",
+    "email": "Email: {{email}}",
+    "phone": "Telefon: {{phone}}",
+    "copyright": "© {{year}} FinanceApp. Toate drepturile rezervate.",
+    "privacy": "Politica de confidențialitate",
+    "terms": "Termeni și condiții",
+    "backToTop": "Înapoi sus"
+  },
+  "auth": {
+    "email": "Email",
+    "emailPlaceholder": "nume@exemplu.ro",
+    "password": "Parolă",
+    "errors": {
+      "emailRequired": "Emailul este obligatoriu.",
+      "emailInvalid": "Introdu o adresă de email validă.",
+      "passwordRequired": "Parola este obligatorie.",
+      "unknown": "Eroare necunoscută",
+      "generic": "A apărut o eroare: {{message}}"
+    },
+    "login": {
+      "title": "Autentifică-te în contul tău",
+      "description": "Introdu emailul mai jos pentru a te autentifica",
+      "forgotPassword": "Ai uitat parola?",
+      "submit": "Autentificare",
+      "submitting": "Se încarcă...",
+      "noAccount": "Nu ai cont?",
+      "startFree": "Începe gratuit",
+      "success": "Autentificare reușită!",
+      "failed": "Autentificarea a eșuat."
+    },
+    "signup": {
+      "title": "Creează un cont",
+      "description": "Completează datele de mai jos pentru a-ți crea contul",
+      "emailHint": "Îl vom folosi pentru a te contacta. Nu îl vom împărtăși cu nimeni.",
+      "passwordHint": "Trebuie să aibă cel puțin 8 caractere.",
+      "confirmPassword": "Confirmă parola",
+      "confirmPasswordHint": "Te rugăm să confirmi parola.",
+      "submit": "Creează cont",
+      "submitting": "Se creează contul...",
+      "google": "Înregistrează-te cu Google",
+      "hasAccount": "Ai deja un cont?",
+      "signIn": "Autentifică-te",
+      "failed": "Crearea contului a eșuat."
+    }
+  },
+  "theme": {
+    "switchToDark": "Activează tema întunecată",
+    "switchToLight": "Activează tema luminoasă"
+  },
+  "prices": {
+    "title": "Preia controlul asupra finanțelor tale",
+    "subtitle": "Alege planul potrivit pentru a-ți gestiona banii, a-ți urmări cheltuielile și a-ți atinge obiectivele financiare",
+    "mostPopular": "Cel mai popular",
+    "perMonth": "/lună",
+    "getStartedFree": "Începe gratuit",
+    "startTrial": "Începe perioada de probă",
+    "everythingIn": "Tot ce include {{plan}}, plus:",
+    "plans": {
+      "free": {
+        "name": "Gratuit",
+        "description": "Perfect pentru a începe să-ți urmărești bugetul"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Ideal pentru cei care își gestionează serios bugetul și economiile"
+      },
+      "family": {
+        "name": "Familie",
+        "description": "Un singur plan comun pentru toată familia"
+      }
+    },
+    "features": {
+      "basicBudget": "Urmărirea de bază a bugetului",
+      "categorization": "Categorisirea cheltuielilor",
+      "monthlyReports": "Rapoarte financiare lunare",
+      "threeBankAccounts": "Până la 3 conturi bancare",
+      "mobileApp": "Acces din aplicația mobilă",
+      "emailSupport": "Suport prin email",
+      "advancedAnalytics": "Analize și statistici avansate",
+      "unlimitedBankAccounts": "Conturi bancare nelimitate",
+      "goalTracking": "Urmărirea obiectivelor și planuri de economisire",
+      "billReminders": "Mementouri și alerte pentru facturi",
+      "customCategories": "Categorii și etichete personalizate",
+      "exportData": "Export date în CSV/Excel",
+      "priorityEmailSupport": "Suport prioritar prin email",
+      "adFree": "Fără reclame",
+      "multiCurrency": "Suport pentru mai multe monede",
+      "netWorth": "Urmărirea averii nete",
+      "familySharing": "Până la 6 membri ai familiei",
+      "support247": "Suport prioritar 24/7",
+      "sharedBudgets": "Bugete comune pentru casă",
+      "sharedGoals": "Obiective comune de economisire (vacanță, casă, educație)",
+      "privateSpaces": "Spațiu privat pentru fiecare membru",
+      "kidsAllowance": "Urmărirea alocației și a banilor de buzunar pentru copii",
+      "familyActivity": "Activitatea familiei și alerte de cheltuieli"
+    },
+    "faq": {
+      "title": "Întrebări frecvente",
+      "items": {
+        "switch": {
+          "q": "Pot schimba planul mai târziu?",
+          "a": "Da! Poți trece oricând la un plan superior sau inferior. Modificările se aplică imediat."
+        },
+        "trial": {
+          "q": "Există o perioadă de probă gratuită?",
+          "a": "Toate planurile plătite includ o perioadă de probă gratuită de 14 zile. Nu ai nevoie de card pentru a începe."
+        },
+        "payment": {
+          "q": "Ce metode de plată acceptați?",
+          "a": "Acceptăm toate cardurile de credit importante, PayPal și transferul bancar direct."
+        },
+        "cancel": {
+          "q": "Pot anula oricând?",
+          "a": "Desigur! Îți poți anula abonamentul oricând, fără taxe de anulare."
+        },
+        "security": {
+          "q": "Datele mele financiare sunt în siguranță?",
+          "a": "Da, folosim criptare pe 256 de biți, de nivel bancar, pentru a-ți proteja datele. Nu îți vindem niciodată informațiile către terți."
+        },
+        "refund": {
+          "q": "Oferiți rambursări?",
+          "a": "Oferim garanția returnării banilor în 30 de zile. Dacă nu ești mulțumit, contactează-ne pentru o rambursare completă."
+        }
+      }
+    }
+  },
+  "pricesEnterprise": {
+    "badge": "Pentru echipe și companii",
+    "title": "Finanțe care cresc odată cu compania ta",
+    "subtitle": "De la un startup de 3 oameni la un grup cu mai multe firme — controlează cheltuielile, automatizează aprobările și vezi cash flow-ul în timp real",
+    "monthly": "Lunar",
+    "annual": "Anual",
+    "save": "Economisești {{percent}}%",
+    "mostPopular": "Cel mai popular",
+    "perSeat": "/utilizator/lună",
+    "billedAnnually": "facturat anual",
+    "minSeats": "Minimum {{n}} utilizatori",
+    "fromSeats": "Începând de la {{n}} utilizatori",
+    "customPrice": "Personalizat",
+    "customPriceHint": "Adaptat organizației tale",
+    "everythingIn": "Tot ce include {{plan}}, plus:",
+    "startTrial": "Începe proba de 14 zile",
+    "contactSales": "Contactează vânzările",
+    "plans": {
+      "team": {
+        "name": "Echipă",
+        "description": "Pentru echipe mici care vor ordine în cheltuielile comune"
+      },
+      "business": {
+        "name": "Business",
+        "description": "Pentru companii în creștere, cu mai multe departamente"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Pentru organizații mari, cu cerințe avansate de securitate"
+      }
+    },
+    "features": {
+      "sharedWorkspace": "Spațiu de lucru comun pentru companie",
+      "expenseApprovals": "Trimiterea și aprobarea cheltuielilor",
+      "receiptScanning": "Scanarea bonurilor cu OCR",
+      "departmentBudgets": "Bugete pe departamente și proiecte",
+      "teamReports": "Rapoarte de cheltuieli pe echipă",
+      "accountingExport": "Export pentru contabilitate (CSV, SAF-T)",
+      "emailSupport": "Suport prin email",
+      "multiEntity": "Mai multe firme și entități",
+      "cashflowForecast": "Prognoza cash flow-ului",
+      "customRoles": "Roluri și permisiuni personalizate",
+      "approvalWorkflows": "Fluxuri de aprobare pe mai multe niveluri",
+      "erpIntegrations": "Integrări cu ERP și programe de contabilitate",
+      "auditLog": "Jurnal de audit complet",
+      "apiAccess": "Acces API",
+      "prioritySupport": "Suport prioritar (chat și telefon)",
+      "sso": "SSO (SAML, Azure AD, Google Workspace)",
+      "dedicatedManager": "Account manager dedicat",
+      "sla": "SLA de disponibilitate 99,9%",
+      "dataResidency": "Date stocate în UE",
+      "customIntegrations": "Integrări personalizate",
+      "onboarding": "Onboarding și training la sediul tău",
+      "securityReview": "Evaluare de securitate și conformitate",
+      "support247": "Suport dedicat 24/7"
+    },
+    "calculator": {
+      "title": "Estimează costul",
+      "subtitle": "Alege dimensiunea echipei și vezi cât ai plăti în fiecare lună",
+      "seats": "Membri în echipă",
+      "perMonth": "/lună",
+      "belowMin": "Minimum {{n}} utilizatori — calculat pentru {{n}}",
+      "overLimit": "Pentru mai mult de {{n}} utilizatori îți recomandăm Enterprise"
+    },
+    "trust": {
+      "title": "Construit pentru companii care iau banii în serios",
+      "items": {
+        "security": {
+          "title": "Securitate de nivel bancar",
+          "text": "Criptare pe 256 de biți, procese aliniate ISO 27001 și teste de penetrare regulate."
+        },
+        "gdpr": {
+          "title": "Conform GDPR",
+          "text": "Date stocate în UE, cu control complet asupra păstrării și exportului."
+        },
+        "uptime": {
+          "title": "Disponibilitate 99,9%",
+          "text": "Infrastructură redundantă și monitorizare în timp real, 24/7."
+        },
+        "support": {
+          "title": "Oameni, nu roboți",
+          "text": "O echipă dedicată care îți cunoaște afacerea și îți vorbește limba."
+        }
+      }
+    },
+    "faq": {
+      "title": "Întrebări frecvente",
+      "items": {
+        "seats": {
+          "q": "Cum se numără utilizatorii?",
+          "a": "Plătești doar pentru utilizatorii activi cu acces în spațiul de lucru. Cei care doar primesc rapoarte sunt gratuiți."
+        },
+        "change": {
+          "q": "Pot adăuga sau elimina utilizatori oricând?",
+          "a": "Da. Utilizatorii noi sunt facturați proporțional, iar cei eliminați sunt creditați pe următoarea factură."
+        },
+        "invoice": {
+          "q": "Emiteți facturi pe firmă?",
+          "a": "Da, emitem facturi fiscale cu datele companiei tale și acceptăm plata prin transfer bancar sau card."
+        },
+        "migration": {
+          "q": "Ne puteți ajuta să migrăm din altă aplicație?",
+          "a": "Desigur. Pe planurile Business și Enterprise echipa noastră te ajută să imporți datele istorice din Excel sau alte aplicații."
+        },
+        "security": {
+          "q": "Cine are acces la datele noastre financiare?",
+          "a": "Doar persoanele pe care le inviți. Accesul este controlat prin roluri, iar fiecare acțiune este înregistrată în jurnalul de audit."
+        },
+        "trial": {
+          "q": "Există perioadă de probă pentru companii?",
+          "a": "Echipă și Business includ 14 zile de probă gratuită. Pentru Enterprise stabilim un pilot adaptat organizației tale."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ai nevoie de ceva personalizat?",
+      "text": "Hai să discutăm despre echipa ta, procesele voastre și integrările de care aveți nevoie. Construim împreună planul potrivit.",
+      "button": "Programează un demo"
+    }
+  },
+  "pay": {
+    "title": "Finalizează abonamentul",
+    "subtitle": "14 zile gratuit, apoi plata se face automat. Anulezi oricând înainte de finalul perioadei de probă și nu plătești nimic.",
+    "backToPlans": "Înapoi la planuri",
+    "haveAccount": "Ai deja cont?",
+    "login": "Autentifică-te",
+    "sections": {
+      "account": "Datele contului",
+      "company": "Datele firmei",
+      "payment": "Metoda de plată"
+    },
+    "fields": {
+      "fullName": "Nume complet",
+      "email": "Email",
+      "companyName": "Denumirea firmei",
+      "cui": "CUI",
+      "address": "Sediul social",
+      "cardName": "Numele de pe card",
+      "cardNumber": "Numărul cardului",
+      "expiry": "Expiră (LL/AA)",
+      "cvc": "CVC"
+    },
+    "placeholders": {
+      "fullName": "Ion Popescu",
+      "email": "ion@exemplu.ro",
+      "companyName": "Exemplu SRL",
+      "cui": "RO12345678",
+      "address": "Strada, număr, oraș"
+    },
+    "errors": {
+      "required": "Câmpul este obligatoriu",
+      "email": "Introdu o adresă de email validă",
+      "cui": "Introdu un CUI valid (ex. RO12345678)",
+      "cardNumber": "Introdu un număr de card valid",
+      "expiry": "Introdu o dată validă, care nu a expirat",
+      "cvc": "Introdu 3 sau 4 cifre",
+      "terms": "Trebuie să accepți termenii pentru a continua"
+    },
+    "terms": "Sunt de acord cu <terms>Termenii și condițiile</terms> și cu <privacy>Politica de confidențialitate</privacy>",
+    "secure": "Plățile sunt criptate și procesate în siguranță. Nu stocăm niciodată datele complete ale cardului.",
+    "submit": "Începe perioada de probă",
+    "processing": "Se procesează...",
+    "failed": "Nu am putut procesa plata. Te rugăm să încerci din nou.",
+    "summary": {
+      "title": "Sumarul comenzii",
+      "changePlan": "Schimbă",
+      "monthly": "Lunar",
+      "annual": "Anual",
+      "save": "Economisești {{percent}}%",
+      "seats": "Utilizatori",
+      "minSeats": "Minimum {{n}} utilizatori",
+      "unitPrice": "Preț",
+      "perMonth": "/lună",
+      "perSeat": "/utilizator/lună",
+      "subtotal": "Subtotal",
+      "vat": "TVA ({{percent}}%)",
+      "vatIncluded": "TVA inclus",
+      "total": "Total",
+      "perMonthPeriod": "pe lună",
+      "perYearPeriod": "pe an",
+      "dueToday": "De plată azi",
+      "firstCharge": "Prima plată pe {{date}}",
+      "trialNote": "Poți anula oricând înainte de {{date}}, fără niciun cost."
+    },
+    "success": {
+      "title": "Perioada de probă a început!",
+      "text": "Planul {{plan}} este activ. Prima plată, de {{amount}}, va fi pe {{date}}.",
+      "emailNote": "Ți-am trimis confirmarea pe {{email}}.",
+      "dashboard": "Mergi la dashboard"
+    }
+  },
+  "legal": {
+    "lastUpdated": "Ultima actualizare: {{date}}",
+    "contents": "Cuprins",
+    "questions": "Ai întrebări despre acest document?",
+    "questionsText": "Echipa noastră te ajută cu drag. Scrie-ne la {{email}}.",
+    "terms": {
+      "title": "Termeni și condiții",
+      "intro": "Acești Termeni și condiții reglementează accesul și utilizarea FinanceApp, platforma de bugetare personală și pentru afaceri operată de FinanceApp SRL. Te rugăm să îi citești cu atenție înainte de a-ți crea un cont.",
+      "sections": {
+        "acceptance": {
+          "title": "1. Acceptarea termenilor",
+          "paragraphs": [
+            "Prin crearea unui cont, accesarea sau utilizarea FinanceApp („Serviciul”), ești de acord să respecți acești Termeni și Politica noastră de confidențialitate. Dacă nu ești de acord, te rugăm să nu folosești Serviciul.",
+            "Dacă folosești FinanceApp în numele unei companii, confirmi că ai dreptul să accepți acești Termeni în numele acesteia."
+          ]
+        },
+        "service": {
+          "title": "2. Descrierea serviciului",
+          "paragraphs": [
+            "FinanceApp te ajută să îți urmărești veniturile și cheltuielile, să creezi bugete, să setezi obiective de economisire, să vezi analize și să primești recomandări despre obiceiurile tale de cheltuire.",
+            "FinanceApp este un instrument de organizare financiară. Nu oferă consultanță de investiții, fiscală, juridică sau contabilă, iar recomandările din aplicație nu trebuie considerate sfaturi financiare profesionale."
+          ]
+        },
+        "account": {
+          "title": "3. Conturi și eligibilitate",
+          "paragraphs": [
+            "Trebuie să ai cel puțin 18 ani pentru a crea un cont. Te angajezi să furnizezi informații corecte la înregistrare și să le menții actualizate.",
+            "Ești responsabil pentru păstrarea confidențialității parolei și pentru toate activitățile desfășurate din contul tău. Anunță-ne imediat la security@financeapp.com dacă suspectezi un acces neautorizat."
+          ]
+        },
+        "plans": {
+          "title": "4. Planuri, plăți și perioada de probă",
+          "paragraphs": [
+            "FinanceApp este disponibil printr-un plan Gratuit și abonamentele plătite Pro și Premium. Prețurile actuale sunt afișate pe pagina Prețuri, în RON pentru România și în USD pentru alte regiuni, și includ TVA acolo unde este cazul.",
+            "Toate planurile plătite includ o perioadă de probă gratuită de 14 zile, fără card necesar. Abonamentele se reînnoiesc automat la sfârșitul fiecărei perioade de facturare, dacă nu sunt anulate înainte de data reînnoirii.",
+            "Poți trece la un plan superior sau inferior ori poți anula oricând din setările contului, fără taxe de anulare. Oferim garanția banilor înapoi timp de 30 de zile pentru primul abonament plătit."
+          ]
+        },
+        "userData": {
+          "title": "5. Conținutul tău",
+          "paragraphs": [
+            "Păstrezi dreptul deplin de proprietate asupra tranzacțiilor, bugetelor, categoriilor și celorlalte date pe care le adaugi în FinanceApp („Conținutul tău”). Ne acorzi o licență limitată de a stoca și procesa Conținutul tău exclusiv pentru a-ți furniza Serviciul.",
+            "Ești responsabil pentru corectitudinea datelor introduse. Analizele și rapoartele sunt generate automat pe baza acestor date."
+          ]
+        },
+        "acceptableUse": {
+          "title": "6. Utilizare acceptabilă",
+          "paragraphs": [
+            "Te angajezi să nu folosești Serviciul în scopuri ilegale, inclusiv spălare de bani sau fraudă; să nu încerci să accesezi conturile sau datele altor utilizatori; să nu decompilezi, suprasolicități sau perturbi platforma; și să nu revinzi Serviciul fără acordul nostru scris."
+          ]
+        },
+        "thirdParty": {
+          "title": "7. Conectarea băncilor și servicii terțe",
+          "paragraphs": [
+            "Unele funcții îți permit să conectezi conturi bancare prin furnizori terți autorizați. Aceste conexiuni sunt doar de citire: FinanceApp nu poate iniția plăți și nu poate muta bani în numele tău.",
+            "Serviciile terților sunt guvernate de propriii termeni, iar noi nu răspundem pentru disponibilitatea lor sau pentru corectitudinea datelor pe care le furnizează."
+          ]
+        },
+        "intellectualProperty": {
+          "title": "8. Proprietate intelectuală",
+          "paragraphs": [
+            "Numele FinanceApp, logo-ul, designul, software-ul și conținutul (cu excepția Conținutului tău) aparțin FinanceApp SRL și sunt protejate de legislația privind proprietatea intelectuală. Nu le poți copia sau folosi fără acordul nostru prealabil scris."
+          ]
+        },
+        "liability": {
+          "title": "9. Limitarea răspunderii",
+          "paragraphs": [
+            "Serviciul este furnizat „ca atare” și „în măsura disponibilității”. Depunem toate eforturile ca FinanceApp să fie sigur și disponibil, dar nu garantăm că va funcționa neîntrerupt sau fără erori.",
+            "În limita maximă permisă de lege, FinanceApp SRL nu răspunde pentru daune indirecte sau pentru deciziile financiare luate pe baza informațiilor din aplicație. Răspunderea noastră totală este limitată la suma plătită de tine în ultimele 12 luni înainte de reclamație."
+          ]
+        },
+        "termination": {
+          "title": "10. Suspendare și încetare",
+          "paragraphs": [
+            "Îți poți șterge contul oricând din Setări. Putem suspenda sau închide conturile care încalcă grav sau repetat acești Termeni, după ce te notificăm, acolo unde este posibil.",
+            "După închiderea contului, datele tale sunt șterse conform Politicii de confidențialitate."
+          ]
+        },
+        "changes": {
+          "title": "11. Modificarea termenilor",
+          "paragraphs": [
+            "Putem actualiza periodic acești Termeni. Pentru modificările importante te vom anunța prin email sau în aplicație cu cel puțin 30 de zile înainte de intrarea lor în vigoare. Continuarea utilizării Serviciului după această dată înseamnă acceptarea noilor Termeni."
+          ]
+        },
+        "law": {
+          "title": "12. Legea aplicabilă și litigii",
+          "paragraphs": [
+            "Acești Termeni sunt guvernați de legea română. Orice litigiu va fi soluționat pe cale amiabilă, iar în caz contrar va fi supus instanțelor competente din București, România.",
+            "Consumatorii se pot adresa și Autorității Naționale pentru Protecția Consumatorilor (ANPC) sau pot folosi platforma europeană de Soluționare Online a Litigiilor (SOL)."
+          ]
+        },
+        "contact": {
+          "title": "13. Contact",
+          "paragraphs": [
+            "FinanceApp SRL, Str. Exemplu nr. 10, Sector 1, București, România. Nr. Registrul Comerțului J40/1234/2024, CUI RO12345678.",
+            "Email: legal@financeapp.com · Telefon: +40 21 123 4567"
+          ]
+        }
+      }
+    },
+    "privacy": {
+      "title": "Politica de confidențialitate",
+      "intro": "Datele tale financiare sunt personale. Această Politică de confidențialitate explică ce informații colectează FinanceApp, de ce le colectăm, cum le protejăm și ce drepturi ai conform Regulamentului General privind Protecția Datelor (GDPR).",
+      "sections": {
+        "controller": {
+          "title": "1. Cine suntem",
+          "paragraphs": [
+            "Operatorul de date este FinanceApp SRL, Str. Exemplu nr. 10, Sector 1, București, România, Nr. Registrul Comerțului J40/1234/2024, CUI RO12345678.",
+            "Îl poți contacta pe Responsabilul nostru cu protecția datelor la dpo@financeapp.com."
+          ]
+        },
+        "dataCollected": {
+          "title": "2. Ce date colectăm",
+          "paragraphs": [
+            "Date de cont: nume, adresă de email, parolă criptată, limba și tema preferate.",
+            "Date de profil pe care alegi să le furnizezi: ocupație, venit lunar, numărul membrilor gospodăriei și obiective financiare.",
+            "Date financiare: tranzacții, categorii, bugete, obiective de economisire și, dacă conectezi o bancă, soldurile și istoricul tranzacțiilor.",
+            "Date de plată: planul de abonament și istoricul facturilor. Datele cardului sunt gestionate direct de procesatorul de plăți și nu sunt stocate niciodată pe serverele noastre.",
+            "Date tehnice: adresă IP, tipul browserului și al dispozitivului și jurnale de utilizare folosite pentru securitate și depanare."
+          ]
+        },
+        "purposes": {
+          "title": "3. Cum folosim datele",
+          "paragraphs": [
+            "Pentru a furniza Serviciul — panouri, bugete, analize și recomandări (temei legal: executarea contractului).",
+            "Pentru procesarea plăților și emiterea facturilor (temei legal: contract și obligație legală).",
+            "Pentru securitatea contului și prevenirea fraudei (temei legal: interes legitim).",
+            "Pentru trimiterea de noutăți și newslettere, doar dacă te abonezi (temei legal: consimțământ, pe care îl poți retrage oricând)."
+          ]
+        },
+        "sharing": {
+          "title": "4. Divulgarea datelor",
+          "paragraphs": [
+            "Nu vindem niciodată datele tale personale sau financiare. Le partajăm doar cu persoane împuternicite de încredere care ne ajută să operăm Serviciul — găzduire cloud, procesare plăți, trimitere email și conectare bancară — pe baza unor acorduri de prelucrare a datelor.",
+            "Putem divulga date autorităților publice doar atunci când legea ne obligă."
+          ]
+        },
+        "transfers": {
+          "title": "5. Transferuri internaționale",
+          "paragraphs": [
+            "Datele tale sunt stocate pe servere din Uniunea Europeană. Dacă o persoană împuternicită transferă date în afara SEE, ne bazăm pe Clauzele Contractuale Standard aprobate de Comisia Europeană sau pe alte garanții adecvate."
+          ]
+        },
+        "retention": {
+          "title": "6. Perioada de păstrare",
+          "paragraphs": [
+            "Păstrăm datele tale cât timp contul este activ. După ștergerea contului, datele sunt eliminate definitiv în 30 de zile, cu excepția facturilor, pe care trebuie să le păstrăm pe perioada impusă de legislația fiscală din România."
+          ]
+        },
+        "security": {
+          "title": "7. Securitate",
+          "paragraphs": [
+            "Folosim criptare pe 256 de biți, de nivel bancar, pentru datele în tranzit și stocate, parole hash-uite, controale stricte de acces și verificări periodice de securitate. Niciun sistem nu este 100% sigur, dar lucrăm continuu pentru a-ți proteja informațiile."
+          ]
+        },
+        "rights": {
+          "title": "8. Drepturile tale",
+          "paragraphs": [
+            "Conform GDPR ai dreptul de acces, rectificare și ștergere a datelor, dreptul de a restricționa prelucrarea sau de a te opune acesteia, dreptul la portabilitatea datelor și dreptul de a-ți retrage consimțământul oricând.",
+            "Îți poți exporta sau șterge datele direct din Setări ori scriindu-ne la privacy@financeapp.com. Răspundem în cel mult 30 de zile.",
+            "Ai și dreptul de a depune o plângere la Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal (ANSPDCP), www.dataprotection.ro."
+          ]
+        },
+        "cookies": {
+          "title": "9. Cookie-uri și stocare locală",
+          "paragraphs": [
+            "Folosim cookie-uri strict necesare și stocare locală pentru a te menține autentificat și pentru a reține limba și tema preferate. Cookie-urile opționale de analiză sunt folosite doar cu acordul tău."
+          ]
+        },
+        "children": {
+          "title": "10. Minori",
+          "paragraphs": [
+            "FinanceApp nu este destinat persoanelor sub 18 ani și nu colectăm în mod intenționat date de la minori."
+          ]
+        },
+        "changes": {
+          "title": "11. Modificarea politicii",
+          "paragraphs": [
+            "Putem actualiza această Politică de confidențialitate pentru a reflecta schimbări ale Serviciului sau ale legislației. Te vom anunța despre modificările importante prin email sau în aplicație înainte de intrarea lor în vigoare."
+          ]
+        },
+        "contact": {
+          "title": "12. Contact",
+          "paragraphs": [
+            "Pentru orice întrebare legată de confidențialitate, scrie-ne la privacy@financeapp.com sau Responsabilului cu protecția datelor la dpo@financeapp.com."
+          ]
+        }
+      }
+    }
+  },
+  "blog": {
+    "badge": "Blog FinanceApp",
+    "title": "Banii, pe înțelesul tuturor",
+    "subtitle": "Ghiduri practice, povești reale și sfaturi de la experți care te ajută să îți faci bugetul mai inteligent, să economisești mai mult și să crești cu încredere.",
+    "searchPlaceholder": "Caută articole...",
+    "featured": "Recomandat",
+    "all": "Toate articolele",
+    "readArticle": "Citește articolul",
+    "readTime": "{{count}} min de citit",
+    "noResults": "Niciun articol nu corespunde căutării.",
+    "clearFilters": "Resetează filtrele",
+    "latest": "Articole recente",
+    "articleCta": {
+      "title": "Pune totul în practică",
+      "text": "Creează-ți un cont gratuit FinanceApp și începe să îți urmărești bugetul în câteva minute.",
+      "button": "Începe gratuit"
+    },
+    "categories": {
+      "budgeting": "Buget",
+      "saving": "Economisire",
+      "business": "Afaceri",
+      "stories": "Povești de succes",
+      "product": "Sfaturi de utilizare"
+    },
+    "newsletter": {
+      "title": "Primește un sfat financiar în fiecare săptămână",
+      "text": "Alătură-te celor peste 25.000 de cititori care primesc cele mai bune ghiduri direct pe email. Fără spam, te poți dezabona oricând.",
+      "placeholder": "Adresa ta de email",
+      "button": "Abonează-te",
+      "success": "Mulțumim pentru abonare! Verifică emailul pentru confirmare."
+    },
+    "share": {
+      "title": "Împărtășește-ți povestea",
+      "text": "Te-a ajutat FinanceApp să îți atingi un obiectiv financiar? Povestește-ne și inspiră comunitatea.",
+      "button": "Scrie-ne"
+    },
+    "posts": {
+      "rule503020": {
+        "title": "Regula 50/30/20: un buget simplu care chiar funcționează",
+        "excerpt": "Împarte venitul în nevoi, dorințe și economii. Iată cum aplici această regulă clasică unui salariu din România și cum o adaptezi vieții tale.",
+        "body": [
+          "Regula 50/30/20 este una dintre cele mai simple metode de a începe un buget: 50% din venitul net merge pe nevoi (chirie, utilități, cumpărături, transport), 30% pe dorințe (ieșiri, hobby-uri, călătorii) și 20% pe economii și plata datoriilor.",
+          "Începe prin a analiza tranzacțiile din ultimele trei luni în FinanceApp. Marchează fiecare cheltuială drept nevoie sau dorință și compară rezultatul cu procentele țintă. Majoritatea oamenilor sunt surprinși cât de mult ocupă categoria „dorințe”.",
+          "Regula este un punct de plecare, nu o lege. Dacă locuiești într-un oraș scump, o împărțire 60/20/20 poate fi mai realistă. Important este ca economiile să fie puse deoparte primele, automat, la începutul fiecărei luni."
+        ]
+      },
+      "emergencyFund": {
+        "title": "Cum construiești un fond de urgență pornind de la zero",
+        "excerpt": "Trei până la șase luni de cheltuieli pare mult. Le împărțim în pași mici și realiști pe care îi poate urma oricine.",
+        "body": [
+          "Un fond de urgență te protejează de costuri neprevăzute — o reparație la mașină, o factură medicală sau o perioadă fără venit — fără să te îndatorezi.",
+          "Stabilește un prim mini-obiectiv: o lună de cheltuieli esențiale. Creează un obiectiv de economisire în FinanceApp și setează un transfer automat în ziua salariului, chiar dacă este de doar 100 de lei.",
+          "Ține banii într-un cont de economii separat, ușor accesibil. După ce atingi primul prag, crește obiectivul la trei luni, apoi la șase."
+        ]
+      },
+      "analytics": {
+        "title": "5 lucruri pe care ți le spun analizele cheltuielilor",
+        "excerpt": "Pagina de Analize știe mai multe despre obiceiurile tale decât crezi. Învață să citești tendințele, categoriile și sănătatea bugetului.",
+        "body": [
+          "Graficul de tendință arată cum evoluează cheltuielile lună de lună. O creștere lentă și constantă într-o categorie este adesea mai periculoasă decât o singură achiziție mare.",
+          "Verifică săptămânal indicatorul Sănătatea bugetului: compară cât a trecut din lună cu cât din buget ai folosit deja.",
+          "La final, uită-te la primele trei categorii. Reducerea uneia singure cu 10% poate elibera sute de lei în fiecare lună."
+        ]
+      },
+      "debtFree": {
+        "title": "Cum a achitat Ana 32.000 de lei datorii în 18 luni",
+        "excerpt": "O asistentă medicală din Cluj povestește cum un buget clar, metoda bulgărelui de zăpadă și multă răbdare au ajutat-o să scape de datorii.",
+        "body": [
+          "„Aveam două carduri de credit și un împrumut personal și nu știam niciodată exact cât datorez”, spune Ana. Primul pas a fost să își noteze toate datoriile într-un singur loc.",
+          "A folosit metoda bulgărelui de zăpadă: plăți minime la toate, iar fiecare leu în plus mergea la cea mai mică datorie. Fiecare datorie închisă îi dădea motivație să continue.",
+          "Astăzi Ana nu mai are datorii și are un fond de urgență de patru luni. „Aplicația nu a făcut munca în locul meu, dar a făcut progresul vizibil în fiecare zi.”"
+        ]
+      },
+      "impulseShopping": {
+        "title": "Regula de 48 de ore care oprește cumpărăturile impulsive",
+        "excerpt": "Magazinele online sunt gândite să te facă să cumperi repede. O regulă simplă de așteptare te poate scuti de mii de lei pe an.",
+        "body": [
+          "Înainte de orice achiziție neesențială de peste 200 de lei, adaugă produsul într-o listă de dorințe și așteaptă 48 de ore. De cele mai multe ori impulsul pur și simplu dispare.",
+          "Dezabonează-te de la emailurile promoționale, șterge cardurile salvate din aplicațiile de cumpărături și setează în FinanceApp un buget lunar de „bani de distracție” pe care să îi cheltui fără vinovăție."
+        ]
+      },
+      "freelancer": {
+        "title": "Bugetul de freelancer: venit neregulat, viață stabilă",
+        "excerpt": "Când venitul se schimbă de la o lună la alta, bugetul clasic nu mai funcționează. Iată un sistem gândit pentru freelanceri și PFA-uri.",
+        "body": [
+          "Calculează-ți nivelul de bază: minimul de care ai nevoie lunar pentru cheltuielile personale și ale afacerii. Acesta devine „salariul” tău.",
+          "Fiecare încasare intră mai întâi într-un cont tampon. De acolo îți plătești același salariu în fiecare lună și pui deoparte separat impozitele și contribuțiile sociale.",
+          "În lunile bune contul tampon crește, iar în cele slabe îți menține viața stabilă. Țintește un tampon de cel puțin trei luni de cheltuieli de bază."
+        ]
+      },
+      "cashFlow": {
+        "title": "Cash flow-ul explicat pentru antreprenorii mici",
+        "excerpt": "Profitul de pe hârtie nu plătește facturile. Învață să îți estimezi fluxul de numerar și să eviți capcanele frecvente ale micilor afaceri.",
+        "body": [
+          "Cash flow-ul reprezintă intrările și ieșirile de bani din afacerea ta. Poți fi profitabil și totuși să rămâi fără lichidități dacă clienții plătesc cu întârziere.",
+          "Construiește o prognoză simplă pe 13 săptămâni: încasări estimate, costuri fixe, costuri variabile și taxe. Actualizeaz-o în fiecare luni.",
+          "Negociază termene de plată mai scurte cu clienții și mai lungi cu furnizorii și păstrează o rezervă de numerar pentru cel puțin o lună de costuri fixe."
+        ]
+      },
+      "inflation": {
+        "title": "Inflația și economiile tale: ce poți face în 2026",
+        "excerpt": "Banii ținuți în contul curent pierd din valoare în fiecare an. Comparăm opțiuni simple pentru a-ți proteja economiile.",
+        "body": [
+          "Când inflația este mai mare decât dobânda primită, economiile tale își pierd puterea de cumpărare, chiar dacă suma din cont rămâne aceeași.",
+          "Opțiuni precum depozitele la termen, titlurile de stat sau fondurile de indici diversificate te pot ajuta. Fiecare are un nivel diferit de risc și de lichiditate.",
+          "Acest articol are scop educativ și nu reprezintă o recomandare de investiții. Ține cont de obiectivele tale și, dacă este nevoie, discută cu un consultant autorizat."
+        ]
+      },
+      "coupleBudget": {
+        "title": "Mihai și Laura: un singur buget, zero certuri pe bani",
+        "excerpt": "Un cuplu tânăr din București explică cum un buget comun i-a ajutat să strângă avansul pentru prima locuință în doar doi ani.",
+        "body": [
+          "„Ne certam pe lucruri mărunte, de exemplu cine a plătit cumpărăturile”, spune Laura. Au decis să treacă toate cheltuielile comune într-un singur buget.",
+          "Fiecare păstrează o sumă personală, iar restul merge în categorii comune și într-un singur obiectiv de economisire: avansul pentru apartament.",
+          "Doi ani mai târziu s-au mutat în prima lor casă. „Să vedem cum crește obiectivul în fiecare lună ne-a ținut motivați.”"
+        ]
+      }
+    }
+  }
+}

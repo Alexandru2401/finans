@@ -1,3 +1,5 @@
+import LegalPage from "@/components/public/LegalPage";
+
 export default function TermsAndConditions() {
-  return <div>Terms</div>;
+  return <LegalPage page="terms" />;
 }
