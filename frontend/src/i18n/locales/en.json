@@ -178,7 +178,8 @@
     "phone": "Phone: {{phone}}",
     "copyright": "© {{year}} FinanceApp. All rights reserved.",
     "privacy": "Privacy Policy",
-    "terms": "Terms and Conditions"
+    "terms": "Terms and Conditions",
+    "backToTop": "Back to top"
   },
   "auth": {
     "email": "Email",

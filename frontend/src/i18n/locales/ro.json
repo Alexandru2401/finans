@@ -178,7 +178,8 @@
     "phone": "Telefon: {{phone}}",
     "copyright": "© {{year}} FinanceApp. Toate drepturile rezervate.",
     "privacy": "Politica de confidențialitate",
-    "terms": "Termeni și condiții"
+    "terms": "Termeni și condiții",
+    "backToTop": "Înapoi sus"
   },
   "auth": {
     "email": "Email",
