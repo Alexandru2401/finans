@@ -238,9 +238,9 @@
         "name": "Pro",
         "description": "Ideal for serious budgeters and savers"
       },
-      "premium": {
-        "name": "Premium",
-        "description": "Complete financial control and planning"
+      "family": {
+        "name": "Family",
+        "description": "One shared plan for the whole household"
       }
     },
     "features": {
@@ -258,15 +258,15 @@
       "exportData": "Export data to CSV/Excel",
       "priorityEmailSupport": "Priority email support",
       "adFree": "Ad-free experience",
-      "investmentTracking": "Investment tracking",
-      "taxPlanning": "Tax planning tools",
       "multiCurrency": "Multi-currency support",
-      "coaching": "Personalized financial coaching",
-      "forecasting": "Advanced forecasting & predictions",
-      "debtCalculator": "Debt payoff calculator",
       "netWorth": "Net worth tracking",
-      "familySharing": "Family sharing (up to 5 members)",
-      "support247": "24/7 priority support"
+      "familySharing": "Up to 6 family members",
+      "support247": "24/7 priority support",
+      "sharedBudgets": "Shared household budgets",
+      "sharedGoals": "Joint savings goals (vacation, home, education)",
+      "privateSpaces": "Private spaces for each member",
+      "kidsAllowance": "Kids' allowance & pocket money tracking",
+      "familyActivity": "Family activity feed & spending alerts"
     },
     "faq": {
       "title": "Frequently Asked Questions",
@@ -296,6 +296,126 @@
           "a": "We offer a 30-day money-back guarantee. If you're not satisfied, contact us for a full refund."
         }
       }
+    }
+  },
+  "pricesEnterprise": {
+    "badge": "For teams & companies",
+    "title": "Finances that scale with your company",
+    "subtitle": "From a 3-person startup to a multi-entity group — control spending, automate approvals and see your cash flow in real time",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "save": "Save {{percent}}%",
+    "mostPopular": "Most Popular",
+    "perSeat": "/user/month",
+    "billedAnnually": "billed annually",
+    "minSeats": "Minimum {{n}} users",
+    "fromSeats": "Starting from {{n}} users",
+    "customPrice": "Custom",
+    "customPriceHint": "Tailored to your organization",
+    "everythingIn": "Everything in {{plan}}, plus:",
+    "startTrial": "Start 14-day trial",
+    "contactSales": "Contact Sales",
+    "plans": {
+      "team": {
+        "name": "Team",
+        "description": "For small teams that want order in shared expenses"
+      },
+      "business": {
+        "name": "Business",
+        "description": "For growing companies with multiple departments"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "For large organizations with advanced security needs"
+      }
+    },
+    "features": {
+      "sharedWorkspace": "Shared company workspace",
+      "expenseApprovals": "Expense submission & approvals",
+      "receiptScanning": "Receipt scanning with OCR",
+      "departmentBudgets": "Budgets per department & project",
+      "teamReports": "Team spending reports",
+      "accountingExport": "Export for accounting (CSV, SAF-T)",
+      "emailSupport": "Email support",
+      "multiEntity": "Multiple companies & entities",
+      "cashflowForecast": "Cash flow forecasting",
+      "customRoles": "Custom roles & permissions",
+      "approvalWorkflows": "Multi-level approval workflows",
+      "erpIntegrations": "ERP & accounting integrations",
+      "auditLog": "Full audit log",
+      "apiAccess": "API access",
+      "prioritySupport": "Priority support (chat & phone)",
+      "sso": "SSO (SAML, Azure AD, Google Workspace)",
+      "dedicatedManager": "Dedicated account manager",
+      "sla": "99.9% uptime SLA",
+      "dataResidency": "EU data residency",
+      "customIntegrations": "Custom integrations",
+      "onboarding": "On-site onboarding & training",
+      "securityReview": "Security & compliance review",
+      "support247": "24/7 dedicated support"
+    },
+    "calculator": {
+      "title": "Estimate your cost",
+      "subtitle": "Choose your team size and see what you would pay each month",
+      "seats": "Team members",
+      "perMonth": "/month",
+      "belowMin": "Minimum {{n}} users — calculated for {{n}}",
+      "overLimit": "For more than {{n}} users we recommend Enterprise"
+    },
+    "trust": {
+      "title": "Built for companies that take money seriously",
+      "items": {
+        "security": {
+          "title": "Bank-level security",
+          "text": "256-bit encryption, ISO 27001 aligned processes and regular penetration tests."
+        },
+        "gdpr": {
+          "title": "GDPR compliant",
+          "text": "Data stored in the EU, with full control over retention and exports."
+        },
+        "uptime": {
+          "title": "99.9% availability",
+          "text": "Redundant infrastructure and real-time monitoring, 24/7."
+        },
+        "support": {
+          "title": "People, not bots",
+          "text": "A dedicated team that knows your business and speaks your language."
+        }
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "seats": {
+          "q": "How are users counted?",
+          "a": "You pay only for active users with access to the workspace. Viewers who only receive reports are free."
+        },
+        "change": {
+          "q": "Can I add or remove users at any time?",
+          "a": "Yes. New users are billed pro rata, and removed users are credited on your next invoice."
+        },
+        "invoice": {
+          "q": "Do you issue invoices for companies?",
+          "a": "Yes, we issue fiscal invoices with your company details and support payment by bank transfer or card."
+        },
+        "migration": {
+          "q": "Can you help us migrate from another tool?",
+          "a": "Of course. On Business and Enterprise plans our team helps you import historical data from Excel or other applications."
+        },
+        "security": {
+          "q": "Who has access to our financial data?",
+          "a": "Only the people you invite. Access is controlled through roles, and every action is recorded in the audit log."
+        },
+        "trial": {
+          "q": "Is there a trial for companies?",
+          "a": "Team and Business include a 14-day free trial. For Enterprise we set up a pilot tailored to your organization."
+        }
+      }
+    },
+    "cta": {
+      "title": "Need something tailored?",
+      "text": "Let's talk about your team, your processes and the integrations you need. We'll build the right plan together.",
+      "button": "Schedule a demo"
     }
   },
   "legal": {

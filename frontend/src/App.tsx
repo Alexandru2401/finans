@@ -13,6 +13,7 @@ import UpgradePlansPage from "./pages/dashboard/UpgradePlansPage";
 import PublicAboutPage from "./pages/public/home/HomeOurMission";
 import PublicHomePage from "./pages/public/PublicHomePage";
 import PublicPricesPersonalPage from "./pages/public/PublicPricesPersonalPage";
+import PublicPricesEnterprisePage from "./pages/public/PublicPricesEnterprisePage";
 import BlogPage from "./pages/public/blog/BlogPage";
 import PersonalPayPage from "./pages/public/paypage/PersonalPayPage";
 import PrivacyPolicy from "./pages/public/terms-and-policy/PrivacyPolicy";
@@ -41,6 +42,7 @@ const publicRoutes = [
   { index: true, element: <PublicHomePage /> },
   { path: "about", element: <PublicAboutPage /> },
   { path: "prices/personal", element: <PublicPricesPersonalPage /> },
+  { path: "prices/enterprise", element: <PublicPricesEnterprisePage /> },
   { path: "blog", element: <BlogPage /> },
   { path: "paypage/personal", element: <PersonalPayPage /> },
   { path: "terms-and-services", element: <TermsAndConditions /> },

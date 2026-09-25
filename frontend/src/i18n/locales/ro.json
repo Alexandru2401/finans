@@ -238,9 +238,9 @@
         "name": "Pro",
         "description": "Ideal pentru cei care își gestionează serios bugetul și economiile"
       },
-      "premium": {
-        "name": "Premium",
-        "description": "Control și planificare financiară completă"
+      "family": {
+        "name": "Familie",
+        "description": "Un singur plan comun pentru toată familia"
       }
     },
     "features": {
@@ -258,15 +258,15 @@
       "exportData": "Export date în CSV/Excel",
       "priorityEmailSupport": "Suport prioritar prin email",
       "adFree": "Fără reclame",
-      "investmentTracking": "Urmărirea investițiilor",
-      "taxPlanning": "Instrumente de planificare fiscală",
       "multiCurrency": "Suport pentru mai multe monede",
-      "coaching": "Consiliere financiară personalizată",
-      "forecasting": "Prognoze și predicții avansate",
-      "debtCalculator": "Calculator pentru achitarea datoriilor",
       "netWorth": "Urmărirea averii nete",
-      "familySharing": "Partajare în familie (până la 5 membri)",
-      "support247": "Suport prioritar 24/7"
+      "familySharing": "Până la 6 membri ai familiei",
+      "support247": "Suport prioritar 24/7",
+      "sharedBudgets": "Bugete comune pentru casă",
+      "sharedGoals": "Obiective comune de economisire (vacanță, casă, educație)",
+      "privateSpaces": "Spațiu privat pentru fiecare membru",
+      "kidsAllowance": "Urmărirea alocației și a banilor de buzunar pentru copii",
+      "familyActivity": "Activitatea familiei și alerte de cheltuieli"
     },
     "faq": {
       "title": "Întrebări frecvente",
@@ -296,6 +296,126 @@
           "a": "Oferim garanția returnării banilor în 30 de zile. Dacă nu ești mulțumit, contactează-ne pentru o rambursare completă."
         }
       }
+    }
+  },
+  "pricesEnterprise": {
+    "badge": "Pentru echipe și companii",
+    "title": "Finanțe care cresc odată cu compania ta",
+    "subtitle": "De la un startup de 3 oameni la un grup cu mai multe firme — controlează cheltuielile, automatizează aprobările și vezi cash flow-ul în timp real",
+    "monthly": "Lunar",
+    "annual": "Anual",
+    "save": "Economisești {{percent}}%",
+    "mostPopular": "Cel mai popular",
+    "perSeat": "/utilizator/lună",
+    "billedAnnually": "facturat anual",
+    "minSeats": "Minimum {{n}} utilizatori",
+    "fromSeats": "Începând de la {{n}} utilizatori",
+    "customPrice": "Personalizat",
+    "customPriceHint": "Adaptat organizației tale",
+    "everythingIn": "Tot ce include {{plan}}, plus:",
+    "startTrial": "Începe proba de 14 zile",
+    "contactSales": "Contactează vânzările",
+    "plans": {
+      "team": {
+        "name": "Echipă",
+        "description": "Pentru echipe mici care vor ordine în cheltuielile comune"
+      },
+      "business": {
+        "name": "Business",
+        "description": "Pentru companii în creștere, cu mai multe departamente"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Pentru organizații mari, cu cerințe avansate de securitate"
+      }
+    },
+    "features": {
+      "sharedWorkspace": "Spațiu de lucru comun pentru companie",
+      "expenseApprovals": "Trimiterea și aprobarea cheltuielilor",
+      "receiptScanning": "Scanarea bonurilor cu OCR",
+      "departmentBudgets": "Bugete pe departamente și proiecte",
+      "teamReports": "Rapoarte de cheltuieli pe echipă",
+      "accountingExport": "Export pentru contabilitate (CSV, SAF-T)",
+      "emailSupport": "Suport prin email",
+      "multiEntity": "Mai multe firme și entități",
+      "cashflowForecast": "Prognoza cash flow-ului",
+      "customRoles": "Roluri și permisiuni personalizate",
+      "approvalWorkflows": "Fluxuri de aprobare pe mai multe niveluri",
+      "erpIntegrations": "Integrări cu ERP și programe de contabilitate",
+      "auditLog": "Jurnal de audit complet",
+      "apiAccess": "Acces API",
+      "prioritySupport": "Suport prioritar (chat și telefon)",
+      "sso": "SSO (SAML, Azure AD, Google Workspace)",
+      "dedicatedManager": "Account manager dedicat",
+      "sla": "SLA de disponibilitate 99,9%",
+      "dataResidency": "Date stocate în UE",
+      "customIntegrations": "Integrări personalizate",
+      "onboarding": "Onboarding și training la sediul tău",
+      "securityReview": "Evaluare de securitate și conformitate",
+      "support247": "Suport dedicat 24/7"
+    },
+    "calculator": {
+      "title": "Estimează costul",
+      "subtitle": "Alege dimensiunea echipei și vezi cât ai plăti în fiecare lună",
+      "seats": "Membri în echipă",
+      "perMonth": "/lună",
+      "belowMin": "Minimum {{n}} utilizatori — calculat pentru {{n}}",
+      "overLimit": "Pentru mai mult de {{n}} utilizatori îți recomandăm Enterprise"
+    },
+    "trust": {
+      "title": "Construit pentru companii care iau banii în serios",
+      "items": {
+        "security": {
+          "title": "Securitate de nivel bancar",
+          "text": "Criptare pe 256 de biți, procese aliniate ISO 27001 și teste de penetrare regulate."
+        },
+        "gdpr": {
+          "title": "Conform GDPR",
+          "text": "Date stocate în UE, cu control complet asupra păstrării și exportului."
+        },
+        "uptime": {
+          "title": "Disponibilitate 99,9%",
+          "text": "Infrastructură redundantă și monitorizare în timp real, 24/7."
+        },
+        "support": {
+          "title": "Oameni, nu roboți",
+          "text": "O echipă dedicată care îți cunoaște afacerea și îți vorbește limba."
+        }
+      }
+    },
+    "faq": {
+      "title": "Întrebări frecvente",
+      "items": {
+        "seats": {
+          "q": "Cum se numără utilizatorii?",
+          "a": "Plătești doar pentru utilizatorii activi cu acces în spațiul de lucru. Cei care doar primesc rapoarte sunt gratuiți."
+        },
+        "change": {
+          "q": "Pot adăuga sau elimina utilizatori oricând?",
+          "a": "Da. Utilizatorii noi sunt facturați proporțional, iar cei eliminați sunt creditați pe următoarea factură."
+        },
+        "invoice": {
+          "q": "Emiteți facturi pe firmă?",
+          "a": "Da, emitem facturi fiscale cu datele companiei tale și acceptăm plata prin transfer bancar sau card."
+        },
+        "migration": {
+          "q": "Ne puteți ajuta să migrăm din altă aplicație?",
+          "a": "Desigur. Pe planurile Business și Enterprise echipa noastră te ajută să imporți datele istorice din Excel sau alte aplicații."
+        },
+        "security": {
+          "q": "Cine are acces la datele noastre financiare?",
+          "a": "Doar persoanele pe care le inviți. Accesul este controlat prin roluri, iar fiecare acțiune este înregistrată în jurnalul de audit."
+        },
+        "trial": {
+          "q": "Există perioadă de probă pentru companii?",
+          "a": "Echipă și Business includ 14 zile de probă gratuită. Pentru Enterprise stabilim un pilot adaptat organizației tale."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ai nevoie de ceva personalizat?",
+      "text": "Hai să discutăm despre echipa ta, procesele voastre și integrările de care aveți nevoie. Construim împreună planul potrivit.",
+      "button": "Programează un demo"
     }
   },
   "legal": {
