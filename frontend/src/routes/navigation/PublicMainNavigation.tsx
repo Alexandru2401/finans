@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SitePreferences from "@/components/SitePreferences";
+import { useTheme } from "@/hooks/useTheme";
 
 type SubmenuKey = "blog" | "prices";
 
@@ -22,6 +23,7 @@ import { cn } from "@/lib/utils";
 export default function PublicMainNavigation() {
   const [openMenu, setOpenMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { theme } = useTheme()
 
   // Fundal + umbră doar după ce pagina a fost derulată
   useEffect(() => {
@@ -62,7 +64,7 @@ export default function PublicMainNavigation() {
       )}
     >
       <div className="h-20 w-36">
-        <img src="/logo.png" />
+        <img src={theme === "dark" ? "/logo-no-bg-dark.png" : "/logo-no-bg.png"} />
       </div>
 
       {/* Desktop Navigation */}

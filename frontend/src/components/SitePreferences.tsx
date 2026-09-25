@@ -7,7 +7,7 @@ export default function SitePreferences({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex items-center gap-0.5 rounded-full border border-border/7 p-0.5 shadow-sm",
+        "flex items-center gap-1 rounded-full border border-border/7  shadow-sm",
         className,
       )}
     >
