@@ -418,6 +418,77 @@
       "button": "Programează un demo"
     }
   },
+  "pay": {
+    "title": "Finalizează abonamentul",
+    "subtitle": "14 zile gratuit, apoi plata se face automat. Anulezi oricând înainte de finalul perioadei de probă și nu plătești nimic.",
+    "backToPlans": "Înapoi la planuri",
+    "haveAccount": "Ai deja cont?",
+    "login": "Autentifică-te",
+    "sections": {
+      "account": "Datele contului",
+      "company": "Datele firmei",
+      "payment": "Metoda de plată"
+    },
+    "fields": {
+      "fullName": "Nume complet",
+      "email": "Email",
+      "companyName": "Denumirea firmei",
+      "cui": "CUI",
+      "address": "Sediul social",
+      "cardName": "Numele de pe card",
+      "cardNumber": "Numărul cardului",
+      "expiry": "Expiră (LL/AA)",
+      "cvc": "CVC"
+    },
+    "placeholders": {
+      "fullName": "Ion Popescu",
+      "email": "ion@exemplu.ro",
+      "companyName": "Exemplu SRL",
+      "cui": "RO12345678",
+      "address": "Strada, număr, oraș"
+    },
+    "errors": {
+      "required": "Câmpul este obligatoriu",
+      "email": "Introdu o adresă de email validă",
+      "cui": "Introdu un CUI valid (ex. RO12345678)",
+      "cardNumber": "Introdu un număr de card valid",
+      "expiry": "Introdu o dată validă, care nu a expirat",
+      "cvc": "Introdu 3 sau 4 cifre",
+      "terms": "Trebuie să accepți termenii pentru a continua"
+    },
+    "terms": "Sunt de acord cu <terms>Termenii și condițiile</terms> și cu <privacy>Politica de confidențialitate</privacy>",
+    "secure": "Plățile sunt criptate și procesate în siguranță. Nu stocăm niciodată datele complete ale cardului.",
+    "submit": "Începe perioada de probă",
+    "processing": "Se procesează...",
+    "failed": "Nu am putut procesa plata. Te rugăm să încerci din nou.",
+    "summary": {
+      "title": "Sumarul comenzii",
+      "changePlan": "Schimbă",
+      "monthly": "Lunar",
+      "annual": "Anual",
+      "save": "Economisești {{percent}}%",
+      "seats": "Utilizatori",
+      "minSeats": "Minimum {{n}} utilizatori",
+      "unitPrice": "Preț",
+      "perMonth": "/lună",
+      "perSeat": "/utilizator/lună",
+      "subtotal": "Subtotal",
+      "vat": "TVA ({{percent}}%)",
+      "vatIncluded": "TVA inclus",
+      "total": "Total",
+      "perMonthPeriod": "pe lună",
+      "perYearPeriod": "pe an",
+      "dueToday": "De plată azi",
+      "firstCharge": "Prima plată pe {{date}}",
+      "trialNote": "Poți anula oricând înainte de {{date}}, fără niciun cost."
+    },
+    "success": {
+      "title": "Perioada de probă a început!",
+      "text": "Planul {{plan}} este activ. Prima plată, de {{amount}}, va fi pe {{date}}.",
+      "emailNote": "Ți-am trimis confirmarea pe {{email}}.",
+      "dashboard": "Mergi la dashboard"
+    }
+  },
   "legal": {
     "lastUpdated": "Ultima actualizare: {{date}}",
     "contents": "Cuprins",

@@ -418,6 +418,77 @@
       "button": "Schedule a demo"
     }
   },
+  "pay": {
+    "title": "Complete your subscription",
+    "subtitle": "14 days free, then you'll be billed automatically. Cancel anytime before the trial ends and you won't pay anything.",
+    "backToPlans": "Back to plans",
+    "haveAccount": "Already have an account?",
+    "login": "Log in",
+    "sections": {
+      "account": "Account details",
+      "company": "Company details",
+      "payment": "Payment method"
+    },
+    "fields": {
+      "fullName": "Full name",
+      "email": "Email",
+      "companyName": "Company name",
+      "cui": "Tax ID (CUI)",
+      "address": "Registered address",
+      "cardName": "Name on card",
+      "cardNumber": "Card number",
+      "expiry": "Expiry (MM/YY)",
+      "cvc": "CVC"
+    },
+    "placeholders": {
+      "fullName": "John Smith",
+      "email": "john@example.com",
+      "companyName": "Acme Ltd.",
+      "cui": "RO12345678",
+      "address": "Street, number, city"
+    },
+    "errors": {
+      "required": "This field is required",
+      "email": "Enter a valid email address",
+      "cui": "Enter a valid tax ID (e.g. RO12345678)",
+      "cardNumber": "Enter a valid card number",
+      "expiry": "Enter a valid, non-expired date",
+      "cvc": "Enter 3 or 4 digits",
+      "terms": "You must accept the terms to continue"
+    },
+    "terms": "I agree to the <terms>Terms and Conditions</terms> and the <privacy>Privacy Policy</privacy>",
+    "secure": "Payments are encrypted and processed securely. We never store your full card details.",
+    "submit": "Start free trial",
+    "processing": "Processing...",
+    "failed": "We couldn't process your payment. Please try again.",
+    "summary": {
+      "title": "Order summary",
+      "changePlan": "Change",
+      "monthly": "Monthly",
+      "annual": "Annual",
+      "save": "Save {{percent}}%",
+      "seats": "Users",
+      "minSeats": "Minimum {{n}} users",
+      "unitPrice": "Price",
+      "perMonth": "/month",
+      "perSeat": "/user/month",
+      "subtotal": "Subtotal",
+      "vat": "VAT ({{percent}}%)",
+      "vatIncluded": "VAT included",
+      "total": "Total",
+      "perMonthPeriod": "per month",
+      "perYearPeriod": "per year",
+      "dueToday": "Due today",
+      "firstCharge": "First charge on {{date}}",
+      "trialNote": "You can cancel anytime before {{date}} at no cost."
+    },
+    "success": {
+      "title": "Your trial has started!",
+      "text": "The {{plan}} plan is active. Your first charge of {{amount}} will be on {{date}}.",
+      "emailNote": "We've sent the confirmation to {{email}}.",
+      "dashboard": "Go to dashboard"
+    }
+  },
   "legal": {
     "lastUpdated": "Last updated: {{date}}",
     "contents": "Contents",

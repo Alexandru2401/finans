@@ -120,7 +120,10 @@ export default function PublicPricesPersonalPage() {
               </CardContent>
 
               <CardFooter>
-                <Link to={isFree ? "/signin" : "/paypage/personal"}>
+                <Link
+                  to={isFree ? "/signin" : `/paypage/personal?plan=${plan.id}`}
+                  className="w-full"
+                >
                   <Button
                     className="w-full cursor-pointer"
                     variant={plan.popular ? "default" : "outline"}

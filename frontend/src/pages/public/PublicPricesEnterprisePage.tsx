@@ -193,7 +193,14 @@ export default function PublicPricesEnterprisePage() {
                     </Button>
                   </a>
                 ) : (
-                  <Link to="/signin" className="w-full">
+                  <Link
+                    to={`/paypage/enterprise?${new URLSearchParams({
+                      plan: plan.id,
+                      billing: annual ? "annual" : "monthly",
+                      seats: String(Math.max(seats, plan.minSeats)),
+                    })}`}
+                    className="w-full"
+                  >
                     <Button
                       className="w-full cursor-pointer"
                       variant={plan.popular ? "default" : "outline"}
