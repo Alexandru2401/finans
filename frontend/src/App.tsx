@@ -13,8 +13,7 @@ import UpgradePlansPage from "./pages/dashboard/UpgradePlansPage";
 import PublicAboutPage from "./pages/public/home/HomeOurMission";
 import PublicHomePage from "./pages/public/PublicHomePage";
 import PublicPricesPersonalPage from "./pages/public/PublicPricesPersonalPage";
-import SuccessStories from "./pages/public/blog/SuccessStories";
-import WriteStory from "./pages/public/blog/WriteStory";
+import BlogPage from "./pages/public/blog/BlogPage";
 import PersonalPayPage from "./pages/public/paypage/PersonalPayPage";
 import PrivacyPolicy from "./pages/public/terms-and-policy/PrivacyPolicy";
 import TermsAndConditions from "./pages/public/terms-and-policy/TermsAndConditions";
@@ -42,8 +41,7 @@ const publicRoutes = [
   { index: true, element: <PublicHomePage /> },
   { path: "about", element: <PublicAboutPage /> },
   { path: "prices/personal", element: <PublicPricesPersonalPage /> },
-  { path: "blog/success-stories", element: <SuccessStories /> },
-  { path: "blog/write-story", element: <WriteStory /> },
+  { path: "blog", element: <BlogPage /> },
   { path: "paypage/personal", element: <PersonalPayPage /> },
   { path: "terms-and-services", element: <TermsAndConditions /> },
   { path: "privacy-policy", element: <PrivacyPolicy /> },

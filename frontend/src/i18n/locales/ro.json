@@ -10,11 +10,6 @@
     "personalUseDescription": "Deblochează întregul potențial și controlul asupra finanțelor tale.",
     "enterprise": "Nivel enterprise",
     "enterpriseDescription": "Gestionează finanțele afacerii tale cu ușurință și încredere.",
-    "joinCommunity": "Alătură-te comunității noastre",
-    "joinCommunityDescription": "Spune-ne despre experiența ta cu produsul nostru și împărtășește-ți povestea.",
-    "writeStory": "Scrie-ți povestea",
-    "successStories": "Povești de succes",
-    "successStoriesDescription": "Oameni care își schimbă viața financiară cu produsul nostru.",
     "readTerms": "Citește termenii și condițiile",
     "terms": "Termeni și condiții",
     "readPrivacy": "Citește politica de confidențialitate",
@@ -490,6 +485,125 @@
             "Pentru orice întrebare legată de confidențialitate, scrie-ne la privacy@financeapp.com sau Responsabilului cu protecția datelor la dpo@financeapp.com."
           ]
         }
+      }
+    }
+  },
+  "blog": {
+    "badge": "Blog FinanceApp",
+    "title": "Banii, pe înțelesul tuturor",
+    "subtitle": "Ghiduri practice, povești reale și sfaturi de la experți care te ajută să îți faci bugetul mai inteligent, să economisești mai mult și să crești cu încredere.",
+    "searchPlaceholder": "Caută articole...",
+    "featured": "Recomandat",
+    "all": "Toate articolele",
+    "readArticle": "Citește articolul",
+    "readTime": "{{count}} min de citit",
+    "noResults": "Niciun articol nu corespunde căutării.",
+    "clearFilters": "Resetează filtrele",
+    "latest": "Articole recente",
+    "articleCta": {
+      "title": "Pune totul în practică",
+      "text": "Creează-ți un cont gratuit FinanceApp și începe să îți urmărești bugetul în câteva minute.",
+      "button": "Începe gratuit"
+    },
+    "categories": {
+      "budgeting": "Buget",
+      "saving": "Economisire",
+      "business": "Afaceri",
+      "stories": "Povești de succes",
+      "product": "Sfaturi de utilizare"
+    },
+    "newsletter": {
+      "title": "Primește un sfat financiar în fiecare săptămână",
+      "text": "Alătură-te celor peste 25.000 de cititori care primesc cele mai bune ghiduri direct pe email. Fără spam, te poți dezabona oricând.",
+      "placeholder": "Adresa ta de email",
+      "button": "Abonează-te",
+      "success": "Mulțumim pentru abonare! Verifică emailul pentru confirmare."
+    },
+    "share": {
+      "title": "Împărtășește-ți povestea",
+      "text": "Te-a ajutat FinanceApp să îți atingi un obiectiv financiar? Povestește-ne și inspiră comunitatea.",
+      "button": "Scrie-ne"
+    },
+    "posts": {
+      "rule503020": {
+        "title": "Regula 50/30/20: un buget simplu care chiar funcționează",
+        "excerpt": "Împarte venitul în nevoi, dorințe și economii. Iată cum aplici această regulă clasică unui salariu din România și cum o adaptezi vieții tale.",
+        "body": [
+          "Regula 50/30/20 este una dintre cele mai simple metode de a începe un buget: 50% din venitul net merge pe nevoi (chirie, utilități, cumpărături, transport), 30% pe dorințe (ieșiri, hobby-uri, călătorii) și 20% pe economii și plata datoriilor.",
+          "Începe prin a analiza tranzacțiile din ultimele trei luni în FinanceApp. Marchează fiecare cheltuială drept nevoie sau dorință și compară rezultatul cu procentele țintă. Majoritatea oamenilor sunt surprinși cât de mult ocupă categoria „dorințe”.",
+          "Regula este un punct de plecare, nu o lege. Dacă locuiești într-un oraș scump, o împărțire 60/20/20 poate fi mai realistă. Important este ca economiile să fie puse deoparte primele, automat, la începutul fiecărei luni."
+        ]
+      },
+      "emergencyFund": {
+        "title": "Cum construiești un fond de urgență pornind de la zero",
+        "excerpt": "Trei până la șase luni de cheltuieli pare mult. Le împărțim în pași mici și realiști pe care îi poate urma oricine.",
+        "body": [
+          "Un fond de urgență te protejează de costuri neprevăzute — o reparație la mașină, o factură medicală sau o perioadă fără venit — fără să te îndatorezi.",
+          "Stabilește un prim mini-obiectiv: o lună de cheltuieli esențiale. Creează un obiectiv de economisire în FinanceApp și setează un transfer automat în ziua salariului, chiar dacă este de doar 100 de lei.",
+          "Ține banii într-un cont de economii separat, ușor accesibil. După ce atingi primul prag, crește obiectivul la trei luni, apoi la șase."
+        ]
+      },
+      "analytics": {
+        "title": "5 lucruri pe care ți le spun analizele cheltuielilor",
+        "excerpt": "Pagina de Analize știe mai multe despre obiceiurile tale decât crezi. Învață să citești tendințele, categoriile și sănătatea bugetului.",
+        "body": [
+          "Graficul de tendință arată cum evoluează cheltuielile lună de lună. O creștere lentă și constantă într-o categorie este adesea mai periculoasă decât o singură achiziție mare.",
+          "Verifică săptămânal indicatorul Sănătatea bugetului: compară cât a trecut din lună cu cât din buget ai folosit deja.",
+          "La final, uită-te la primele trei categorii. Reducerea uneia singure cu 10% poate elibera sute de lei în fiecare lună."
+        ]
+      },
+      "debtFree": {
+        "title": "Cum a achitat Ana 32.000 de lei datorii în 18 luni",
+        "excerpt": "O asistentă medicală din Cluj povestește cum un buget clar, metoda bulgărelui de zăpadă și multă răbdare au ajutat-o să scape de datorii.",
+        "body": [
+          "„Aveam două carduri de credit și un împrumut personal și nu știam niciodată exact cât datorez”, spune Ana. Primul pas a fost să își noteze toate datoriile într-un singur loc.",
+          "A folosit metoda bulgărelui de zăpadă: plăți minime la toate, iar fiecare leu în plus mergea la cea mai mică datorie. Fiecare datorie închisă îi dădea motivație să continue.",
+          "Astăzi Ana nu mai are datorii și are un fond de urgență de patru luni. „Aplicația nu a făcut munca în locul meu, dar a făcut progresul vizibil în fiecare zi.”"
+        ]
+      },
+      "impulseShopping": {
+        "title": "Regula de 48 de ore care oprește cumpărăturile impulsive",
+        "excerpt": "Magazinele online sunt gândite să te facă să cumperi repede. O regulă simplă de așteptare te poate scuti de mii de lei pe an.",
+        "body": [
+          "Înainte de orice achiziție neesențială de peste 200 de lei, adaugă produsul într-o listă de dorințe și așteaptă 48 de ore. De cele mai multe ori impulsul pur și simplu dispare.",
+          "Dezabonează-te de la emailurile promoționale, șterge cardurile salvate din aplicațiile de cumpărături și setează în FinanceApp un buget lunar de „bani de distracție” pe care să îi cheltui fără vinovăție."
+        ]
+      },
+      "freelancer": {
+        "title": "Bugetul de freelancer: venit neregulat, viață stabilă",
+        "excerpt": "Când venitul se schimbă de la o lună la alta, bugetul clasic nu mai funcționează. Iată un sistem gândit pentru freelanceri și PFA-uri.",
+        "body": [
+          "Calculează-ți nivelul de bază: minimul de care ai nevoie lunar pentru cheltuielile personale și ale afacerii. Acesta devine „salariul” tău.",
+          "Fiecare încasare intră mai întâi într-un cont tampon. De acolo îți plătești același salariu în fiecare lună și pui deoparte separat impozitele și contribuțiile sociale.",
+          "În lunile bune contul tampon crește, iar în cele slabe îți menține viața stabilă. Țintește un tampon de cel puțin trei luni de cheltuieli de bază."
+        ]
+      },
+      "cashFlow": {
+        "title": "Cash flow-ul explicat pentru antreprenorii mici",
+        "excerpt": "Profitul de pe hârtie nu plătește facturile. Învață să îți estimezi fluxul de numerar și să eviți capcanele frecvente ale micilor afaceri.",
+        "body": [
+          "Cash flow-ul reprezintă intrările și ieșirile de bani din afacerea ta. Poți fi profitabil și totuși să rămâi fără lichidități dacă clienții plătesc cu întârziere.",
+          "Construiește o prognoză simplă pe 13 săptămâni: încasări estimate, costuri fixe, costuri variabile și taxe. Actualizeaz-o în fiecare luni.",
+          "Negociază termene de plată mai scurte cu clienții și mai lungi cu furnizorii și păstrează o rezervă de numerar pentru cel puțin o lună de costuri fixe."
+        ]
+      },
+      "inflation": {
+        "title": "Inflația și economiile tale: ce poți face în 2026",
+        "excerpt": "Banii ținuți în contul curent pierd din valoare în fiecare an. Comparăm opțiuni simple pentru a-ți proteja economiile.",
+        "body": [
+          "Când inflația este mai mare decât dobânda primită, economiile tale își pierd puterea de cumpărare, chiar dacă suma din cont rămâne aceeași.",
+          "Opțiuni precum depozitele la termen, titlurile de stat sau fondurile de indici diversificate te pot ajuta. Fiecare are un nivel diferit de risc și de lichiditate.",
+          "Acest articol are scop educativ și nu reprezintă o recomandare de investiții. Ține cont de obiectivele tale și, dacă este nevoie, discută cu un consultant autorizat."
+        ]
+      },
+      "coupleBudget": {
+        "title": "Mihai și Laura: un singur buget, zero certuri pe bani",
+        "excerpt": "Un cuplu tânăr din București explică cum un buget comun i-a ajutat să strângă avansul pentru prima locuință în doar doi ani.",
+        "body": [
+          "„Ne certam pe lucruri mărunte, de exemplu cine a plătit cumpărăturile”, spune Laura. Au decis să treacă toate cheltuielile comune într-un singur buget.",
+          "Fiecare păstrează o sumă personală, iar restul merge în categorii comune și într-un singur obiectiv de economisire: avansul pentru apartament.",
+          "Doi ani mai târziu s-au mutat în prima lor casă. „Să vedem cum crește obiectivul în fiecare lună ne-a ținut motivați.”"
+        ]
       }
     }
   }

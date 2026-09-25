@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import SitePreferences from "@/components/SitePreferences";
 import { useTheme } from "@/hooks/useTheme";
 
-type SubmenuKey = "blog" | "prices";
+type SubmenuKey = "prices";
 
 import { useAuth } from "@/hooks/useAuth";
 import { cn } from "@/lib/utils";
@@ -36,7 +36,6 @@ export default function PublicMainNavigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   const [openSubMenu, setOpenSubMenu] = useState<Record<SubmenuKey, boolean>>({
-    blog: false,
     prices: false,
   });
 
@@ -105,24 +104,13 @@ export default function PublicMainNavigation() {
             </NavigationMenuContent>
           </NavigationMenuItem>
 
-          <NavigationMenuItem className="relative">
-            <NavigationMenuTrigger>{t("nav.blog")}</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="w-96 p-4">
-                <ListItem
-                  href="/blog/write-story"
-                  title={t("nav.joinCommunity")}
-                >
-                  {t("nav.joinCommunityDescription")}
-                </ListItem>
-                <ListItem
-                  href="/blog/success-stories"
-                  title={t("nav.successStories")}
-                >
-                  {t("nav.successStoriesDescription")}
-                </ListItem>
-              </ul>
-            </NavigationMenuContent>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <Link to="/blog">{t("nav.blog")}</Link>
+            </NavigationMenuLink>
           </NavigationMenuItem>
 
           <NavigationMenuItem className="relative">
@@ -234,33 +222,13 @@ export default function PublicMainNavigation() {
                 </div>
               )}
             </div>
-            {/* Blog Section */}
-            <div className="border-b pb-4">
-              <p
-                className="text-sm font-semibold mb-2 text-muted-foreground cursor-pointer"
-                onClick={() => handleSubMenuToggle("blog")}
-              >
-                {t("nav.blog")}
-              </p>
-              {openSubMenu.blog && (
-                <div className="flex flex-col gap-2 pl-4">
-                  <Link
-                    to="/blog/write-story"
-                    className="text-sm hover:text-primary transition-colors"
-                    onClick={() => setOpenMenu(false)}
-                  >
-                    {t("nav.writeStory")}
-                  </Link>
-                  <Link
-                    to="/blog/success-stories"
-                    className="text-sm hover:text-primary transition-colors"
-                    onClick={() => setOpenMenu(false)}
-                  >
-                    {t("nav.successStories")}
-                  </Link>
-                </div>
-              )}
-            </div>
+            <Link
+              to="/blog"
+              className="text-sm font-medium hover:text-primary transition-colors py-2 border-b"
+              onClick={() => setOpenMenu(false)}
+            >
+              {t("nav.blog")}
+            </Link>
             {/* Auth Buttons */}
             <div className="flex flex-col gap-3 mt-4 pt-4 border-t sm:hidden">
               <Button asChild variant="outline" className="w-full">

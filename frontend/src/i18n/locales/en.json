@@ -10,11 +10,6 @@
     "personalUseDescription": "Unlock the full potential and control for your finances.",
     "enterprise": "Enterprise level",
     "enterpriseDescription": "Manage your business finances with ease and confidence.",
-    "joinCommunity": "Become part of our community",
-    "joinCommunityDescription": "Tell us about your experience with our product and share your story.",
-    "writeStory": "Write your story",
-    "successStories": "Success stories",
-    "successStoriesDescription": "People changing their financial lives with our product.",
     "readTerms": "Read our terms and services",
     "terms": "Terms and Conditions",
     "readPrivacy": "Read our privacy policy",
@@ -490,6 +485,125 @@
             "For any privacy question, write to privacy@financeapp.com or to our Data Protection Officer at dpo@financeapp.com."
           ]
         }
+      }
+    }
+  },
+  "blog": {
+    "badge": "FinanceApp Blog",
+    "title": "Money, made simple",
+    "subtitle": "Practical guides, real stories and expert tips to help you budget smarter, save more and grow with confidence.",
+    "searchPlaceholder": "Search articles...",
+    "featured": "Featured",
+    "all": "All articles",
+    "readArticle": "Read article",
+    "readTime": "{{count}} min read",
+    "noResults": "No articles match your search.",
+    "clearFilters": "Clear filters",
+    "latest": "Latest articles",
+    "articleCta": {
+      "title": "Put this into practice",
+      "text": "Create your free FinanceApp account and start tracking your budget in minutes.",
+      "button": "Get started for free"
+    },
+    "categories": {
+      "budgeting": "Budgeting",
+      "saving": "Saving",
+      "business": "Business",
+      "stories": "Success stories",
+      "product": "Product tips"
+    },
+    "newsletter": {
+      "title": "Get one money tip every week",
+      "text": "Join 25,000+ readers who receive our best guides straight to their inbox. No spam, unsubscribe anytime.",
+      "placeholder": "Your email address",
+      "button": "Subscribe",
+      "success": "Thanks for subscribing! Check your inbox to confirm."
+    },
+    "share": {
+      "title": "Share your story",
+      "text": "Has FinanceApp helped you reach a financial goal? Tell us about it and inspire our community.",
+      "button": "Write to us"
+    },
+    "posts": {
+      "rule503020": {
+        "title": "The 50/30/20 rule: a simple budget that actually works",
+        "excerpt": "Split your income into needs, wants and savings. Here is how to apply this classic rule to a Romanian salary and adjust it to your life.",
+        "body": [
+          "The 50/30/20 rule is one of the easiest ways to start budgeting: 50% of your net income goes to needs (rent, utilities, groceries, transport), 30% to wants (eating out, hobbies, travel) and 20% to savings and paying off debt.",
+          "Start by looking at the last three months of transactions in FinanceApp. Tag each expense as a need or a want and compare the result with the target percentages. Most people are surprised by how much the \"wants\" category really takes.",
+          "The rule is a starting point, not a law. If you live in an expensive city, a 60/20/20 split might be more realistic. What matters is that savings get paid first, automatically, at the beginning of every month."
+        ]
+      },
+      "emergencyFund": {
+        "title": "How to build an emergency fund from zero",
+        "excerpt": "Three to six months of expenses sounds like a lot. We break it down into small, realistic steps anyone can follow.",
+        "body": [
+          "An emergency fund protects you from unexpected costs — a car repair, a medical bill or a period without income — without going into debt.",
+          "Set a first mini-goal of one month of essential expenses. Create a savings target in FinanceApp and set up an automatic transfer on payday, even if it is only 100 lei.",
+          "Keep the money in a separate, easily accessible savings account. Once you hit the first milestone, raise the target to three months, then six."
+        ]
+      },
+      "analytics": {
+        "title": "5 insights hidden in your spending analytics",
+        "excerpt": "Your Analytics page knows more about your habits than you think. Learn how to read trends, category breakdowns and budget health.",
+        "body": [
+          "The trend chart shows how your spending evolves month by month. A slow, steady increase in one category is often more dangerous than a single large purchase.",
+          "Check the Budget Health indicator weekly: it compares how much of the month has passed with how much of your budget you have already used.",
+          "Finally, look at your top three categories. Reducing just one of them by 10% can free up hundreds of lei every month."
+        ]
+      },
+      "debtFree": {
+        "title": "How Ana paid off 32,000 lei of debt in 18 months",
+        "excerpt": "A nurse from Cluj shares how a clear budget, the snowball method and a lot of patience helped her become debt-free.",
+        "body": [
+          "\"I had two credit cards and a personal loan, and I never knew exactly how much I owed,\" says Ana. The first step was listing every debt in one place.",
+          "She used the snowball method: minimum payments on everything, and every extra leu went to the smallest debt. Each closed debt gave her motivation to keep going.",
+          "Today Ana has no debt and an emergency fund of four months. \"The app did not do the work for me, but it made the progress visible every single day.\""
+        ]
+      },
+      "impulseShopping": {
+        "title": "The 48-hour rule that stops impulse shopping",
+        "excerpt": "Online stores are designed to make you buy fast. A simple waiting rule can save you thousands of lei per year.",
+        "body": [
+          "Before any non-essential purchase over 200 lei, add the item to a wishlist and wait 48 hours. Most of the time the urge simply disappears.",
+          "Unsubscribe from promotional emails, remove saved cards from shopping apps and set a monthly \"fun money\" budget in FinanceApp for guilt-free spending."
+        ]
+      },
+      "freelancer": {
+        "title": "Budgeting as a freelancer: irregular income, stable life",
+        "excerpt": "When income changes every month, a classic budget breaks. Here is a system built for freelancers and PFA owners.",
+        "body": [
+          "Calculate your baseline: the minimum you need each month to cover personal and business expenses. That becomes your \"salary\".",
+          "Every payment you receive goes into a buffer account first. From there, pay yourself the same salary every month and set aside taxes and social contributions separately.",
+          "In good months the buffer grows; in slow months it keeps your life stable. Aim for a buffer of at least three months of baseline expenses."
+        ]
+      },
+      "cashFlow": {
+        "title": "Cash flow basics every small business owner should know",
+        "excerpt": "Profit on paper does not pay the bills. Learn how to forecast cash flow and avoid the most common small business traps.",
+        "body": [
+          "Cash flow is the movement of money in and out of your business. You can be profitable and still run out of cash if clients pay late.",
+          "Build a simple 13-week forecast: expected income, fixed costs, variable costs and taxes. Update it every Monday.",
+          "Negotiate shorter payment terms with clients, longer ones with suppliers, and keep a cash reserve for at least one month of fixed costs."
+        ]
+      },
+      "inflation": {
+        "title": "Inflation and your savings: what you can do in 2026",
+        "excerpt": "Money kept in a current account loses value every year. We compare simple options for protecting your savings.",
+        "body": [
+          "When inflation is higher than the interest you receive, your savings lose purchasing power, even if the number in your account stays the same.",
+          "Options such as term deposits, government bonds or diversified index funds can help. Each has a different level of risk and liquidity.",
+          "This article is for educational purposes only and is not investment advice. Always consider your goals and, if needed, talk to a licensed advisor."
+        ]
+      },
+      "coupleBudget": {
+        "title": "Mihai & Laura: one budget, zero money fights",
+        "excerpt": "A young couple from Bucharest explains how a shared budget helped them save for their first home in just two years.",
+        "body": [
+          "\"We used to argue about small things, like who paid for groceries,\" says Laura. They decided to put all shared expenses into a single budget.",
+          "Each keeps a personal allowance, and everything else goes into common categories and one savings goal: the down payment for an apartment.",
+          "Two years later, they moved into their first home. \"Seeing the goal grow together every month kept us motivated.\""
+        ]
       }
     }
   }
