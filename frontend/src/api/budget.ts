@@ -2,6 +2,8 @@ import { get } from "./client";
 
 export interface BudgetItem {
   id: string;
+  title: string;
+  type: "income" | "expenses" | "savings";
   category: string;
   amount: number;
   date?: string;
@@ -26,10 +28,22 @@ async function editIncomeItem(
   payload: Partial<NewBudgetItem>,
 ): Promise<Ok<BudgetItem>> {
   await delay();
-  return { ok: true, data: { id, category: "", amount: 0, ...payload } };
+  return {
+    ok: true,
+    data: {
+      id,
+      title: "income",
+      type: "income",
+      category: "",
+      amount: 0,
+      ...payload,
+    },
+  };
 }
 
-async function deleteIncomeItem(_id: string): Promise<Ok<{ success: boolean }>> {
+async function deleteIncomeItem(
+  _id: string,
+): Promise<Ok<{ success: boolean }>> {
   await delay();
   return { ok: true, data: { success: true } };
 }
@@ -45,7 +59,17 @@ async function editExpenseItem(
   payload: Partial<NewBudgetItem>,
 ): Promise<Ok<BudgetItem>> {
   await delay();
-  return { ok: true, data: { id, category: "", amount: 0, ...payload } };
+  return {
+    ok: true,
+    data: {
+      id,
+      title: "expenses",
+      type: "expenses",
+      category: "",
+      amount: 0,
+      ...payload,
+    },
+  };
 }
 
 async function deleteExpenseItem(
@@ -66,7 +90,17 @@ async function editSavingsItem(
   payload: Partial<NewBudgetItem>,
 ): Promise<Ok<BudgetItem>> {
   await delay();
-  return { ok: true, data: { id, category: "", amount: 0, ...payload } };
+  return {
+    ok: true,
+    data: {
+      id,
+      title: "savings",
+      type: "savings",
+      category: "",
+      amount: 0,
+      ...payload,
+    },
+  };
 }
 
 async function deleteSavingsItem(

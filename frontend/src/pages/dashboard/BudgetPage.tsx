@@ -160,14 +160,6 @@ export default function BudgetPage() {
     savings: 1500,
   });
 
-  const [formData, setFormData] = useState({
-    type: "expenses" as BudgetType,
-    category: "groceries",
-    amount: "",
-    notes: "",
-    date: new Date().toISOString().split("T")[0],
-  });
-
   useEffect(() => {
     setLoading(true);
     Promise.all([getTransactions(), artificialDelay()])
@@ -203,38 +195,6 @@ export default function BudgetPage() {
     () => totalIncome - totalExpenses,
     [totalIncome, totalExpenses],
   );
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const amount = Number(formData.amount);
-    if (!amount || Number.isNaN(amount)) return;
-
-    const payload: NewBudgetItem = {
-      category: formData.category,
-      amount,
-      notes: formData.notes.trim(),
-      date: formData.date,
-    };
-
-    if (formData.type === "income") {
-      const res = await apiAddIncome(payload);
-      if (res.ok) setIncomeItems((prev) => [...prev, res.data]);
-    } else if (formData.type === "expenses") {
-      const res = await apiAddExpense(payload);
-      if (res.ok) setExpenseItems((prev) => [...prev, res.data]);
-    } else {
-      const res = await apiAddSavings(payload);
-      if (res.ok) setSavingsItems((prev) => [...prev, res.data]);
-    }
-
-    setFormData((prev) => ({
-      ...prev,
-      category: CATEGORIES_BY_TYPE[prev.type][0].value,
-      amount: "",
-      notes: "",
-      date: new Date().toISOString().split("T")[0],
-    }));
-  }
 
   async function deleteIncomeItem(id: string) {
     const res = await apiDeleteIncome(id);
@@ -431,9 +391,9 @@ export default function BudgetPage() {
 
             <div className="p-6">
               <BudgetForm
-                formData={formData}
-                setFormData={setFormData}
-                handleSubmit={handleSubmit}
+              // formData={formData}
+              // setFormData={setFormData}
+              // handleSubmit={handleSubmit}
               />
             </div>
           </aside>
