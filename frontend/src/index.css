@@ -159,3 +159,10 @@
     transform: translateX(-50%);
   }
 }
+
+/* Tranziția circulară la schimbarea temei (ThemeToggle) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}

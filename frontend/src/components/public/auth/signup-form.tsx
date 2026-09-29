@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 import { createUser } from "@/api/user";
 import { useAuth } from "@/hooks/useAuth";
@@ -28,6 +29,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   });
 
   const { setUser } = useAuth();
+  const { t } = useTranslation();
 
   const [loading, setLoading] = useState(false);
 
@@ -53,7 +55,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       const response = await createUser(formData.email, formData.password);
 
       if (!response.ok) {
-        toast.error(response.data.message || "Failed to create account.");
+        toast.error(response.data.message || t("auth.signup.failed"));
         return;
       }
 
@@ -62,7 +64,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       navigate("/dashboard/user-info");
     } catch (err) {
       console.log(err);
-      toast.error("Failed to create account."); // aici doar erori de retea
+      toast.error(t("auth.signup.failed")); // aici doar erori de retea
     } finally {
       setLoading(false);
     }
@@ -71,32 +73,31 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   return (
     <Card {...props}>
       <CardHeader>
-        <CardTitle>Create an account</CardTitle>
+        <CardTitle>{t("auth.signup.title")}</CardTitle>
         <CardDescription>
-          Enter your information below to create your account
+          {t("auth.signup.description")}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmitForm}>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <FieldLabel htmlFor="email">{t("auth.email")}</FieldLabel>
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder={t("auth.emailPlaceholder")}
                 required
                 value={formData.email}
                 onChange={(e) => handleChange("email", e)}
                 // className={errors.email ? "border-red-500" : ""}
               />
               <FieldDescription>
-                We&apos;ll use this to contact you. We will not share your email
-                with anyone else.
+                {t("auth.signup.emailHint")}
               </FieldDescription>
             </Field>
             <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
+              <FieldLabel htmlFor="password">{t("auth.password")}</FieldLabel>
               <Input
                 id="password"
                 type="password"
@@ -106,12 +107,12 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 onChange={(e) => handleChange("password", e)}
               />
               <FieldDescription>
-                Must be at least 8 characters long.
+                {t("auth.signup.passwordHint")}
               </FieldDescription>
             </Field>
             <Field>
               <FieldLabel htmlFor="confirm-password">
-                Confirm Password
+                {t("auth.signup.confirmPassword")}
               </FieldLabel>
               <Input
                 id="confirm-password"
@@ -121,18 +122,21 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 value={formData.confirmPassword}
                 onChange={(e) => handleChange("confirmPassword", e)}
               />
-              <FieldDescription>Please confirm your password.</FieldDescription>
+              <FieldDescription>
+                {t("auth.signup.confirmPasswordHint")}
+              </FieldDescription>
             </Field>
             <FieldGroup>
               <Field>
                 <Button type="submit">
-                  {loading ? "Creating Account..." : "Create Account"}
+                  {loading ? t("auth.signup.submitting") : t("auth.signup.submit")}
                 </Button>
                 <Button variant="outline" type="button">
-                  Sign up with Google
+                  {t("auth.signup.google")}
                 </Button>
                 <FieldDescription className="px-6 text-center">
-                  Already have an account? <a href="/login">Sign in</a>
+                  {t("auth.signup.hasAccount")}{" "}
+                  <a href="/login">{t("auth.signup.signIn")}</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>

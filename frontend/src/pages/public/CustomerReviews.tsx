@@ -6,46 +6,29 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
+import { useTranslation } from "react-i18next";
 
 const reviews = [
-  {
-    name: "Alex M.",
-    role: "Freelancer",
-    text: "This app completely changed how I manage my finances. Clean, simple and powerful.",
-  },
-  {
-    name: "Maria L.",
-    role: "Small Business Owner",
-    text: "Tracking expenses for my team has never been easier. Highly recommended!",
-  },
-  {
-    name: "John D.",
-    role: "Entrepreneur",
-    text: "Finally an app that makes budgeting feel effortless and intuitive.",
-  },
-  {
-    name: "Elena P.",
-    role: "Product Manager",
-    text: "The insights are amazing. I finally know where my money goes every month.",
-  },
-  {
-    name: "Daniel R.",
-    role: "Startup Founder",
-    text: "Perfect balance between simplicity and advanced features.",
-  },
-];
+  { key: "alex", name: "Alex M." },
+  { key: "maria", name: "Maria L." },
+  { key: "john", name: "John D." },
+  { key: "elena", name: "Elena P." },
+  { key: "daniel", name: "Daniel R." },
+] as const;
 
 export default function CustomerReviews() {
+  const { t } = useTranslation();
+
   return (
     <section className="px-3 sm:px-6 py-8">
       <div className="mx-auto max-w-6xl">
         {/* Heading */}
         <div className="mb-6 text-center">
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-            Loved by our customers
+            {t("home.reviews.title")}
           </h2>
           <p className="mt-3 text-muted-foreground">
-            See what people are saying about our platform
+            {t("home.reviews.subtitle")}
           </p>
         </div>
 
@@ -58,21 +41,21 @@ export default function CustomerReviews() {
           className="relative"
         >
           <CarouselContent>
-            {reviews.map((review, index) => (
+            {reviews.map(({ key, name }) => (
               <CarouselItem
-                key={index}
+                key={key}
                 className="basis-5/5 sm:basis-1/2 lg:basis-1/3"
               >
                 <Card className="h-full">
                   <CardContent className="flex h-full flex-col gap-6 p-6 md:justify-between">
                     <p className="mb-6 text-muted-foreground">
-                      “{review.text}”
+                      “{t(`home.reviews.items.${key}.text`)}”
                     </p>
 
                     <div className="mx-auto max-w-6xl px-4 sm:px-6">
-                      <p className="font-semibold">{review.name}</p>
+                      <p className="font-semibold">{name}</p>
                       <p className="text-sm text-muted-foreground">
-                        {review.role}
+                        {t(`home.reviews.items.${key}.role`)}
                       </p>
                     </div>
                   </CardContent>

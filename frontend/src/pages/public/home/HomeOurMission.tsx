@@ -1,8 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export default function OurMission() {
+  const { t } = useTranslation();
+
   return (
     <section
       className="bg-background px-3 sm:px-6 scroll-mt-24"
@@ -11,11 +14,10 @@ export default function OurMission() {
         {/* Heading */}
         <div className="mb-6 max-w-2xl">
           <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
-            Our mission
+            {t("home.mission.title")}
           </h2>
           <p className="text-muted-foreground">
-            Budgeting shouldn't be complicated. It should be clear, organized
-            and actually help you make better decisions.
+            {t("home.mission.subtitle")}
           </p>
         </div>
 
@@ -26,20 +28,18 @@ export default function OurMission() {
 
           {/* Right — image */}
           <div className="rounded-2xl border border-border p-2 shadow-xl">
-            <img src="/cta2.png" alt="Dashboard preview" className="w-full rounded-xl object-cover" />
+            <img src="/cta2.png" alt={t("home.mission.imageAlt")} className="w-full rounded-xl object-cover" />
           </div>
 
           <div className="space-y-4 text-muted-foreground">
             <p className="text-2xl font-semibold text-foreground">
-              But… why choose us?
+              {t("home.mission.whyUs")}
             </p>
             <p>
-              Tired of juggling spreadsheets, apps and bank statements just to
-              understand where your money goes?
+              {t("home.mission.whyUsP1")}
             </p>
             <p>
-              We help individuals and businesses simplify financial management —
-              without stress, confusion or wasted time.
+              {t("home.mission.whyUsP2")}
             </p>
           </div>
         </div>
@@ -48,31 +48,28 @@ export default function OurMission() {
         <div className="grid gap-6 md:grid-cols-2">
           <Card className="transition-shadow hover:shadow-lg">
             <CardHeader>
-              <CardTitle className="text-xl">Your money, your control</CardTitle>
+              <CardTitle className="text-xl">{t("home.mission.personal.title")}</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-6">
               <p className="text-muted-foreground">
-                A flexible and user-friendly interface that adapts to your
-                lifestyle, helping you track expenses, set budgets and stay in
-                control effortlessly.
+                {t("home.mission.personal.desc")}
               </p>
               <Button asChild className="w-fit bg-amber-500 text-black hover:bg-finance-warning/90">
-                <Link to="/signup">Join over 100,000 users in control</Link>
+                <Link to="/signup">{t("home.mission.personal.cta")}</Link>
               </Button>
             </CardContent>
           </Card>
 
           <Card className="border-finance-warning/30 transition-shadow hover:shadow-lg">
             <CardHeader>
-              <CardTitle className="text-xl">Your business, your growth</CardTitle>
+              <CardTitle className="text-xl">{t("home.mission.business.title")}</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-6">
               <p className="text-muted-foreground">
-                Manage multiple teams, track company spending and gain financial
-                insights — all from one centralized platform.
+                {t("home.mission.business.desc")}
               </p>
               <Button asChild variant="outline" className="w-fit">
-                <Link to="/enterprise">Trusted by growing businesses</Link>
+                <Link to="/enterprise">{t("home.mission.business.cta")}</Link>
               </Button>
             </CardContent>
           </Card>

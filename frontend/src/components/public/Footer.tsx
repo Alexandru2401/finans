@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function PublicFooter() {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-black text-slate-300">
       <div className="mx-auto max-w-7xl px-6 py-16">
@@ -10,35 +13,34 @@ export default function PublicFooter() {
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-white">FinanceApp</h3>
             <p className="text-sm leading-relaxed text-slate-400">
-              Smart budgeting and financial management for individuals and
-              growing businesses.
+              {t("footer.tagline")}
             </p>
           </div>
 
           {/* Public routes */}
           <div>
             <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">
-              Product
+              {t("footer.product")}
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link to="/" className="hover:text-white transition">
-                  Home
+                  {t("footer.home")}
                 </Link>
               </li>
               <li>
                 <Link to="/#about" className="hover:text-white transition">
-                  About
+                  {t("footer.about")}
                 </Link>
               </li>
               <li>
                 <Link to="/signin" className="hover:text-white transition">
-                  Start for free
+                  {t("footer.startFree")}
                 </Link>
               </li>
               <li>
                 <Link to="/login" className="hover:text-white transition">
-                  Log in
+                  {t("footer.login")}
                 </Link>
               </li>
             </ul>
@@ -47,7 +49,7 @@ export default function PublicFooter() {
           {/* Social */}
           <div>
             <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">
-              Social
+              {t("footer.social")}
             </h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2 hover:text-white transition">
@@ -68,11 +70,11 @@ export default function PublicFooter() {
           {/* Contact */}
           <div>
             <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">
-              Contact
+              {t("footer.contact")}
             </h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li>Email: contact@financeapp.com</li>
-              <li>Phone: +1 (555) 123-4567</li>
+              <li>{t("footer.email", { email: "contact@financeapp.com" })}</li>
+              <li>{t("footer.phone", { phone: "+1 (555) 123-4567" })}</li>
             </ul>
           </div>
         </div>
@@ -82,16 +84,16 @@ export default function PublicFooter() {
 
         {/* Bottom */}
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-500 md:flex-row">
-          <p>© {new Date().getFullYear()} FinanceApp. All rights reserved.</p>
+          <p>{t("footer.copyright", { year: new Date().getFullYear() })}</p>
           <div className="flex gap-6">
             <Link to="/privacy-policy" className="hover:text-white transition">
-              Privacy Policy
+              {t("footer.privacy")}
             </Link>
             <Link
               to="/terms-and-services"
               className="hover:text-white transition"
             >
-              Terms of Service
+              {t("footer.terms")}
             </Link>
           </div>
         </div>
