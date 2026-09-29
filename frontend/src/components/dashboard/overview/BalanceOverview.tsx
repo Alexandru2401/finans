@@ -1,3 +1,4 @@
+import type { BudgetSummary } from "@/api/budget";
 import {
   Card,
   CardContent,
@@ -6,9 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { TrendingUp } from "lucide-react";
-import { Pie, PieChart } from "recharts";
 import {
   ChartContainer,
   ChartLegend,
@@ -17,7 +15,8 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import type { BudgetSummary } from "@/api/budget";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Pie, PieChart } from "recharts";
 
 interface Props {
   summary: BudgetSummary | null;
@@ -48,9 +47,6 @@ export default function BalanceOverview({ summary, loading }: Props) {
       </Card>
     );
   }
-
-  const savingsRate =
-    summary.income > 0 ? Math.round((summary.net / summary.income) * 100) : 0;
 
   const chartData = [
     {
@@ -98,15 +94,6 @@ export default function BalanceOverview({ summary, loading }: Props) {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-1 text-sm">
-        <p className="flex items-center gap-1 font-medium">
-          Net margin {savingsRate}%
-          <TrendingUp className="h-4 w-4" aria-hidden="true" />
-        </p>
-        <p className="text-muted-foreground">
-          Total net balance: ${summary.net.toLocaleString()}
-        </p>
-      </CardFooter>
     </Card>
   );
 }

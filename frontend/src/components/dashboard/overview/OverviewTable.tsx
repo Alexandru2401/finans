@@ -24,8 +24,20 @@ const TYPE_STYLES: Record<Transaction["type"], string> = {
   savings: "bg-finance-primary-bg text-finance-primary",
 };
 
+const TYPE_LABELS: Record<Transaction["type"], string> = {
+  income: "Income",
+  expense: "Expense",
+  savings: "Savings",
+};
+
 const fmt = (n: number, type: Transaction["type"]) =>
-  `${type === "income" ? "+" : "-"}$${Math.abs(n).toLocaleString()}`;
+  `${type === "expense" ? "-" : "+"}$${Math.abs(n).toLocaleString()}`;
+
+const AMOUNT_COLORS: Record<Transaction["type"], string> = {
+  income: "text-finance-success",
+  expense: "text-finance-danger",
+  savings: "text-finance-primary",
+};
 
 const fmtDate = (date: string) =>
   new Date(date).toLocaleDateString("en-US", {
@@ -76,8 +88,8 @@ export default function OverviewTable({ transactions, loading }: Props) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="min-w-35">Description</TableHead>
-                  <TableHead className="min-w-25">Category</TableHead>
+                  <TableHead className="min-w-25">Type</TableHead>
+                  <TableHead className="min-w-35">Category</TableHead>
                   <TableHead className="min-w-22.5">Date</TableHead>
                   <TableHead className="min-w-25 text-right">Amount</TableHead>
                 </TableRow>
@@ -85,23 +97,21 @@ export default function OverviewTable({ transactions, loading }: Props) {
               <TableBody>
                 {transactions.map((t) => (
                   <TableRow key={t.item_id}>
-                    <TableCell className="font-medium">{t.title}</TableCell>
                     <TableCell>
                       <span
                         className={`rounded-full px-2.5 py-1 text-xs font-medium ${TYPE_STYLES[t.type]}`}
                       >
-                        {t.category_name}
+                        {TYPE_LABELS[t.type]}
                       </span>
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {t.category_name ?? "Uncategorized"}
                     </TableCell>
                     <TableCell className="whitespace-nowrap text-muted-foreground">
                       {fmtDate(t.date)}
                     </TableCell>
                     <TableCell
-                      className={`whitespace-nowrap text-right font-medium tabular-nums ${
-                        t.type === "income"
-                          ? "text-finance-success"
-                          : "text-finance-danger"
-                      }`}
+                      className={`whitespace-nowrap text-right font-medium tabular-nums ${AMOUNT_COLORS[t.type]}`}
                     >
                       {fmt(t.amount, t.type)}
                     </TableCell>

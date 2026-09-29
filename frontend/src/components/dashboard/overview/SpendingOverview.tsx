@@ -66,8 +66,7 @@ export default function SpendingOverview({ items, loading }: Props) {
               <div key={item.item_id} className="space-y-1">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">
-                    {item.title}
-                    <span className="ml-1 text-xs">({item.category})</span>
+                    {item.category || "Uncategorized"}
                   </span>
                   <span className="font-medium tabular-nums">
                     ${item.amount.toLocaleString()}

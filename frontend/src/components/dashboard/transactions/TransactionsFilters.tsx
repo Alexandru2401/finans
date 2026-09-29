@@ -85,7 +85,7 @@ export default function TransactionsFilters({
           <Input
             type="search"
             id="search-transactions"
-            placeholder="Search description..."
+            placeholder="Search notes or category..."
             className="pl-9"
             value={filters.search}
             onChange={(e) => onChange({ search: e.target.value })}

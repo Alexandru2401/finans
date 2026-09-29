@@ -34,6 +34,12 @@ const TYPE_STYLES: Record<Transaction["type"], string> = {
   savings: "bg-finance-primary-bg text-finance-primary",
 };
 
+const TYPE_LABELS: Record<Transaction["type"], string> = {
+  income: "Income",
+  expense: "Expense",
+  savings: "Savings",
+};
+
 const fmtAmount = (amount: number, type: Transaction["type"]) =>
   `${type === "income" ? "+" : "-"}$${Math.abs(amount).toLocaleString()}`;
 
@@ -66,7 +72,7 @@ export default function TransactionsTable({ transactions, loading }: Props) {
           </TableCaption>
           <TableHeader className="sticky top-0 z-10 bg-card">
             <TableRow>
-              <TableHead className="min-w-40">Description</TableHead>
+              <TableHead className="min-w-40">Type</TableHead>
               <TableHead className="min-w-40">Category</TableHead>
               <TableHead className="min-w-40">Date</TableHead>
               <TableHead className="min-w-40 text-right">Amount</TableHead>
@@ -103,13 +109,15 @@ export default function TransactionsTable({ transactions, loading }: Props) {
             ) : (
               transactions.map((t) => (
                 <TableRow key={t.item_id} className="cursor-pointer">
-                  <TableCell className="font-medium">{t.title}</TableCell>
                   <TableCell>
                     <span
                       className={`text-xs font-medium px-2.5 py-1 rounded-full ${TYPE_STYLES[t.type]}`}
                     >
-                      {t.category_name}
+                      {TYPE_LABELS[t.type]}
                     </span>
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {t.category_name ?? "Uncategorized"}
                   </TableCell>
                   <TableCell className="text-muted-foreground whitespace-nowrap">
                     {fmtDate(t.date)}

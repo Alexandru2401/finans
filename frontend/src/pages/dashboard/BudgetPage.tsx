@@ -2,7 +2,7 @@ import BudgetForm from "@/components/dashboard/budget/BudgetForm";
 import ItemCard from "@/components/dashboard/budget/ItemCard";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Plus, SlidersHorizontal, Target } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import BudgetFilters from "@/components/dashboard/budget/BudgetFilters";
 import ExtraInfo from "@/components/dashboard/budget/ExtraInfo";
@@ -14,32 +14,28 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TargetsPanel from "@/components/dashboard/budget/TargetsPanel";
 import {
-  addIncomeItem as apiAddIncome,
-  addExpenseItem as apiAddExpense,
-  addSavingsItem as apiAddSavings,
-  editIncomeItem as apiEditIncome,
-  editExpenseItem as apiEditExpense,
-  editSavingsItem as apiEditSavings,
-  deleteIncomeItem as apiDeleteIncome,
-  deleteExpenseItem as apiDeleteExpense,
-  deleteSavingsItem as apiDeleteSavings,
+  deleteTransaction,
+  getBudgetSummary,
   type BudgetItem,
-  type NewBudgetItem,
+  type BudgetSummary,
+  type UpdateTransactionPayload,
+  updateTransaction,
 } from "@/api/budget";
 import { getTransactions, type Transaction } from "@/api/transactions";
 import PageHeader from "@/components/dashboard/shared/PageHeader";
+import { toast } from "sonner";
 
 function toBudgetItem(t: Transaction): BudgetItem {
   return {
     id: t.item_id,
-    category: t.category_name,
-    amount: t.amount,
+    type: t.type === "expense" ? "expenses" : t.type,
+    category: t.category_name ?? "Uncategorized",
+    categoryId: t.category_id ?? undefined,
+    amount: Number(t.amount),
     date: t.date,
-    description: t.title,
+    notes: t.notes ?? undefined,
   };
 }
-
-const artificialDelay = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 
 function SummaryCardsSkeleton() {
   return (
@@ -94,61 +90,29 @@ function ItemListSkeleton() {
   );
 }
 
-type BudgetType = "income" | "expenses" | "savings";
-
-const CATEGORIES_BY_TYPE: Record<
-  BudgetType,
-  { value: string; label: string }[]
-> = {
-  income: [
-    { value: "salary", label: "Salary" },
-    { value: "freelance", label: "Freelance" },
-    { value: "investments", label: "Investments" },
-    { value: "bonus", label: "Bonus" },
-    { value: "rental", label: "Rental Income" },
-    { value: "dividends", label: "Dividends" },
-    { value: "other", label: "Other" },
-  ],
-  expenses: [
-    { value: "groceries", label: "Groceries" },
-    { value: "rent", label: "Rent / Mortgage" },
-    { value: "utilities", label: "Utilities" },
-    { value: "transport", label: "Transport" },
-    { value: "healthcare", label: "Healthcare" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "invoice", label: "Invoice" },
-    { value: "subscriptions", label: "Subscriptions" },
-    { value: "dining", label: "Dining Out" },
-    { value: "other", label: "Other" },
-  ],
-  savings: [
-    { value: "emergency", label: "Emergency Fund" },
-    { value: "retirement", label: "Retirement" },
-    { value: "vacation", label: "Vacation" },
-    { value: "education", label: "Education" },
-    { value: "investment", label: "Investment Fund" },
-    { value: "house", label: "House / Property" },
-    { value: "other", label: "Other" },
-  ],
-};
-
 export interface Section {
   title: string;
   items: BudgetItem[];
   total: number;
   section: "income" | "expenses" | "savings";
   onDelete: (id: string) => void;
-  onEdit: (id: string, payload: Partial<NewBudgetItem>) => void;
+  onEdit: (id: string, payload: UpdateTransactionPayload) => void;
 }
 
 export default function BudgetPage() {
-  const [incomeItems, setIncomeItems] = useState<BudgetItem[]>([]);
-  const [expenseItems, setExpenseItems] = useState<BudgetItem[]>([]);
-  const [savingsItems, setSavingsItems] = useState<BudgetItem[]>([]);
+  // Cached per tab so refetches and tab switches keep showing the last data
+  // instead of flashing a skeleton; undefined = not loaded yet
+  const [itemsByTab, setItemsByTab] = useState<
+    Partial<Record<"income" | "expenses" | "savings", BudgetItem[]>>
+  >({});
+  const [itemsError, setItemsError] = useState<string | null>(null);
+  const [summary, setSummary] = useState<BudgetSummary | null>(null);
+  const [summaryLoaded, setSummaryLoaded] = useState(false);
+  // Bumped after any change so the list and the totals are fetched again
+  const [refreshKey, setRefreshKey] = useState(0);
   const [activeTab, setActiveTab] = useState<"income" | "expenses" | "savings">(
     "income",
   );
-  const [loading, setLoading] = useState(true);
 
   const [showForm, setShowForm] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
@@ -160,97 +124,112 @@ export default function BudgetPage() {
     savings: 1500,
   });
 
+  const refresh = () => setRefreshKey((k) => k + 1);
+
+  // Jump to the tab of the new transaction so it shows up in the list
+  function handleCreated(type: typeof activeTab) {
+    setActiveTab(type);
+    refresh();
+  }
+
+  // Latest 5 transactions for the active tab
   useEffect(() => {
-    setLoading(true);
-    Promise.all([getTransactions(), artificialDelay()])
-      .then(([res]) => {
-        if (res.ok && res.data) {
-          setIncomeItems(
-            res.data.filter((t) => t.type === "income").map(toBudgetItem),
-          );
-          setExpenseItems(
-            res.data.filter((t) => t.type === "expense").map(toBudgetItem),
-          );
-          setSavingsItems(
-            res.data.filter((t) => t.type === "savings").map(toBudgetItem),
-          );
-        }
-      })
-      .finally(() => setLoading(false));
-  }, []);
+    let ignore = false;
 
-  const totalIncome = useMemo(
-    () => incomeItems.reduce((s, i) => s + i.amount, 0),
-    [incomeItems],
-  );
-  const totalExpenses = useMemo(
-    () => expenseItems.reduce((s, i) => s + i.amount, 0),
-    [expenseItems],
-  );
-  const totalSavings = useMemo(
-    () => savingsItems.reduce((s, i) => s + i.amount, 0),
-    [savingsItems],
-  );
-  const netBalance = useMemo(
-    () => totalIncome - totalExpenses,
-    [totalIncome, totalExpenses],
-  );
+    async function fetchTransactions() {
+      const res = await getTransactions({
+        type: activeTab,
+        limit: 5,
+        sort: "newest",
+      });
+      if (ignore) return;
 
-  async function deleteIncomeItem(id: string) {
-    const res = await apiDeleteIncome(id);
-    if (res.ok) setIncomeItems((prev) => prev.filter((i) => i.id !== id));
-  }
-  async function deleteExpenseItem(id: string) {
-    const res = await apiDeleteExpense(id);
-    if (res.ok) setExpenseItems((prev) => prev.filter((i) => i.id !== id));
-  }
-  async function deleteSavingsItem(id: string) {
-    const res = await apiDeleteSavings(id);
-    if (res.ok) setSavingsItems((prev) => prev.filter((i) => i.id !== id));
+      if (res.ok) {
+        setItemsByTab((prev) => ({
+          ...prev,
+          [activeTab]: res.data.transactions.map(toBudgetItem),
+        }));
+        setItemsError(null);
+      } else {
+        setItemsError(res.error);
+      }
+    }
+
+    fetchTransactions();
+    return () => {
+      ignore = true;
+    };
+  }, [activeTab, refreshKey]);
+
+  // Totals come from the summary endpoint, not from the 5 items shown
+  useEffect(() => {
+    let ignore = false;
+
+    async function fetchSummary() {
+      const res = await getBudgetSummary();
+      if (ignore) return;
+
+      // Keep the previous totals if a refetch fails
+      if (res.ok) setSummary(res.data);
+      setSummaryLoaded(true);
+    }
+
+    fetchSummary();
+    return () => {
+      ignore = true;
+    };
+  }, [refreshKey]);
+
+  const totalIncome = summary?.income ?? 0;
+  const totalExpenses = summary?.expense ?? 0;
+  const totalSavings = summary?.savings ?? 0;
+  const netBalance = summary?.net ?? totalIncome - totalExpenses;
+
+  async function deleteItem(id: string) {
+    try {
+      await deleteTransaction(id);
+      toast.success("Transaction deleted.");
+      refresh();
+    } catch (err) {
+      toast.error(
+        err instanceof Error ? err.message : "Could not delete transaction",
+      );
+    }
   }
 
-  async function editIncomeItem(id: string, payload: Partial<NewBudgetItem>) {
-    const res = await apiEditIncome(id, payload);
-    if (res.ok)
-      setIncomeItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
-  }
-  async function editExpenseItem(id: string, payload: Partial<NewBudgetItem>) {
-    const res = await apiEditExpense(id, payload);
-    if (res.ok)
-      setExpenseItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
-  }
-  async function editSavingsItem(id: string, payload: Partial<NewBudgetItem>) {
-    const res = await apiEditSavings(id, payload);
-    if (res.ok)
-      setSavingsItems((prev) => prev.map((i) => (i.id === id ? res.data : i)));
+  async function editItem(id: string, payload: UpdateTransactionPayload) {
+    try {
+      await updateTransaction(id, payload);
+      toast.success("Transaction updated.");
+      refresh();
+    } catch (err) {
+      toast.error(
+        err instanceof Error ? err.message : "Could not update transaction",
+      );
+    }
   }
 
-  const sections = [
-    {
-      title: "Income",
-      items: incomeItems,
-      total: totalIncome,
-      section: "income" as const,
-      onDelete: deleteIncomeItem,
-      onEdit: editIncomeItem,
-    },
-    {
-      title: "Expenses",
-      items: expenseItems,
-      total: totalExpenses,
-      section: "expenses" as const,
-      onDelete: deleteExpenseItem,
-      onEdit: editExpenseItem,
-    },
-    {
-      title: "Savings",
-      items: savingsItems,
-      total: totalSavings,
-      section: "savings" as const,
-      onDelete: deleteSavingsItem,
-      onEdit: editSavingsItem,
-    },
-  ];
+  const totalsByType = {
+    income: totalIncome,
+    expenses: totalExpenses,
+    savings: totalSavings,
+  };
+
+  const sections: Section[] = (
+    [
+      { title: "Income", section: "income" },
+      { title: "Expenses", section: "expenses" },
+      { title: "Savings", section: "savings" },
+    ] as const
+  ).map(({ title, section }) => ({
+    title,
+    section,
+    // Only the active tab is rendered, so it is the only one that needs items
+    items: itemsByTab[section] ?? [],
+    total: totalsByType[section],
+    onDelete: deleteItem,
+    onEdit: editItem,
+  }));
 
   const incomePct = Math.min((totalIncome / budgetTargets.income) * 100, 100);
   const expensesPct = Math.min(
@@ -310,7 +289,7 @@ export default function BudgetPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="col-span-2 space-y-3">
-          {loading ? (
+          {!summaryLoaded ? (
             <SummaryCardsSkeleton />
           ) : (
             <SummaryCards
@@ -327,36 +306,42 @@ export default function BudgetPage() {
           )}
 
           <div className="grid items-start gap-6">
-            {loading ? (
-              <ItemListSkeleton />
-            ) : (
-              <Tabs
-                value={activeTab}
-                onValueChange={(v) => setActiveTab(v as typeof activeTab)}
-                className="w-full"
-              >
-                <TabsList>
-                  {sections.map((section) => (
-                    <TabsTrigger
-                      key={section.section}
-                      value={section.section}
-                      className="cursor-pointer"
-                    >
-                      {section.title}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-
+            <Tabs
+              value={activeTab}
+              onValueChange={(v) => setActiveTab(v as typeof activeTab)}
+              className="w-full"
+            >
+              <TabsList>
                 {sections.map((section) => (
-                  <TabsContent key={section.section} value={section.section}>
+                  <TabsTrigger
+                    key={section.section}
+                    value={section.section}
+                    className="cursor-pointer"
+                  >
+                    {section.title}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {sections.map((section) => (
+                <TabsContent key={section.section} value={section.section}>
+                  {itemsByTab[section.section] ? (
                     <ItemCard
                       section={section}
                       onShowForm={() => setShowForm(true)}
                     />
-                  </TabsContent>
-                ))}
-              </Tabs>
-            )}
+                  ) : itemsError ? (
+                    <Card>
+                      <CardContent className="py-6 text-sm text-destructive">
+                        {itemsError}
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <ItemListSkeleton />
+                  )}
+                </TabsContent>
+              ))}
+            </Tabs>
           </div>
         </div>
 
@@ -390,11 +375,7 @@ export default function BudgetPage() {
             </div>
 
             <div className="p-6">
-              <BudgetForm
-              // formData={formData}
-              // setFormData={setFormData}
-              // handleSubmit={handleSubmit}
-              />
+              <BudgetForm onCreated={handleCreated} />
             </div>
           </aside>
         </>

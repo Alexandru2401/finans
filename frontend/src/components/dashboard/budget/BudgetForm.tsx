@@ -16,78 +16,41 @@ import {
 } from "@/components/ui/select";
 import { format } from "date-fns/format";
 import { parseISO } from "date-fns/parseISO";
-import { ChevronDownIcon, Loader2 } from "lucide-react";
-import { useRef, useState } from "react";
+import { ChevronDownIcon, Loader2, Plus } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import BudgetItemSchema, {
   NOTES_MAX_LENGTH,
   type BudgetItemInput,
+  type BudgetItemPayload,
 } from "@/schemas/budget-item.schema";
+import {
+  addNewTransaction,
+  createCategory,
+  getCategories,
+  type Category,
+} from "@/api/budget";
 
 type BudgetType = BudgetItemInput["type"];
 
-type FormErrors = { amount?: string; notes?: string };
+type FormErrors = { category?: string; amount?: string; notes?: string };
 
 const NOTES_WARNING_THRESHOLD = 100;
-
-const artificialDelay = (ms = 2000) =>
-  new Promise((resolve, reject) =>
-    setTimeout(() => {
-      if (Math.random() > 0) {
-        resolve(undefined);
-      } else {
-        reject(new Error("Simulated error"));
-      }
-    }, ms),
-  );
-
-// Simulates a request until the API is wired up
-const fakeRequest = <T,>(data: T) => artificialDelay().then(() => data);
 
 // yyyy-MM-dd in local time (toISOString would shift the day in UTC+ timezones)
 const toDateString = (d: Date) => format(d, "yyyy-MM-dd");
 
-const CATEGORIES_BY_TYPE: Record<
-  BudgetType,
-  { value: string; label: string }[]
-> = {
-  income: [
-    { value: "salary", label: "Salary" },
-    { value: "freelance", label: "Freelance" },
-    { value: "investments", label: "Investments" },
-    { value: "bonus", label: "Bonus" },
-    { value: "rental", label: "Rental Income" },
-    { value: "dividends", label: "Dividends" },
-    { value: "other", label: "Other" },
-  ],
-  expenses: [
-    { value: "groceries", label: "Groceries" },
-    { value: "rent", label: "Rent / Mortgage" },
-    { value: "utilities", label: "Utilities" },
-    { value: "transport", label: "Transport" },
-    { value: "healthcare", label: "Healthcare" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "invoice", label: "Invoice" },
-    { value: "subscriptions", label: "Subscriptions" },
-    { value: "dining", label: "Dining Out" },
-    { value: "other", label: "Other" },
-  ],
-  savings: [
-    { value: "emergency", label: "Emergency Fund" },
-    { value: "retirement", label: "Retirement" },
-    { value: "vacation", label: "Vacation" },
-    { value: "education", label: "Education" },
-    { value: "investment", label: "Investment Fund" },
-    { value: "house", label: "House / Property" },
-    { value: "other", label: "Other" },
-  ],
-};
+const CATEGORY_NAME_MAX_LENGTH = 40;
 
-export default function BudgetForm() {
+interface BudgetFormProps {
+  onCreated?: (type: BudgetItemPayload["type"]) => void;
+}
+
+export default function BudgetForm({ onCreated }: BudgetFormProps) {
   const [formData, setFormData] = useState<BudgetItemInput>({
     type: "income",
-    category: "salary",
+    category: "",
     amount: "",
     notes: "",
     date: toDateString(new Date()),
@@ -98,6 +61,45 @@ export default function BudgetForm() {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [dateOpen, setDateOpen] = useState(false);
+
+  // Categories for the currently selected type
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
+  const [newCategoryOpen, setNewCategoryOpen] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [newCategoryError, setNewCategoryError] = useState<string>();
+  const [creatingCategory, setCreatingCategory] = useState(false);
+
+  // Refetch categories whenever the type changes
+  useEffect(() => {
+    let cancelled = false;
+
+    setCategoriesLoading(true);
+    setCategories([]);
+
+    getCategories(formData.type)
+      .then((data) => {
+        if (cancelled) return;
+        setCategories(data);
+        setFormData((prev) => ({
+          ...prev,
+          category: data[0]?.category_id ?? "",
+        }));
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        toast.error(
+          err instanceof Error ? err.message : "Could not load categories",
+        );
+      })
+      .finally(() => {
+        if (!cancelled) setCategoriesLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [formData.type]);
 
   const notesRemaining = NOTES_MAX_LENGTH - formData.notes.length;
   const notesNearLimit = notesRemaining <= NOTES_WARNING_THRESHOLD;
@@ -112,8 +114,50 @@ export default function BudgetForm() {
   }
 
   function handleTypeChange(value: BudgetType) {
-    const firstCategory = CATEGORIES_BY_TYPE[value][0].value;
-    setFormData((prev) => ({ ...prev, type: value, category: firstCategory }));
+    setFormData((prev) => ({ ...prev, type: value, category: "" }));
+  }
+
+  function handleNewCategoryOpenChange(open: boolean) {
+    setNewCategoryOpen(open);
+    if (!open) {
+      setNewCategoryName("");
+      setNewCategoryError(undefined);
+    }
+  }
+
+  async function handleAddCategory() {
+    if (creatingCategory) return;
+
+    const name = newCategoryName.trim();
+
+    if (!name) {
+      setNewCategoryError("Please enter a category name.");
+      return;
+    }
+
+    const exists = categories.some(
+      (cat) => cat.name.toLowerCase() === name.toLowerCase(),
+    );
+    if (exists) {
+      setNewCategoryError("This category already exists.");
+      return;
+    }
+
+    setCreatingCategory(true);
+    try {
+      const category = await createCategory({ type: formData.type, name });
+
+      setCategories((prev) => [...prev, category]);
+      setFormData((prev) => ({ ...prev, category: category.category_id }));
+      handleNewCategoryOpenChange(false);
+      toast.success(`Category "${category.name}" added.`);
+    } catch (err) {
+      setNewCategoryError(
+        err instanceof Error ? err.message : "Could not create category",
+      );
+    } finally {
+      setCreatingCategory(false);
+    }
   }
 
   function handleDateSelect(d: Date | undefined) {
@@ -131,6 +175,7 @@ export default function BudgetForm() {
     if (!result.success) {
       const fieldErrors = z.flattenError(result.error).fieldErrors;
       setFormErrors({
+        category: fieldErrors.category?.[0],
         amount: fieldErrors.amount?.[0],
         notes: fieldErrors.notes?.[0],
       });
@@ -142,14 +187,14 @@ export default function BudgetForm() {
 
     setSubmitting(true);
     try {
-      // TODO: replace with the real API call
-      await fakeRequest(result.data);
+      await addNewTransaction(result.data);
 
       toast.success("Budget item added successfully!");
+      onCreated?.(result.data.type);
 
       setFormData((prev) => ({
         ...prev,
-        category: CATEGORIES_BY_TYPE[prev.type][0].value,
+        category: categories[0]?.category_id ?? "",
         amount: "",
         notes: "",
         date: toDateString(new Date()),
@@ -188,24 +233,120 @@ export default function BudgetForm() {
 
         {/* Category */}
         <div className="space-y-2">
-          <Label htmlFor="category">Category</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="category">Category</Label>
+            <Popover
+              open={newCategoryOpen}
+              onOpenChange={handleNewCategoryOpenChange}
+            >
+              <PopoverTrigger asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 cursor-pointer gap-1 px-2 text-xs text-muted-foreground"
+                >
+                  <Plus className="h-3 w-3" aria-hidden="true" />
+                  Add new category
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 space-y-2" align="end">
+                <Label htmlFor="new-category">New category</Label>
+                {/* Not a nested <form>: submit events would bubble to the parent form through the portal */}
+                <div className="flex gap-2">
+                  <Input
+                    id="new-category"
+                    autoFocus
+                    value={newCategoryName}
+                    disabled={creatingCategory}
+                    maxLength={CATEGORY_NAME_MAX_LENGTH}
+                    onChange={(e) => {
+                      setNewCategoryName(e.target.value);
+                      setNewCategoryError(undefined);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleAddCategory();
+                      }
+                    }}
+                    placeholder="e.g. Gym"
+                    aria-invalid={!!newCategoryError}
+                    aria-describedby={
+                      newCategoryError ? "new-category-error" : undefined
+                    }
+                  />
+                  <Button
+                    type="button"
+                    size="sm"
+                    className="h-9 cursor-pointer"
+                    onClick={handleAddCategory}
+                    disabled={creatingCategory}
+                    aria-busy={creatingCategory}
+                  >
+                    {creatingCategory ? (
+                      <Loader2
+                        className="h-4 w-4 animate-spin"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      "Add"
+                    )}
+                  </Button>
+                </div>
+                {newCategoryError && (
+                  <p
+                    id="new-category-error"
+                    role="alert"
+                    className="text-xs text-destructive"
+                  >
+                    {newCategoryError}
+                  </p>
+                )}
+              </PopoverContent>
+            </Popover>
+          </div>
           <Select
             value={formData.category}
-            onValueChange={(v) =>
-              setFormData((prev) => ({ ...prev, category: v }))
-            }
+            onValueChange={(v) => {
+              setFormData((prev) => ({ ...prev, category: v }));
+              setFormErrors((prev) => ({ ...prev, category: undefined }));
+            }}
           >
-            <SelectTrigger id="category" className="w-full">
-              <SelectValue placeholder="Select category" />
+            <SelectTrigger
+              id="category"
+              className="w-full"
+              disabled={categoriesLoading}
+              aria-invalid={!!formErrors.category}
+              aria-describedby={
+                formErrors.category ? "category-error" : undefined
+              }
+            >
+              <SelectValue
+                placeholder={
+                  categoriesLoading
+                    ? "Loading categories..."
+                    : "Select category"
+                }
+              />
             </SelectTrigger>
             <SelectContent>
-              {CATEGORIES_BY_TYPE[formData.type].map((cat) => (
-                <SelectItem key={cat.value} value={cat.value}>
-                  {cat.label}
+              {categories.map((cat) => (
+                <SelectItem key={cat.category_id} value={cat.category_id}>
+                  {cat.name}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
+          {formErrors.category && (
+            <p
+              id="category-error"
+              role="alert"
+              className="text-sm text-destructive"
+            >
+              {formErrors.category}
+            </p>
+          )}
         </div>
 
         {/* Amount + Date */}

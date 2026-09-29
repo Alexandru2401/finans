@@ -10,16 +10,14 @@ import { useEffect, useMemo, useState } from "react";
 import { getTransactions, type Transaction } from "@/api/transactions";
 
 export default function TransactionsPage() {
-  const [transactions, setTransactions] = useState<Transaction[] | null>(
-    null,
-  );
+  const [transactions, setTransactions] = useState<Transaction[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<TransactionFilters>(DEFAULT_FILTERS);
 
   useEffect(() => {
     setLoading(true);
-    getTransactions()
-      .then((res) => res.ok && setTransactions(res.data))
+    getTransactions({ limit: 10, sort: "newest" })
+      .then((res) => res.ok && setTransactions(res.data.transactions))
       .finally(() => setLoading(false));
   }, []);
 
@@ -33,7 +31,10 @@ export default function TransactionsPage() {
 
   const categories = useMemo(() => {
     if (!transactions) return [];
-    return Array.from(new Set(transactions.map((t) => t.category_name))).sort();
+    const names = transactions
+      .map((t) => t.category_name)
+      .filter((name): name is string => name !== null);
+    return Array.from(new Set(names)).sort();
   }, [transactions]);
 
   const filteredTransactions = useMemo(() => {
@@ -46,20 +47,24 @@ export default function TransactionsPage() {
     const result = transactions.filter((t) => {
       const d = new Date(t.date);
 
-      if (search && !t.title.toLowerCase().includes(search)) return false;
+      // No title anymore: search in notes and category name
+      if (
+        search &&
+        !`${t.notes ?? ""} ${t.category_name ?? ""}`
+          .toLowerCase()
+          .includes(search)
+      )
+        return false;
       if (filters.year !== "all" && String(d.getFullYear()) !== filters.year)
         return false;
-      if (
-        filters.month !== "all" &&
-        String(d.getMonth() + 1) !== filters.month
-      )
+      if (filters.month !== "all" && String(d.getMonth() + 1) !== filters.month)
         return false;
       if (filters.day !== "all" && String(d.getDate()) !== filters.day)
         return false;
       if (filters.type !== "all" && t.type !== filters.type) return false;
       if (
         filters.categories.length > 0 &&
-        !filters.categories.includes(t.category_name)
+        (!t.category_name || !filters.categories.includes(t.category_name))
       )
         return false;
       if (min !== null && t.amount < min) return false;
@@ -98,7 +103,10 @@ export default function TransactionsPage() {
         years={years}
         categories={categories}
       />
-      <TransactionsTable transactions={filteredTransactions} loading={loading} />
+      <TransactionsTable
+        transactions={filteredTransactions}
+        loading={loading}
+      />
     </section>
   );
 }

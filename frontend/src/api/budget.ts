@@ -1,125 +1,129 @@
-import { get } from "./client";
+import { del, get, patch, post } from "./client";
+import type { BudgetItemPayload } from "@/schemas/budget-item.schema";
 
 export interface BudgetItem {
   id: string;
-  title: string;
   type: "income" | "expenses" | "savings";
   category: string;
+  categoryId?: string;
   amount: number;
   date?: string;
-  description?: string;
   notes?: string;
 }
 
+type BudgetType = "income" | "expenses" | "savings";
+
+// The backend uses "expense" (singular); the frontend uses "expenses"
+type ApiBudgetType = "income" | "expense" | "savings";
+
+const toApiType = (type: BudgetType): ApiBudgetType =>
+  type === "expenses" ? "expense" : type;
+
+const fromApiType = (type: ApiBudgetType): BudgetType =>
+  type === "expense" ? "expenses" : type;
+
+export interface Category {
+  category_id: string;
+  type: BudgetType;
+  name: string;
+  key: string | null; // null pentru categoriile custom
+}
+
+type ApiCategory = Omit<Category, "type"> & { type: ApiBudgetType };
+
+const fromApiCategory = (category: ApiCategory): Category => ({
+  ...category,
+  type: fromApiType(category.type),
+});
+
+interface CategoriesResponse {
+  success: boolean;
+  categories: ApiCategory[];
+}
+
+interface CategoryResponse {
+  success: boolean;
+  category: ApiCategory;
+  message?: string;
+}
 export type NewBudgetItem = Omit<BudgetItem, "id">;
 
-type Ok<T> = { ok: true; data: T };
-
-const delay = (ms = 600) => new Promise((r) => setTimeout(r, ms));
-
-// ── INCOME ──
-async function addIncomeItem(payload: NewBudgetItem): Promise<Ok<BudgetItem>> {
-  await delay();
-  return { ok: true, data: { id: crypto.randomUUID(), ...payload } };
+async function getCategories(type?: BudgetType): Promise<Category[]> {
+  const query = type ? `?type=${toApiType(type)}` : "";
+  const response = await get<CategoriesResponse>(`/budget/categories${query}`);
+  if (!response.ok) throw new Error("Could not load categories");
+  return response.data.categories.map(fromApiCategory);
 }
 
-async function editIncomeItem(
+async function createCategory(payload: {
+  type: BudgetType;
+  name: string;
+}): Promise<Category> {
+  const response = await post<CategoryResponse>("/budget/categories", {
+    ...payload,
+    type: toApiType(payload.type),
+  });
+  if (!response.ok) {
+    throw new Error(response.data?.message ?? "Could not create category");
+  }
+  return fromApiCategory(response.data.category);
+}
+
+async function addNewTransaction(item: BudgetItemPayload): Promise<void> {
+  const response = await post<{ message?: string }>("/transactions", {
+    type: toApiType(item.type),
+    category_id: item.category,
+    amount: item.amount,
+    date: item.date,
+    ...(item.notes && { notes: item.notes }),
+  });
+  if (!response.ok) {
+    throw new Error(response.data?.message ?? "Could not add new transaction");
+  }
+}
+
+export interface UpdateTransactionPayload {
+  amount?: number;
+  date?: string;
+  category_id?: string;
+  // null or "" clears the note
+  notes?: string | null;
+}
+
+// Errors come as { message } (4xx) or { error } (500)
+type ApiError = { message?: string; error?: string } | null;
+
+async function updateTransaction(
   id: string,
-  payload: Partial<NewBudgetItem>,
-): Promise<Ok<BudgetItem>> {
-  await delay();
-  return {
-    ok: true,
-    data: {
-      id,
-      title: "income",
-      type: "income",
-      category: "",
-      amount: 0,
-      ...payload,
-    },
-  };
+  payload: UpdateTransactionPayload,
+): Promise<void> {
+  const response = await patch<ApiError>(`/transactions/${id}`, payload);
+  if (!response.ok) {
+    throw new Error(
+      response.data?.message ??
+        response.data?.error ??
+        "Could not update transaction",
+    );
+  }
 }
 
-async function deleteIncomeItem(
-  _id: string,
-): Promise<Ok<{ success: boolean }>> {
-  await delay();
-  return { ok: true, data: { success: true } };
-}
-
-// ── EXPENSES ──
-async function addExpenseItem(payload: NewBudgetItem): Promise<Ok<BudgetItem>> {
-  await delay();
-  return { ok: true, data: { id: crypto.randomUUID(), ...payload } };
-}
-
-async function editExpenseItem(
-  id: string,
-  payload: Partial<NewBudgetItem>,
-): Promise<Ok<BudgetItem>> {
-  await delay();
-  return {
-    ok: true,
-    data: {
-      id,
-      title: "expenses",
-      type: "expenses",
-      category: "",
-      amount: 0,
-      ...payload,
-    },
-  };
-}
-
-async function deleteExpenseItem(
-  _id: string,
-): Promise<Ok<{ success: boolean }>> {
-  await delay();
-  return { ok: true, data: { success: true } };
-}
-
-// ── SAVINGS ──
-async function addSavingsItem(payload: NewBudgetItem): Promise<Ok<BudgetItem>> {
-  await delay();
-  return { ok: true, data: { id: crypto.randomUUID(), ...payload } };
-}
-
-async function editSavingsItem(
-  id: string,
-  payload: Partial<NewBudgetItem>,
-): Promise<Ok<BudgetItem>> {
-  await delay();
-  return {
-    ok: true,
-    data: {
-      id,
-      title: "savings",
-      type: "savings",
-      category: "",
-      amount: 0,
-      ...payload,
-    },
-  };
-}
-
-async function deleteSavingsItem(
-  _id: string,
-): Promise<Ok<{ success: boolean }>> {
-  await delay();
-  return { ok: true, data: { success: true } };
+async function deleteTransaction(id: string): Promise<void> {
+  const response = await del<ApiError>(`/transactions/${id}`);
+  if (!response.ok) {
+    throw new Error(
+      response.data?.message ??
+        response.data?.error ??
+        "Could not delete transaction",
+    );
+  }
 }
 
 export {
-  addIncomeItem,
-  editIncomeItem,
-  deleteIncomeItem,
-  addExpenseItem,
-  editExpenseItem,
-  deleteExpenseItem,
-  addSavingsItem,
-  editSavingsItem,
-  deleteSavingsItem,
+  getCategories,
+  createCategory,
+  addNewTransaction,
+  updateTransaction,
+  deleteTransaction,
 };
 
 export interface BudgetSummary {
@@ -149,9 +153,8 @@ export { getBudgetSummary };
 
 export interface TopExpense {
   item_id: string;
-  category_id: string;
-  category: string;
-  title: string;
+  category_id: string | null;
+  category: string | null;
   amount: number;
   date: string;
   notes: string | null;

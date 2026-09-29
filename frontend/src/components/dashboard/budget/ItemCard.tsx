@@ -4,10 +4,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import type {
-  BudgetItem,
-  NewBudgetItem,
-} from "@/store/dashboardStore/BudgetStoreContext";
+import {
+  getCategories,
+  type BudgetItem,
+  type Category,
+  type UpdateTransactionPayload,
+} from "@/api/budget";
 import { format } from "date-fns/format";
 import {
   ChevronDownIcon,
@@ -18,7 +20,7 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import type { Section } from "../../../pages/dashboard/BudgetPage";
 import { Button } from "../../ui/button";
@@ -42,42 +44,6 @@ import {
 
 type BudgetType = "income" | "expenses" | "savings";
 
-const CATEGORIES_BY_TYPE: Record<
-  BudgetType,
-  { value: string; label: string }[]
-> = {
-  income: [
-    { value: "salary", label: "Salary" },
-    { value: "freelance", label: "Freelance" },
-    { value: "investments", label: "Investments" },
-    { value: "bonus", label: "Bonus" },
-    { value: "rental", label: "Rental Income" },
-    { value: "dividends", label: "Dividends" },
-    { value: "other", label: "Other" },
-  ],
-  expenses: [
-    { value: "groceries", label: "Groceries" },
-    { value: "rent", label: "Rent / Mortgage" },
-    { value: "utilities", label: "Utilities" },
-    { value: "transport", label: "Transport" },
-    { value: "healthcare", label: "Healthcare" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "invoice", label: "Invoice" },
-    { value: "subscriptions", label: "Subscriptions" },
-    { value: "dining", label: "Dining Out" },
-    { value: "other", label: "Other" },
-  ],
-  savings: [
-    { value: "emergency", label: "Emergency Fund" },
-    { value: "retirement", label: "Retirement" },
-    { value: "vacation", label: "Vacation" },
-    { value: "education", label: "Education" },
-    { value: "investment", label: "Investment Fund" },
-    { value: "house", label: "House / Property" },
-    { value: "other", label: "Other" },
-  ],
-};
-
 interface ItemCardProps {
   section: Section;
   onShowForm: () => void;
@@ -93,17 +59,32 @@ export default function ItemCard({ section, onShowForm }: ItemCardProps) {
     amount: "",
     category: "",
     date: "",
-    description: "",
     notes: "",
   });
 
+  // Real categories for this section; the edit sends their category_id
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    let ignore = false;
+    getCategories(section.section)
+      .then((data) => {
+        if (!ignore) setCategories(data);
+      })
+      .catch(() => {});
+    return () => {
+      ignore = true;
+    };
+  }, [section.section]);
+
   const startEdit = (item: BudgetItem) => {
     setEditingItem(item);
+    // new Date() keeps local time; splitting the ISO string would show the day before
+    setDate(item.date ? new Date(item.date) : undefined);
     setEditValues({
       amount: item.amount.toFixed(2),
-      category: item.category,
-      date: item.date?.split("T")[0] ?? "",
-      description: item.description ?? "",
+      category: item.categoryId ?? "",
+      date: item.date ? format(new Date(item.date), "yyyy-MM-dd") : "",
       notes: item.notes ?? "",
     });
   };
@@ -111,13 +92,21 @@ export default function ItemCard({ section, onShowForm }: ItemCardProps) {
   const cancelEdit = () => setEditingItem(null);
 
   const confirmEdit = () => {
-    section.onEdit(editingItem!.id, {
-      amount: parseFloat(editValues.amount),
-      category: editValues.category,
-      date: editValues.date,
-      description: editValues.description,
-      notes: editValues.notes,
-    } satisfies Partial<NewBudgetItem>);
+    const original = editingItem!;
+    const amount = parseFloat(editValues.amount);
+    const newDate = date ? format(date, "yyyy-MM-dd") : "";
+    const notes = editValues.notes.trim();
+
+    // PATCH only the fields that changed
+    const payload: UpdateTransactionPayload = {};
+    if (amount > 0 && amount !== original.amount) payload.amount = amount;
+    if (newDate && newDate !== editValues.date) payload.date = newDate;
+    if (editValues.category && editValues.category !== original.categoryId)
+      payload.category_id = editValues.category;
+    // Empty string clears the note on the backend
+    if (notes !== (original.notes ?? "").trim()) payload.notes = notes;
+
+    if (Object.keys(payload).length > 0) section.onEdit(original.id, payload);
     setEditingItem(null);
   };
 
@@ -154,8 +143,6 @@ export default function ItemCard({ section, onShowForm }: ItemCardProps) {
     ) : (
       <Minus size={16} className="shrink-0" />
     );
-
-  const categories = CATEGORIES_BY_TYPE[section.section as BudgetType];
 
   console.log(section);
 
@@ -332,17 +319,6 @@ export default function ItemCard({ section, onShowForm }: ItemCardProps) {
               </div>
             </div>
 
-            {viewingItem.description && (
-              <div className="rounded-lg bg-muted/40 p-3">
-                <p className="mb-0.5 text-xs text-muted-foreground">
-                  Description
-                </p>
-                <p className="text-sm text-foreground">
-                  {viewingItem.description}
-                </p>
-              </div>
-            )}
-
             <div className="rounded-lg bg-muted/40 p-3">
               <p className="mb-1 text-xs text-muted-foreground">Notes</p>
               <p className="max-h-32 overflow-y-auto overflow-x-hidden whitespace-pre-wrap break-all text-sm text-foreground">
@@ -427,8 +403,8 @@ export default function ItemCard({ section, onShowForm }: ItemCardProps) {
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((cat) => (
-                    <SelectItem key={cat.value} value={cat.value}>
-                      {cat.label}
+                    <SelectItem key={cat.category_id} value={cat.category_id}>
+                      {cat.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
