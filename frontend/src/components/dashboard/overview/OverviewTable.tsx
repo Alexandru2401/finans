@@ -16,7 +16,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Link } from "react-router";
-import type { Transaction } from "@/api/transactions";
+import { useEffect, useState } from "react";
+import { getTransactions, type Transaction } from "@/api/transactions";
+import CardError from "@/components/dashboard/shared/CardError";
+import { formatCurrency } from "@/lib/format";
 
 const TYPE_STYLES: Record<Transaction["type"], string> = {
   income: "bg-finance-success-bg text-finance-success",
@@ -31,7 +34,7 @@ const TYPE_LABELS: Record<Transaction["type"], string> = {
 };
 
 const fmt = (n: number, type: Transaction["type"]) =>
-  `${type === "expense" ? "-" : "+"}$${Math.abs(n).toLocaleString()}`;
+  formatCurrency(n, type === "expense" ? "-" : "+");
 
 const AMOUNT_COLORS: Record<Transaction["type"], string> = {
   income: "text-finance-success",
@@ -45,12 +48,24 @@ const fmtDate = (date: string) =>
     day: "numeric",
   });
 
-interface Props {
-  transactions: Transaction[] | null;
-  loading: boolean;
-}
+export default function OverviewTable() {
+  const [transactions, setTransactions] = useState<Transaction[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [attempt, setAttempt] = useState(0);
 
-export default function OverviewTable({ transactions, loading }: Props) {
+  useEffect(() => {
+    getTransactions({ limit: 5, sort: "newest" })
+      .then((res) => setTransactions(res.ok ? res.data.transactions : null))
+      .catch(() => setTransactions(null))
+      .finally(() => setLoading(false));
+  }, [attempt]);
+
+  const error = !loading && !transactions;
+  const onRetry = () => {
+    setLoading(true);
+    setAttempt((n) => n + 1);
+  };
+
   return (
     <Card className="flex flex-col">
       <CardHeader>
@@ -68,7 +83,12 @@ export default function OverviewTable({ transactions, loading }: Props) {
       </CardHeader>
 
       <CardContent className="flex-1">
-        {loading || !transactions ? (
+        {!loading && error ? (
+          <CardError
+            message="Could not load your transactions."
+            onRetry={onRetry}
+          />
+        ) : loading || !transactions ? (
           <div className="space-y-3">
             {[0, 1, 2, 3, 4].map((i) => (
               <div key={i} className="flex items-center justify-between">

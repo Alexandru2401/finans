@@ -9,7 +9,11 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "react-router";
-import type { TopExpense } from "@/api/budget";
+import { useEffect, useState } from "react";
+import { getTopExpenses, type TopExpense } from "@/api/budget";
+import CardError from "@/components/dashboard/shared/CardError";
+import { formatCurrency } from "@/lib/format";
+import { periodLabel } from "@/lib/periods";
 
 const CATEGORY_BAR_COLORS = [
   "[&>*]:bg-finance-primary",
@@ -20,11 +24,34 @@ const CATEGORY_BAR_COLORS = [
 ];
 
 interface Props {
-  items: TopExpense[] | null;
-  loading: boolean;
+  period: string;
 }
 
-export default function SpendingOverview({ items, loading }: Props) {
+export default function SpendingOverview({ period }: Props) {
+  const [attempt, setAttempt] = useState(0);
+  const [result, setResult] = useState<{
+    key: string;
+    items: TopExpense[] | null;
+  } | null>(null);
+  // Changes on every new request; results from older requests are ignored
+  const key = `${period}-${attempt}`;
+
+  useEffect(() => {
+    let cancelled = false;
+    getTopExpenses(period)
+      .then((res) => res.data)
+      .catch(() => null)
+      .then((data) => !cancelled && setResult({ key, items: data }));
+    return () => {
+      cancelled = true;
+    };
+  }, [key, period]);
+
+  const loading = result?.key !== key;
+  const items = loading ? null : (result?.items ?? null);
+  const error = !loading && !items;
+  const onRetry = () => setAttempt((n) => n + 1);
+
   const topAmount = items?.[0]?.amount ?? 0;
 
   return (
@@ -35,7 +62,9 @@ export default function SpendingOverview({ items, loading }: Props) {
             <CardTitle className="flex items-center gap-2 text-base">
               Top Spendings
             </CardTitle>
-            <CardDescription>Your biggest expenses this period</CardDescription>
+            <CardDescription>
+              Your biggest expenses · {periodLabel(period)}
+            </CardDescription>
           </div>
           <Button asChild variant="outline" size="sm">
             <Link to="transactions">See all</Link>
@@ -44,7 +73,12 @@ export default function SpendingOverview({ items, loading }: Props) {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {loading || !items ? (
+        {!loading && error ? (
+          <CardError
+            message="Could not load your top spendings."
+            onRetry={onRetry}
+          />
+        ) : loading || !items ? (
           <div className="space-y-3 pt-2">
             {[0, 1, 2, 3].map((i) => (
               <div key={i} className="space-y-1">
@@ -69,7 +103,7 @@ export default function SpendingOverview({ items, loading }: Props) {
                     {item.category || "Uncategorized"}
                   </span>
                   <span className="font-medium tabular-nums">
-                    ${item.amount.toLocaleString()}
+                    {formatCurrency(item.amount)}
                   </span>
                 </div>
                 <Progress

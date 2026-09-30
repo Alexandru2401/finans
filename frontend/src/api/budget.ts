@@ -145,7 +145,15 @@ async function getBudgetSummary(period = "last-month") {
 
   return {
     ok: response.ok,
-    data: response.ok ? response.data.summary : null,
+    // Numeric DB columns may arrive as strings, so coerce them
+    data: response.ok
+      ? {
+          income: Number(response.data.summary.income),
+          expense: Number(response.data.summary.expense),
+          savings: Number(response.data.summary.savings),
+          net: Number(response.data.summary.net),
+        }
+      : null,
   };
 }
 
@@ -195,12 +203,22 @@ interface BudgetTrendResponse {
   trend: BudgetTrendPoint[];
 }
 
-async function getBudgetTrend() {
-  const response = await get<BudgetTrendResponse>("/budget/budget-trend");
+// Without a period the backend returns the last 6 months
+async function getBudgetTrend(period?: string) {
+  const query = period ? `?period=${period}` : "";
+  const response = await get<BudgetTrendResponse>(
+    `/budget/budget-trend${query}`,
+  );
 
   return {
     ok: response.ok,
-    data: response.ok ? response.data.trend : null,
+    data: response.ok
+      ? response.data.trend.map((point) => ({
+          month: point.month,
+          income: Number(point.income),
+          expense: Number(point.expense),
+        }))
+      : null,
   };
 }
 

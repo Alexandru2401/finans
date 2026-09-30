@@ -8,17 +8,20 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import type { BudgetSummary, BudgetTrendPoint } from "@/api/budget";
+import { useEffect, useState } from "react";
+import {
+  getBudgetSummary,
+  getBudgetTrend,
+  type BudgetSummary,
+  type BudgetTrendPoint,
+} from "@/api/budget";
+import CardError from "@/components/dashboard/shared/CardError";
+import { formatCurrency as fmt } from "@/lib/format";
+import { periodLabel } from "@/lib/periods";
 
 interface Props {
-  summary: BudgetSummary | null;
-  loading: boolean;
-  trend: BudgetTrendPoint[] | null;
-  trendLoading: boolean;
+  period: string;
 }
-
-const fmt = (n: number) =>
-  `${n < 0 ? "-" : ""}$${Math.abs(n).toLocaleString()}`;
 
 const formatMonth = (month: string) =>
   new Date(`${month}-01`).toLocaleDateString("en-US", {
@@ -60,12 +63,16 @@ function NetBalanceSkeleton() {
 function NetSparkline({
   trend,
   loading,
+  error,
   positive,
 }: {
   trend: BudgetTrendPoint[] | null;
   loading: boolean;
+  error?: boolean;
   positive: boolean;
 }) {
+  // The sparkline is secondary, so on error just leave it out
+  if (error) return null;
   if (loading || !trend) return <Skeleton className="mt-4 h-20 w-full" />;
   if (trend.length < 2) return null;
 
@@ -142,12 +149,52 @@ function NetSparkline({
   );
 }
 
-export default function NetBalance({
-  summary,
-  loading,
-  trend,
-  trendLoading,
-}: Props) {
+export default function NetBalance({ period }: Props) {
+  const [attempt, setAttempt] = useState(0);
+  const [result, setResult] = useState<{
+    key: string;
+    summary: BudgetSummary | null;
+  } | null>(null);
+  // Changes on every new request; results from older requests are ignored
+  const key = `${period}-${attempt}`;
+
+  useEffect(() => {
+    let cancelled = false;
+    getBudgetSummary(period)
+      .then((res) => res.data)
+      .catch(() => null)
+      .then((data) => !cancelled && setResult({ key, summary: data }));
+    return () => {
+      cancelled = true;
+    };
+  }, [key, period]);
+
+  const loading = result?.key !== key;
+  const summary = loading ? null : (result?.summary ?? null);
+  const error = !loading && !summary;
+  const onRetry = () => setAttempt((n) => n + 1);
+
+  // The sparkline always shows the last 6 months, whatever the period
+  const [trend, setTrend] = useState<BudgetTrendPoint[] | null>(null);
+  const [trendLoading, setTrendLoading] = useState(true);
+
+  useEffect(() => {
+    getBudgetTrend()
+      .then((res) => setTrend(res.data))
+      .catch(() => setTrend(null))
+      .finally(() => setTrendLoading(false));
+  }, []);
+
+  const trendError = !trendLoading && !trend;
+
+  if (!loading && error) {
+    return (
+      <Card className="col-span-1 md:col-span-2">
+        <CardError message="Could not load your balance." onRetry={onRetry} />
+      </Card>
+    );
+  }
+
   if (loading || !summary) {
     return (
       <Card className="col-span-1 md:col-span-2">
@@ -165,7 +212,7 @@ export default function NetBalance({
     <Card className="col-span-1 md:col-span-2">
       <CardContent className="grid gap-6 sm:grid-cols-5">
         <div className="min-w-0 sm:col-span-3">
-          <CardDescription>Total net balance</CardDescription>
+          <CardDescription>Total net balance · {periodLabel(period)}</CardDescription>
           <p className="mt-1 text-4xl font-bold tabular-nums text-foreground">
             {fmt(summary.net)}
           </p>
@@ -181,6 +228,7 @@ export default function NetBalance({
           <NetSparkline
             trend={trend}
             loading={trendLoading}
+            error={trendError}
             positive={positive}
           />
         </div>

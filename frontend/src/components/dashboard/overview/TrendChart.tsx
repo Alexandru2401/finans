@@ -8,9 +8,11 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "react-router";
-import type { BudgetTrendPoint } from "@/api/budget";
-
-export const description = "A simple pie chart";
+import { useEffect, useState } from "react";
+import { getBudgetTrend, type BudgetTrendPoint } from "@/api/budget";
+import CardError from "@/components/dashboard/shared/CardError";
+import { formatCurrency } from "@/lib/format";
+import { periodLabel as getPeriodLabel } from "@/lib/periods";
 
 import {
   Area,
@@ -24,8 +26,7 @@ import {
 } from "recharts";
 
 interface Props {
-  trend: BudgetTrendPoint[] | null;
-  loading: boolean;
+  period: string;
 }
 
 function formatMonth(month: string) {
@@ -34,7 +35,51 @@ function formatMonth(month: string) {
   });
 }
 
-export default function SpendingTrendingChart({ trend, loading }: Props) {
+export default function SpendingTrendingChart({ period }: Props) {
+  // A one-month trend is a single point, so short periods keep the
+  // default trend (last 6 months) instead
+  const trendPeriod =
+    period === "this-month" || period === "last-month" ? undefined : period;
+  const periodLabel = getPeriodLabel(trendPeriod ?? "last-6");
+
+  const [attempt, setAttempt] = useState(0);
+  const [result, setResult] = useState<{
+    key: string;
+    trend: BudgetTrendPoint[] | null;
+  } | null>(null);
+  // Changes on every new request; results from older requests are ignored
+  const key = `${trendPeriod ?? "default"}-${attempt}`;
+
+  useEffect(() => {
+    let cancelled = false;
+    getBudgetTrend(trendPeriod)
+      .then((res) => res.data)
+      .catch(() => null)
+      .then((data) => !cancelled && setResult({ key, trend: data }));
+    return () => {
+      cancelled = true;
+    };
+  }, [key, trendPeriod]);
+
+  const loading = result?.key !== key;
+  const trend = loading ? null : (result?.trend ?? null);
+  const error = !loading && !trend;
+  const onRetry = () => setAttempt((n) => n + 1);
+
+  if (!loading && error) {
+    return (
+      <Card className="flex flex-col">
+        <CardHeader>
+          <CardTitle className="text-base">Budget Trend</CardTitle>
+        </CardHeader>
+        <CardError
+          message="Could not load the budget trend."
+          onRetry={onRetry}
+        />
+      </Card>
+    );
+  }
+
   if (loading || !trend) {
     return (
       <Card className="flex flex-col">
@@ -60,26 +105,44 @@ export default function SpendingTrendingChart({ trend, loading }: Props) {
     expenses: point.expense,
   }));
 
+  const header = (
+    <CardHeader>
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <CardTitle className="text-base">Budget Trend</CardTitle>
+          <CardDescription>Income vs Expenses · {periodLabel}</CardDescription>
+        </div>
+        <Button asChild variant="outline" size="sm">
+          <Link to="analytics">See details</Link>
+        </Button>
+      </div>
+    </CardHeader>
+  );
+
+  // Points are monthly, so a one-month period has nothing to draw a line with
+  if (spendingTrend.length < 2) {
+    return (
+      <Card className="flex flex-col">
+        {header}
+        <CardContent className="flex flex-1 items-center justify-center">
+          <p className="text-center text-sm text-muted-foreground">
+            The trend needs at least 2 months of data.
+            <br />
+            Pick a longer period to see it.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="flex flex-col">
-      <CardHeader>
-        <div className="flex items-start justify-between gap-2">
-          <div>
-            <CardTitle className="text-base">Budget Trend</CardTitle>
-            <CardDescription>
-              Income vs Expenses — last 6 months
-            </CardDescription>
-          </div>
-          <Button asChild variant="outline" size="sm">
-            <Link to="analytics">See details</Link>
-          </Button>
-        </div>
-      </CardHeader>
+      {header}
 
       <CardContent className="flex-1">
         <div
           role="img"
-          aria-label="Area chart of income, expenses and savings over the last 6 months"
+          aria-label={`Area chart of income and expenses, ${periodLabel.toLowerCase()}`}
         >
           <ResponsiveContainer width="100%" height={260}>
             <AreaChart
@@ -124,11 +187,11 @@ export default function SpendingTrendingChart({ trend, loading }: Props) {
                 tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(v) => `$${v}`}
+                tickFormatter={(v) => formatCurrency(Number(v))}
               />
               <Tooltip
                 formatter={(value, name) => [
-                  `$${Number(value).toLocaleString()}`,
+                  formatCurrency(Number(value)),
                   name,
                 ]}
                 contentStyle={{
