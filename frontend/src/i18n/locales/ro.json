@@ -798,5 +798,76 @@
         ]
       }
     }
+  },
+  "dashboard": {
+    "periods": {
+      "this-month": "Luna aceasta",
+      "last-month": "Luna trecută",
+      "last-3": "Ultimele 3 luni",
+      "last-6": "Ultimele 6 luni",
+      "this-year": "Anul acesta"
+    },
+    "common": {
+      "seeAll": "Vezi tot",
+      "seeDetails": "Vezi detalii",
+      "tryAgain": "Încearcă din nou",
+      "loadError": "Datele nu au putut fi încărcate.",
+      "uncategorized": "Fără categorie",
+      "income": "Venituri",
+      "expenses": "Cheltuieli",
+      "savings": "Economii"
+    },
+    "overview": {
+      "welcome": "Bine ai revenit, {{name}}!",
+      "defaultUser": "Utilizator",
+      "subtitle": "Aruncă o privire peste situația ta financiară.",
+      "selectPeriod": "Selectează perioada",
+      "netBalance": {
+        "title": "Sold net total",
+        "netMargin": "{{value}}% marjă netă",
+        "net": "Net",
+        "sparklineLabel": "Sold net lunar: {{values}}",
+        "totalIncome": "Venituri totale",
+        "totalExpenses": "Cheltuieli totale",
+        "totalSavings": "Economii totale",
+        "error": "Soldul nu a putut fi încărcat."
+      },
+      "breakdown": {
+        "title": "Distribuția bugetului",
+        "description": "Venituri, cheltuieli și economii",
+        "chartLabel": "Distribuția veniturilor, cheltuielilor și economiilor",
+        "empty": "Nu există tranzacții în această perioadă.",
+        "error": "Distribuția nu a putut fi încărcată."
+      },
+      "topSpendings": {
+        "title": "Cele mai mari cheltuieli",
+        "description": "Cheltuielile tale cele mai mari",
+        "empty": "Nu există cheltuieli în această perioadă.",
+        "error": "Cheltuielile nu au putut fi încărcate."
+      },
+      "trend": {
+        "title": "Evoluția bugetului",
+        "description": "Venituri vs. cheltuieli",
+        "chartLabel": "Grafic cu veniturile și cheltuielile, {{period}}",
+        "notEnoughData": "Evoluția are nevoie de cel puțin 2 luni de date.",
+        "pickLongerPeriod": "Alege o perioadă mai lungă ca s-o vezi.",
+        "error": "Evoluția bugetului nu a putut fi încărcată."
+      },
+      "recentTransactions": {
+        "title": "Tranzacții recente",
+        "description": "Ultimele tale tranzacții.",
+        "empty": "Nu ai înregistrat încă nicio tranzacție.",
+        "error": "Tranzacțiile nu au putut fi încărcate.",
+        "type": "Tip",
+        "category": "Categorie",
+        "date": "Dată",
+        "amount": "Sumă",
+        "types": {
+          "income": "Venit",
+          "expense": "Cheltuială",
+          "savings": "Economii"
+        }
+      }
+    }
   }
 }

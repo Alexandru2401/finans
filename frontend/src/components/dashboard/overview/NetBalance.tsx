@@ -17,22 +17,35 @@ import {
 } from "@/api/budget";
 import CardError from "@/components/dashboard/shared/CardError";
 import { formatCurrency as fmt } from "@/lib/format";
-import { periodLabel } from "@/lib/periods";
+import type { Period } from "@/lib/periods";
+import { useTranslation } from "react-i18next";
 
 interface Props {
-  period: string;
+  period: Period;
 }
 
-const formatMonth = (month: string) =>
-  new Date(`${month}-01`).toLocaleDateString("en-US", {
+const formatMonth = (month: string, locale: string) =>
+  new Date(`${month}-01`).toLocaleDateString(locale, {
     month: "short",
     year: "numeric",
   });
 
 const TILES = [
-  { key: "income", label: "Total income", color: "text-finance-success" },
-  { key: "expense", label: "Total spendings", color: "text-finance-danger" },
-  { key: "savings", label: "Total savings", color: "text-finance-primary" },
+  {
+    key: "income",
+    label: "dashboard.overview.netBalance.totalIncome",
+    color: "text-finance-success",
+  },
+  {
+    key: "expense",
+    label: "dashboard.overview.netBalance.totalExpenses",
+    color: "text-finance-danger",
+  },
+  {
+    key: "savings",
+    label: "dashboard.overview.netBalance.totalSavings",
+    color: "text-finance-primary",
+  },
 ] as const;
 
 function NetBalanceSkeleton() {
@@ -71,19 +84,21 @@ function NetSparkline({
   error?: boolean;
   positive: boolean;
 }) {
+  const { t, i18n } = useTranslation();
+
   // The sparkline is secondary, so on error just leave it out
   if (error) return null;
   if (loading || !trend) return <Skeleton className="mt-4 h-20 w-full" />;
   if (trend.length < 2) return null;
 
   const data = trend.map((p) => ({
-    month: formatMonth(p.month),
+    month: formatMonth(p.month, i18n.language),
     net: p.income - p.expense,
   }));
 
   const chartConfig = {
     net: {
-      label: "Net",
+      label: t("dashboard.overview.netBalance.net"),
       color: positive ? "var(--finance-success)" : "var(--finance-danger)",
     },
   } satisfies ChartConfig;
@@ -94,9 +109,9 @@ function NetSparkline({
         config={chartConfig}
         className="aspect-auto h-20 w-full"
         role="img"
-        aria-label={`Monthly net balance: ${data
-          .map((d) => `${d.month} ${fmt(d.net)}`)
-          .join(", ")}`}
+        aria-label={t("dashboard.overview.netBalance.sparklineLabel", {
+          values: data.map((d) => `${d.month} ${fmt(d.net)}`).join(", "),
+        })}
       >
         <AreaChart
           data={data}
@@ -125,7 +140,8 @@ function NetSparkline({
                 indicator="line"
                 formatter={(value) => (
                   <span className="font-medium tabular-nums">
-                    Net {fmt(Number(value))}
+                    {t("dashboard.overview.netBalance.net")}{" "}
+                    {fmt(Number(value))}
                   </span>
                 )}
               />
@@ -142,14 +158,12 @@ function NetSparkline({
           />
         </AreaChart>
       </ChartContainer>
-      <p className="mt-1 text-xs text-muted-foreground">
-        Net balance · last {data.length} months
-      </p>
     </div>
   );
 }
 
 export default function NetBalance({ period }: Props) {
+  const { t } = useTranslation();
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState<{
     key: string;
@@ -190,7 +204,10 @@ export default function NetBalance({ period }: Props) {
   if (!loading && error) {
     return (
       <Card className="col-span-1 md:col-span-2">
-        <CardError message="Could not load your balance." onRetry={onRetry} />
+        <CardError
+          message={t("dashboard.overview.netBalance.error")}
+          onRetry={onRetry}
+        />
       </Card>
     );
   }
@@ -212,7 +229,10 @@ export default function NetBalance({ period }: Props) {
     <Card className="col-span-1 md:col-span-2">
       <CardContent className="grid gap-6 sm:grid-cols-5">
         <div className="min-w-0 sm:col-span-3">
-          <CardDescription>Total net balance · {periodLabel(period)}</CardDescription>
+          <CardDescription>
+            {t("dashboard.overview.netBalance.title")} ·{" "}
+            {t(`dashboard.periods.${period}`)}
+          </CardDescription>
           <p className="mt-1 text-4xl font-bold tabular-nums text-foreground">
             {fmt(summary.net)}
           </p>
@@ -222,7 +242,7 @@ export default function NetBalance({ period }: Props) {
             }`}
           >
             <TrendIcon className="h-4 w-4" aria-hidden="true" />
-            {netMargin}% net margin
+            {t("dashboard.overview.netBalance.netMargin", { value: netMargin })}
           </p>
 
           <NetSparkline
@@ -239,7 +259,7 @@ export default function NetBalance({ period }: Props) {
               key={tile.key}
               className="rounded-lg border border-border bg-accent/50 p-3"
             >
-              <p className="text-sm">{tile.label}</p>
+              <p className="text-sm">{t(tile.label)}</p>
               <p
                 className={`mt-0.5 text-lg font-semibold tabular-nums ${tile.color}`}
               >

@@ -16,8 +16,12 @@ import {
   User,
   Settings,
   Crown,
+  Languages,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useTheme } from "@/hooks/useTheme";
+import { SUPPORTED_LANGUAGES } from "@/i18n";
+import { cn } from "@/lib/utils";
 
 import { logoutUser } from "@/api/user";
 import { useAuth } from "@/hooks/useAuth";
@@ -31,6 +35,7 @@ export default function ProfileBadge() {
   const { user, setUser } = useAuth();
 
   const { dark, toggleTheme } = useTheme();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -129,6 +134,42 @@ export default function ProfileBadge() {
                   checked={dark}
                   onCheckedChange={toggleTheme}
                 />
+              </div>
+
+              <div className="flex items-center justify-between p-3 rounded-lg transition-colors">
+                <div className="flex items-center gap-3">
+                  <Languages className="h-4 w-4 text-primary" />
+                  <span id="language-label" className="text-sm">
+                    {t("language.label")}
+                  </span>
+                </div>
+                <div
+                  role="group"
+                  aria-labelledby="language-label"
+                  className="flex rounded-full bg-muted p-0.5"
+                >
+                  {SUPPORTED_LANGUAGES.map((lng) => {
+                    const active = i18n.resolvedLanguage === lng;
+
+                    return (
+                      <button
+                        key={lng}
+                        type="button"
+                        aria-pressed={active}
+                        aria-label={t(`language.${lng}`)}
+                        onClick={() => i18n.changeLanguage(lng)}
+                        className={cn(
+                          "cursor-pointer rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase transition-colors",
+                          active
+                            ? "bg-primary text-primary-foreground shadow-sm"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        {lng}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors">

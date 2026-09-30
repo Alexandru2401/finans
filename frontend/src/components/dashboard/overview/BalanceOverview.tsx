@@ -17,31 +17,42 @@ import {
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import CardError from "@/components/dashboard/shared/CardError";
-import { periodLabel as getPeriodLabel } from "@/lib/periods";
+import type { Period } from "@/lib/periods";
+import { useTranslation } from "react-i18next";
 import { Pie, PieChart } from "recharts";
 
 interface Props {
-  period: string;
+  period: Period;
 }
 
-const chartConfig = {
-  income: { label: "Income", color: "var(--chart-2)" },
-  spendings: { label: "Spendings", color: "var(--chart-5)" },
-  savings: { label: "Savings", color: "var(--chart-1)" },
-} satisfies ChartConfig;
+function BalanceCardHeader({ period }: { period: Period }) {
+  const { t } = useTranslation();
 
-function BalanceCardHeader({ periodLabel }: { periodLabel: string }) {
   return (
     <CardHeader>
-      <CardTitle className="text-base">Balance breakdown</CardTitle>
+      <CardTitle className="text-base">
+        {t("dashboard.overview.breakdown.title")}
+      </CardTitle>
       <CardDescription className="text-muted-foreground">
-        Income, spendings and savings · {periodLabel}
+        {t("dashboard.overview.breakdown.description")} ·{" "}
+        {t(`dashboard.periods.${period}`)}
       </CardDescription>
     </CardHeader>
   );
 }
 
 export default function BalanceOverview({ period }: Props) {
+  const { t } = useTranslation();
+
+  const chartConfig = {
+    income: { label: t("dashboard.common.income"), color: "var(--chart-2)" },
+    spendings: {
+      label: t("dashboard.common.expenses"),
+      color: "var(--chart-5)",
+    },
+    savings: { label: t("dashboard.common.savings"), color: "var(--chart-1)" },
+  } satisfies ChartConfig;
+
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState<{
     key: string;
@@ -65,13 +76,15 @@ export default function BalanceOverview({ period }: Props) {
   const summary = loading ? null : (result?.summary ?? null);
   const error = !loading && !summary;
   const onRetry = () => setAttempt((n) => n + 1);
-  const periodLabel = getPeriodLabel(period);
 
   if (!loading && error) {
     return (
       <Card className="flex flex-col">
-        <BalanceCardHeader periodLabel={periodLabel} />
-        <CardError message="Could not load the breakdown." onRetry={onRetry} />
+        <BalanceCardHeader period={period} />
+        <CardError
+          message={t("dashboard.overview.breakdown.error")}
+          onRetry={onRetry}
+        />
       </Card>
     );
   }
@@ -93,10 +106,10 @@ export default function BalanceOverview({ period }: Props) {
   if (summary.income === 0 && summary.expense === 0 && summary.savings === 0) {
     return (
       <Card className="flex flex-col">
-        <BalanceCardHeader periodLabel={periodLabel} />
+        <BalanceCardHeader period={period} />
         <CardContent className="flex flex-1 items-center justify-center">
           <p className="text-sm text-muted-foreground">
-            No transactions recorded for this period.
+            {t("dashboard.overview.breakdown.empty")}
           </p>
         </CardContent>
       </Card>
@@ -123,13 +136,13 @@ export default function BalanceOverview({ period }: Props) {
 
   return (
     <Card className="flex flex-col">
-      <BalanceCardHeader periodLabel={periodLabel} />
+      <BalanceCardHeader period={period} />
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-62.5"
           role="img"
-          aria-label="Breakdown of income, spendings and savings"
+          aria-label={t("dashboard.overview.breakdown.chartLabel")}
         >
           <PieChart>
             <ChartTooltip

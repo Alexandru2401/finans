@@ -13,7 +13,8 @@ import { useEffect, useState } from "react";
 import { getTopExpenses, type TopExpense } from "@/api/budget";
 import CardError from "@/components/dashboard/shared/CardError";
 import { formatCurrency } from "@/lib/format";
-import { periodLabel } from "@/lib/periods";
+import type { Period } from "@/lib/periods";
+import { useTranslation } from "react-i18next";
 
 const CATEGORY_BAR_COLORS = [
   "[&>*]:bg-finance-primary",
@@ -24,10 +25,11 @@ const CATEGORY_BAR_COLORS = [
 ];
 
 interface Props {
-  period: string;
+  period: Period;
 }
 
 export default function SpendingOverview({ period }: Props) {
+  const { t } = useTranslation();
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState<{
     key: string;
@@ -60,14 +62,15 @@ export default function SpendingOverview({ period }: Props) {
         <div className="flex items-start justify-between gap-2">
           <div>
             <CardTitle className="flex items-center gap-2 text-base">
-              Top Spendings
+              {t("dashboard.overview.topSpendings.title")}
             </CardTitle>
             <CardDescription>
-              Your biggest expenses · {periodLabel(period)}
+              {t("dashboard.overview.topSpendings.description")} ·{" "}
+              {t(`dashboard.periods.${period}`)}
             </CardDescription>
           </div>
           <Button asChild variant="outline" size="sm">
-            <Link to="transactions">See all</Link>
+            <Link to="transactions">{t("dashboard.common.seeAll")}</Link>
           </Button>
         </div>
       </CardHeader>
@@ -75,7 +78,7 @@ export default function SpendingOverview({ period }: Props) {
       <CardContent className="space-y-4">
         {!loading && error ? (
           <CardError
-            message="Could not load your top spendings."
+            message={t("dashboard.overview.topSpendings.error")}
             onRetry={onRetry}
           />
         ) : loading || !items ? (
@@ -92,7 +95,7 @@ export default function SpendingOverview({ period }: Props) {
           </div>
         ) : items.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            No expenses recorded for this period.
+            {t("dashboard.overview.topSpendings.empty")}
           </p>
         ) : (
           <div className="space-y-3 pt-2">
@@ -100,7 +103,7 @@ export default function SpendingOverview({ period }: Props) {
               <div key={item.item_id} className="space-y-1">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">
-                    {item.category || "Uncategorized"}
+                    {item.category || t("dashboard.common.uncategorized")}
                   </span>
                   <span className="font-medium tabular-nums">
                     {formatCurrency(item.amount)}

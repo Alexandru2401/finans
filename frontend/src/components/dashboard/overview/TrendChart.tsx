@@ -12,7 +12,8 @@ import { useEffect, useState } from "react";
 import { getBudgetTrend, type BudgetTrendPoint } from "@/api/budget";
 import CardError from "@/components/dashboard/shared/CardError";
 import { formatCurrency } from "@/lib/format";
-import { periodLabel as getPeriodLabel } from "@/lib/periods";
+import type { Period } from "@/lib/periods";
+import { useTranslation } from "react-i18next";
 
 import {
   Area,
@@ -26,21 +27,23 @@ import {
 } from "recharts";
 
 interface Props {
-  period: string;
+  period: Period;
 }
 
-function formatMonth(month: string) {
-  return new Date(`${month}-01`).toLocaleDateString("en-US", {
+function formatMonth(month: string, locale: string) {
+  return new Date(`${month}-01`).toLocaleDateString(locale, {
     month: "short",
   });
 }
 
 export default function SpendingTrendingChart({ period }: Props) {
+  const { t, i18n } = useTranslation();
+
   // A one-month trend is a single point, so short periods keep the
   // default trend (last 6 months) instead
   const trendPeriod =
     period === "this-month" || period === "last-month" ? undefined : period;
-  const periodLabel = getPeriodLabel(trendPeriod ?? "last-6");
+  const periodLabel = t(`dashboard.periods.${trendPeriod ?? "last-6"}`);
 
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState<{
@@ -70,10 +73,12 @@ export default function SpendingTrendingChart({ period }: Props) {
     return (
       <Card className="flex flex-col">
         <CardHeader>
-          <CardTitle className="text-base">Budget Trend</CardTitle>
+          <CardTitle className="text-base">
+            {t("dashboard.overview.trend.title")}
+          </CardTitle>
         </CardHeader>
         <CardError
-          message="Could not load the budget trend."
+          message={t("dashboard.overview.trend.error")}
           onRetry={onRetry}
         />
       </Card>
@@ -100,7 +105,7 @@ export default function SpendingTrendingChart({ period }: Props) {
   }
 
   const spendingTrend = trend.map((point) => ({
-    month: formatMonth(point.month),
+    month: formatMonth(point.month, i18n.language),
     income: point.income,
     expenses: point.expense,
   }));
@@ -109,11 +114,15 @@ export default function SpendingTrendingChart({ period }: Props) {
     <CardHeader>
       <div className="flex items-start justify-between gap-2">
         <div>
-          <CardTitle className="text-base">Budget Trend</CardTitle>
-          <CardDescription>Income vs Expenses · {periodLabel}</CardDescription>
+          <CardTitle className="text-base">
+            {t("dashboard.overview.trend.title")}
+          </CardTitle>
+          <CardDescription>
+            {t("dashboard.overview.trend.description")} · {periodLabel}
+          </CardDescription>
         </div>
         <Button asChild variant="outline" size="sm">
-          <Link to="analytics">See details</Link>
+          <Link to="analytics">{t("dashboard.common.seeDetails")}</Link>
         </Button>
       </div>
     </CardHeader>
@@ -126,9 +135,9 @@ export default function SpendingTrendingChart({ period }: Props) {
         {header}
         <CardContent className="flex flex-1 items-center justify-center">
           <p className="text-center text-sm text-muted-foreground">
-            The trend needs at least 2 months of data.
+            {t("dashboard.overview.trend.notEnoughData")}
             <br />
-            Pick a longer period to see it.
+            {t("dashboard.overview.trend.pickLongerPeriod")}
           </p>
         </CardContent>
       </Card>
@@ -142,7 +151,9 @@ export default function SpendingTrendingChart({ period }: Props) {
       <CardContent className="flex-1">
         <div
           role="img"
-          aria-label={`Area chart of income and expenses, ${periodLabel.toLowerCase()}`}
+          aria-label={t("dashboard.overview.trend.chartLabel", {
+            period: periodLabel.toLowerCase(),
+          })}
         >
           <ResponsiveContainer width="100%" height={260}>
             <AreaChart
@@ -213,6 +224,7 @@ export default function SpendingTrendingChart({ period }: Props) {
               <Area
                 type="monotone"
                 dataKey="income"
+                name={t("dashboard.common.income")}
                 stroke="var(--finance-success)"
                 strokeWidth={2}
                 fill="url(#income)"
@@ -220,6 +232,7 @@ export default function SpendingTrendingChart({ period }: Props) {
               <Area
                 type="monotone"
                 dataKey="expenses"
+                name={t("dashboard.common.expenses")}
                 stroke="var(--finance-danger)"
                 strokeWidth={2}
                 fill="url(#expenses)"

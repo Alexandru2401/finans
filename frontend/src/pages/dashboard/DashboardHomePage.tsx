@@ -14,28 +14,38 @@ import SpendingTrendingChart from "@/components/dashboard/overview/TrendChart";
 import PageHeader from "@/components/dashboard/shared/PageHeader";
 
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
-import { PERIOD_OPTIONS } from "@/lib/periods";
+import { PERIODS, type Period } from "@/lib/periods";
 
 export default function DashboardHomePage() {
-  const [period, setPeriod] = useState("last-month");
+  const { t } = useTranslation();
+  const [period, setPeriod] = useState<Period>("last-month");
 
   const user = useAuth().user;
 
   return (
     <section className="px-4 py-4 max-w-7xl mx-auto">
       <PageHeader
-        title={`Welcome back, ${user?.username || "User"}!`}
-        subtitle=" Take a look over your financial dashboard."
+        title={t("dashboard.overview.welcome", {
+          name: user?.username || t("dashboard.overview.defaultUser"),
+        })}
+        subtitle={t("dashboard.overview.subtitle")}
       >
-        <Select value={period} onValueChange={setPeriod}>
-          <SelectTrigger className="w-40" aria-label="Select period">
-            <SelectValue placeholder="Last month" />
+        <Select
+          value={period}
+          onValueChange={(value) => setPeriod(value as Period)}
+        >
+          <SelectTrigger
+            className="w-40"
+            aria-label={t("dashboard.overview.selectPeriod")}
+          >
+            <SelectValue placeholder={t("dashboard.periods.last-month")} />
           </SelectTrigger>
           <SelectContent>
-            {PERIOD_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
+            {PERIODS.map((p) => (
+              <SelectItem key={p} value={p}>
+                {t(`dashboard.periods.${p}`)}
               </SelectItem>
             ))}
           </SelectContent>
